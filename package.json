@@ -1,7 +1,7 @@
 {
-  "name": "electron-react-typescript",
+  "name": "dyboard",
   "version": "1.0.0",
-  "description": "An Electron boilerplate including TypeScript, React, Jest and ESLint.",
+  "description": "My little dynamic 'blackboard'.",
   "main": "./dist/main.js",
   "scripts": {
     "dev": "npm-run-all -p dev:react electron:serve",
@@ -18,7 +18,7 @@
     "test": "jest"
   },
   "keywords": [],
-  "author": "Diego Fernandes <diego.schell.f@gmail.com>",
+  "author": "Eduardo Oliveira <eduardo_y05@outlook.com>",
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.9.0",
@@ -32,6 +32,7 @@
     "@testing-library/react": "^10.4.3",
     "@types/electron-devtools-installer": "^2.2.0",
     "@types/jest": "^26.0.3",
+    "@types/katex": "^0.11.0",
     "@types/react": "^16.9.34",
     "@types/react-dom": "^16.9.6",
     "@types/styled-components": "^5.1.0",
@@ -40,6 +41,7 @@
     "babel-loader": "^8.1.0",
     "commitizen": "^4.1.2",
     "cross-env": "^7.0.2",
+    "css-loader": "^3.6.0",
     "cz-conventional-changelog": "3.2.0",
     "electron": "^8.2.2",
     "electron-builder": "^22.7.0",
@@ -54,22 +56,27 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-react": "^7.20.1",
     "eslint-plugin-standard": "^4.0.1",
+    "file-loader": "^6.0.0",
     "html-webpack-plugin": "^4.2.0",
     "husky": "^4.2.5",
     "jest": "^26.1.0",
     "lint-staged": "^10.2.11",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.0.5",
+    "style-loader": "^1.2.1",
     "ts-jest": "^26.1.1",
     "typescript": "^3.9.5",
+    "url-loader": "^4.1.0",
     "wait-on": "^5.0.1",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {
+    "katex": "^0.12.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-draggable": "^4.4.3",
     "styled-components": "^5.1.1"
   },
   "build": {
