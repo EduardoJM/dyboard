@@ -7,7 +7,7 @@ const MathExpression: React.FC = () => {
     const str = 'F(x)=\\int f(x)dx';
     return (
         <Draggable>
-            <div>
+            <div className="no-select draggable-element">
                 <Latex displayMode={true}>{str}</Latex>
             </div>
         </Draggable>
