@@ -17,7 +17,7 @@ document.body.appendChild(mainElement);
 const App = () => {
     const boardRef = createRef<HTMLDivElement>();
 
-    const str = 'The value of $x$ is $$x=\\frac{-b\\pm\\sqrt{b^2-4ac}}{2a}$$';
+    const str = 'The <b style="color: red">value</b> of $x$ is $$x=\\frac{-b\\pm\\sqrt{b^2-4ac}}{2a}$$';
 
     return (
         <>

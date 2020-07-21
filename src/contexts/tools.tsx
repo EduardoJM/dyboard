@@ -1,6 +1,6 @@
 import React, { useContext, useState, createContext } from 'react';
 
-import Modal from '../components/Modal';
+import { ModalAddText, ModalAddImage } from '../modals';
 
 interface ToolsContextData {
     addText: () => void;
@@ -12,15 +12,30 @@ const ToolsContext = createContext<ToolsContextData>({} as ToolsContextData);
 export const ToolsContextProvider: React.FC = ({
     children
 }) => {
-    const [addTextModalVisible, setAddTextModalVisible] = useState(false);
-    const [addImageModalVisible, setAddImageModalVisible] = useState(false);
+    const [modalStates, setModalStates] = useState({
+        addText: false,
+        addImage: false
+    });
 
     const addText = () => {
-        setAddTextModalVisible(true);
+        setModalStates({
+            ...modalStates,
+            addText: true
+        });
     };
 
     const addImage = () => {
-        setAddImageModalVisible(true);
+        setModalStates({
+            ...modalStates,
+            addImage: true
+        });
+    };
+
+    function handleCloseModal(id: string) {
+        setModalStates({
+            ...modalStates,
+            [id]: false
+        });
     };
 
     return (
@@ -31,20 +46,8 @@ export const ToolsContextProvider: React.FC = ({
             }}>
                 { children }
             </ToolsContext.Provider>
-            <Modal
-                visible={addTextModalVisible}
-                title="Adicionar Texto"
-                closeModalRequest={() => setAddTextModalVisible(false)}
-            >
-                Adicionar novo texto!
-            </Modal>
-            <Modal
-                visible={addImageModalVisible}
-                title="Adicionar Imagem"
-                closeModalRequest={() => setAddImageModalVisible(false)}
-            >
-                Adicionar nova Imagem!
-            </Modal>
+            <ModalAddText modalId="addText" opened={modalStates.addText} handleClose={handleCloseModal} />
+            <ModalAddImage modalId="addImage" opened={modalStates.addImage} handleClose={handleCloseModal} />
         </>
     );
 };

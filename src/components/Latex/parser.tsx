@@ -76,7 +76,12 @@ const parseContent = (text: string, options: KatexOptions): JSX.Element[] => {
                     />
                 );
             }
-            return <span key={r.string}>{r.string}</span>;
+            return (
+                <span
+                    key={r.string}
+                    dangerouslySetInnerHTML={{ __html: r.string }}
+                />
+            );
         });
         return newResult;
     };
