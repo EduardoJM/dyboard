@@ -4,6 +4,7 @@ import { GlobalStyle } from './styles/GlobalStyle';
 
 import Latex from './components/Latex';
 import Toolbar from './components/Toolbar';
+import Switch from './components/Switch';
 import { Container, BlackBoard } from './styles/app';
 import { SizeMonitorProvider } from './contexts/sizeMonitor';
 import { ToolsContextProvider } from './contexts/tools';
@@ -26,7 +27,9 @@ const App = () => {
                     <Toolbar />
                     <BlackBoard ref={boardRef}>
                         <SizeMonitorProvider elementReference={boardRef}>
-                            <Latex>{ str }</Latex>
+                            <div style={{ width: '200px', margin: '50px auto' }}>
+                                <Switch checked={false} text="Open" />
+                            </div>
                         </SizeMonitorProvider>
                     </BlackBoard>
                 </ToolsContextProvider>
