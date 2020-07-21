@@ -1,26 +1,26 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useTransition, useSpring } from 'react-spring';
 
 import { Container, GrayBar, ColoredBar, Marker } from './styles';
 
 interface SwitchProps {
     checked: boolean;
+    handleCheckChange: (checkValue: boolean) => void;
     text: string;
 }
 
-const Switch: React.FC<SwitchProps> = ({ checked, text }) => {
-    const [state, setState] = useState(false);
-    const transitions = useTransition(state, null, {
+const Switch: React.FC<SwitchProps> = ({ checked, handleCheckChange, text }) => {
+    const transitions = useTransition(checked, null, {
         from: { opacity: 0 },
         enter: { opacity: 1 },
         leave: { opacity: 0 }
     });
     const markerProps = useSpring({
-        left: state ? 30 : -10
+        left: checked ? 30 : -10
     });
 
     return (
-        <Container onClick={() => setState(!state)}>
+        <Container onClick={() => handleCheckChange(!checked)}>
             <span>{ text }</span>
             <GrayBar>
                 {transitions.map(
@@ -34,7 +34,7 @@ const Switch: React.FC<SwitchProps> = ({ checked, text }) => {
                 <Marker
                     style={{
                         ...markerProps,
-                        backgroundColor: state ? '#90caf9' : '#bdbdbd'
+                        backgroundColor: checked ? '#90caf9' : '#bdbdbd'
                     }}
                 />
             </GrayBar>

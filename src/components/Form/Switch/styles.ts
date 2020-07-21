@@ -12,6 +12,8 @@ export const Container = styled.div`
     align-items: center;
     justify-content: space-between;
 
+    margin-bottom: 10px;
+
     > span {
         flex: 1;
     }

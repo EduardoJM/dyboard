@@ -1,6 +1,6 @@
 import React from 'react';
-import Modal from '../components/Modal';
-import ModalProps from './interfaces';
+import Modal from '../../components/Modal';
+import ModalProps from '../interfaces';
 
 const ModalAddImage: React.FC<ModalProps> = ({
     opened,
