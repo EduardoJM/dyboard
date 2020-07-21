@@ -5,63 +5,10 @@ import { GiArrowCursor, GiCube } from 'react-icons/gi';
 import { useTools } from '../../contexts/tools';
 
 import { Container, Button } from './styles';
-
-interface ToolBarObjectItem {
-    id: string;
-    title: string;
-    tool: string;
-    childs?: ToolBarObjectItem[];
-}
+import toolBarData, { ToolBarObjectItem } from './data';
 
 const Toolbar: React.FC = () => {
     const tools = useTools();
-
-    const toolBarData = [
-        {
-            id: 'cursor',
-            title: 'Cursor',
-            tool: 'none'
-        },
-        {
-            id: 'add',
-            title: 'Adicionar Elementos',
-            tool: 'child',
-            childs: [
-                {
-                    id: 'parent',
-                    title: 'Ferramentas',
-                    tool: 'parent'
-                },
-                {
-                    id: 'add-text',
-                    title: 'Adicionar Texto',
-                    tool: 'add-text'
-                },
-                {
-                    id: 'add-image',
-                    title: 'Adicionar Imagem',
-                    tool: 'add-image'
-                },
-                {
-                    id: '3d-element',
-                    title: 'Adicionar Elementos Tridimensional',
-                    tool: 'child',
-                    childs: [
-                        {
-                            id: 'parent',
-                            title: 'Adicionar Elementos',
-                            tool: 'parent'
-                        },
-                        {
-                            id: 'cube',
-                            title: 'Desenhar Caixa Tridimensional',
-                            tool: 'cube'
-                        }
-                    ]
-                }
-            ]
-        }
-    ];
 
     const [barButtons, setBarButtons] = useState<ToolBarObjectItem[]>(toolBarData);
     const [parents, setParents] = useState<ToolBarObjectItem[][]>([]);

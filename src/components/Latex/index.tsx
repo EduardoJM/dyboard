@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import katex from 'katex';
+import parseContent from './parser';
 
 export interface TrustContext {
     command: string
@@ -143,9 +143,26 @@ const Latex: React.FC<LatexProps> = ({
     trust,
     globalGroup
 }) => {
-    const [rendered, setRendered] = useState('');
+    const [rendered, setRendered] = useState<JSX.Element[]>([]);
 
     useEffect(() => {
+        setRendered(parseContent(children as string, {
+            displayMode,
+            output,
+            leqno,
+            fleqn,
+            throwOnError,
+            errorColor,
+            macros,
+            minRuleThickness,
+            colorIsTextColor,
+            maxSize,
+            maxExpand,
+            strict,
+            trust,
+            globalGroup
+        }));
+        /*
         setRendered(katex.renderToString(children as string, {
             displayMode,
             output,
@@ -162,6 +179,7 @@ const Latex: React.FC<LatexProps> = ({
             trust,
             globalGroup
         }));
+        */
     }, [
         children,
         displayMode,
@@ -181,9 +199,9 @@ const Latex: React.FC<LatexProps> = ({
     ]);
 
     return (
-        <div dangerouslySetInnerHTML={{
-            __html: rendered
-        }} />
+        <>
+            {rendered}
+        </>
     );
 };
 
