@@ -70,19 +70,6 @@ export default class CubeDrawner {
             }
         }));
 
-        const plane = Phoria.MeshFactory.generateTesselatedPlane(8, 8, 0, 20, false);
-        this.scene.graph.push(Phoria.Entity.create({
-            points: plane.points,
-            edges: plane.edges,
-            polygons: plane.polygons,
-            style: {
-                drawmode: 'wireframe',
-                shademode: 'plain',
-                linewidth: 0.5,
-                objectsortmode: 'back'
-            }
-        }));
-
         this.scene.graph.push(new Phoria.DistantLight());
 
         this.mouse = Phoria.View.addMouseEvents(canvas, (e) => this.mouseClick(e));
@@ -105,21 +92,31 @@ export default class CubeDrawner {
         }
         if (this.points.length <= 1) {
             const vec = this.getHorizontalClickPoint(e.pageX, e.pageY);
+            /*
             const p0 = this.scene.graph[this.points.length];
             if (p0 instanceof Phoria.Entity) {
                 p0.disabled = false;
                 p0.points[0].set(vec[0], vec[1], vec[2]);
             }
+            */
             this.points.push(vec);
         } else if (this.points.length === 2) {
             const vec = this.getVerticalClickPoint(e.pageX, e.pageY, this.points[1]);
+            /*
             const p0 = this.scene.graph[2];
             if (p0 instanceof Phoria.Entity) {
                 p0.disabled = false;
                 p0.points[0].set(this.points[1][0], vec[1], vec[2]);
             }
+            */
             this.points.push(vec);
         }
+    }
+
+    updateViewport(canvas: HTMLCanvasElement): void {
+        this.scene.perspective.aspect = canvas.clientWidth / canvas.clientHeight;
+        this.scene.viewport.width = canvas.clientWidth;
+        this.scene.viewport.height = canvas.clientHeight;
     }
 
     getHorizontalClickPoint(x: number, y: number): Phoria.Vector3 {
@@ -164,11 +161,13 @@ export default class CubeDrawner {
                         this.mouseX,
                         this.mouseY
                     );
+                    /*
                     const p0 = this.scene.graph[1];
                     if (p0 instanceof Phoria.Entity) {
                         p0.disabled = false;
                         p0.points[0].set(newPoint[0], newPoint[1], newPoint[2]);
                     }
+                    */
                     let minx = newPoint[0];
                     let minz = newPoint[2];
                     let maxx = newPoint[0];
@@ -210,11 +209,13 @@ export default class CubeDrawner {
                         this.mouseY,
                         this.points[1]
                     );
+                    /*
                     const p0 = this.scene.graph[2];
                     if (p0 instanceof Phoria.Entity) {
                         p0.disabled = false;
                         p0.points[0].set(this.points[1][0], newPoint[1], newPoint[2]);
                     }
+                    */
                     const cube = this.scene.graph[3];
                     if (cube instanceof Phoria.Entity) {
                         const y = newPoint[1];
