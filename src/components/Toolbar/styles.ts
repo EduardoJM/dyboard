@@ -13,5 +13,13 @@ export const Container = styled.div`
 `;
 
 export const Button = styled.div`
+    width: 50px;
+    height: 50px;
+    padding: 5px;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
+    cursor: pointer;
 `;

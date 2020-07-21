@@ -3,8 +3,10 @@ import { render } from 'react-dom';
 import { GlobalStyle } from './styles/GlobalStyle';
 
 import Scene3D from './components/Scene3D';
-import BlackBoard from './styles/app';
+import Toolbar from './components/Toolbar';
+import { Container, BlackBoard } from './styles/app';
 import { SizeMonitorProvider } from './contexts/sizeMonitor';
+import { ToolsContextProvider } from './contexts/tools';
 
 import 'katex/dist/katex.min.css';
 
@@ -17,12 +19,16 @@ const App = () => {
 
     return (
         <>
-            <BlackBoard ref={boardRef}>
-                <SizeMonitorProvider elementReference={boardRef}>
-                    <Scene3D />
-                </SizeMonitorProvider>
-            </BlackBoard>
-
+            <Container>
+                <ToolsContextProvider>
+                    <Toolbar />
+                    <BlackBoard ref={boardRef}>
+                        <SizeMonitorProvider elementReference={boardRef}>
+                            <Scene3D />
+                        </SizeMonitorProvider>
+                    </BlackBoard>
+                </ToolsContextProvider>
+            </Container>
             <GlobalStyle />
         </>
     );
