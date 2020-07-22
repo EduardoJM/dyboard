@@ -2,7 +2,11 @@ import React, { useContext, useState, createContext } from 'react';
 
 import { ModalAddText, ModalAddImage } from '../modals';
 
+type Tools = 'cursor' | 'drag' | 'resize';
+
 interface ToolsContextData {
+    currentTool: Tools;
+    changeCurrentTool: (tool: Tools) => void;
     addText: () => void;
     addImage: () => void;
 }
@@ -16,6 +20,7 @@ export const ToolsContextProvider: React.FC = ({
         addText: false,
         addImage: false
     });
+    const [currentTool, setCurrentTool] = useState<Tools>('cursor');
 
     const addText = () => {
         setModalStates({
@@ -41,6 +46,8 @@ export const ToolsContextProvider: React.FC = ({
     return (
         <>
             <ToolsContext.Provider value={{
+                currentTool,
+                changeCurrentTool: setCurrentTool,
                 addText,
                 addImage
             }}>

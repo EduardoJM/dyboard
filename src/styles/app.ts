@@ -15,4 +15,6 @@ export const BlackBoard = styled.div`
     background: #222;
     flex: 1;
     overflow: hidden;
+
+    position: relative;
 `;

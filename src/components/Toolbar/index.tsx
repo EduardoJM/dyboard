@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { MdFunctions, MdTitle, MdInsertPhoto, MdAdd, MdChevronLeft } from 'react-icons/md';
-import { GiArrowCursor, GiCube, GiStoneSphere } from 'react-icons/gi';
+import { GiArrowCursor, GiCube, GiStoneSphere, GiResize, GiMove } from 'react-icons/gi';
 import { useTransition } from 'react-spring';
 
 import { useTools } from '../../contexts/tools';
@@ -36,6 +36,10 @@ const Toolbar: React.FC = () => {
             return <GiStoneSphere size={24} />;
         } else if (id === 'math') {
             return <MdFunctions size={24} />;
+        } else if (id === 'drag') {
+            return <GiMove size={24} />;
+        } else if (id === 'resize') {
+            return <GiResize size={24} />;
         }
         return <></>;
     };
@@ -49,6 +53,12 @@ const Toolbar: React.FC = () => {
             tools.addText();
         } else if (button.tool === 'add-image') {
             tools.addImage();
+        } else if (button.tool === 'set-cursor') {
+            tools.changeCurrentTool('cursor');
+        } else if (button.tool === 'set-drag') {
+            tools.changeCurrentTool('drag');
+        } else if (button.tool === 'set-resize') {
+            tools.changeCurrentTool('resize');
         }
     }
 

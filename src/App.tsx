@@ -7,7 +7,10 @@ import { Container, BlackBoard } from './styles/app';
 import { SizeMonitorProvider } from './contexts/sizeMonitor';
 import { ToolsContextProvider } from './contexts/tools';
 
+import TextBlock from './components/Elements/TextBlock';
+
 import 'katex/dist/katex.min.css';
+import 'react-resizable/css/styles.css';
 
 const mainElement = document.createElement('div');
 mainElement.setAttribute('id', 'root');
@@ -23,6 +26,12 @@ const App = () => {
                     <Toolbar />
                     <BlackBoard ref={boardRef}>
                         <SizeMonitorProvider elementReference={boardRef}>
+                            <TextBlock supportLatex={true}>
+                                What is this? looook hahahahhaha. Seja
+                                $$
+                                    x = \pm x^2+2xa + c^2
+                                $$
+                            </TextBlock>
                         </SizeMonitorProvider>
                     </BlackBoard>
                 </ToolsContextProvider>

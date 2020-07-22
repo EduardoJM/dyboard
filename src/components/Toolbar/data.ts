@@ -11,7 +11,19 @@ const toolBarData: ToolBarObjectItem[][] = [
         {
             id: 'cursor',
             title: 'Cursor',
-            tool: 'none',
+            tool: 'set-cursor',
+            deep: false
+        },
+        {
+            id: 'drag',
+            title: 'Mover',
+            tool: 'set-drag',
+            deep: false
+        },
+        {
+            id: 'resize',
+            title: 'Redimensionar',
+            tool: 'set-resize',
             deep: false
         },
         {
