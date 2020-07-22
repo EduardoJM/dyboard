@@ -19,6 +19,7 @@ const ModalAddText: React.FC<ModalProps> = ({
     handleClose
 }) => {
     const [supportLatex, setSupportLatex] = useState(true);
+    const [supportMarkdown, setSupportMarkdown] = useState(false);
     const [text, setText] = useState('');
 
     return (
@@ -32,6 +33,11 @@ const ModalAddText: React.FC<ModalProps> = ({
                     text="Suporte para LaTeX"
                     checked={supportLatex}
                     handleCheckChange={(value) => setSupportLatex(value)}
+                />
+                <Switch
+                    text="Suporte para Markdown"
+                    checked={supportMarkdown}
+                    handleCheckChange={(value) => setSupportMarkdown(value)}
                 />
                 <TextWriter>
                     <div>
