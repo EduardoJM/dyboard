@@ -4,6 +4,7 @@ import { MdClose } from 'react-icons/md';
 
 import {
     Container,
+    Overlay,
     Dialog,
     Header,
     HeaderButton,
@@ -24,9 +25,14 @@ const Modal: React.FC<ModalProps> = ({
 }) => {
     const [modalState, setModalState] = useState(false);
     const transitions = useTransition(modalState, null, {
-        from: { opacity: 0, transform: 'translateY(-40px)' },
-        enter: { opacity: 1, transform: 'translateY(0px)' },
-        leave: { opacity: 0, transform: 'translateY(-40px)' }
+        from: { opacity: 0 },
+        enter: { opacity: 1 },
+        leave: { opacity: 0 }
+    });
+    const dialogTransitions = useTransition(modalState, null, {
+        from: { opacity: 0, transform: 'translate(-50%, -50%) translateY(-40px)' },
+        enter: { opacity: 1, transform: 'translate(-50%, -50%) translateY(0px)' },
+        leave: { opacity: 0, transform: 'translate(-50%, -50%) translateY(-40px)' }
     });
 
     useEffect(() => {
@@ -51,15 +57,19 @@ const Modal: React.FC<ModalProps> = ({
 
     return (
         <>
-            {transitions.map(
-                ({ item, key, props: style }) => item && (
-                    <Container
-                        className="close-modal"
-                        key={key}
-                        style={style}
-                        onClick={handleOverlayClick}
-                    >
-                        <Dialog>
+            <Container>
+                {transitions.map(
+                    ({ item, key, props: style }) => item && (
+                        <Overlay
+                            className="close-modal"
+                            key={key}
+                            style={style}
+                            onClick={handleOverlayClick} />
+                    )
+                )}
+                {dialogTransitions.map(
+                    ({ item: dlg, key: key2, props: dlgStyle }) => dlg && (
+                        <Dialog key={key2} style={dlgStyle}>
                             <Header>
                                 <span className="title">{ title }</span>
                                 <HeaderButton onClick={handleCloseButtonClick}>
@@ -70,9 +80,9 @@ const Modal: React.FC<ModalProps> = ({
                                 { children }
                             </Content>
                         </Dialog>
-                    </Container>
-                )
-            )}
+                    )
+                )}
+            </Container>
         </>
     );
 };
