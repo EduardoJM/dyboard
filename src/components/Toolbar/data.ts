@@ -38,6 +38,12 @@ const toolBarData: ToolBarObjectItem[][] = [
             deep: false
         },
         {
+            id: 'math',
+            title: 'Adicionar Equação LaTeX',
+            tool: 'add-math',
+            deep: false
+        },
+        {
             id: 'add-image',
             title: 'Adicionar Imagem',
             tool: 'add-image',
@@ -64,6 +70,12 @@ const toolBarData: ToolBarObjectItem[][] = [
             id: 'cube',
             title: 'Desenhar Caixa Tridimensional',
             tool: 'cube',
+            deep: false
+        },
+        {
+            id: 'sphere',
+            title: 'Desenhar Esfera Tridimensional',
+            tool: 'sphere',
             deep: false
         }
     ]

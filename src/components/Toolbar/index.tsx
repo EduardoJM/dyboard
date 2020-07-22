@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { MdTitle, MdInsertPhoto, MdAdd, MdChevronLeft } from 'react-icons/md';
-import { GiArrowCursor, GiCube } from 'react-icons/gi';
+import { MdFunctions, MdTitle, MdInsertPhoto, MdAdd, MdChevronLeft } from 'react-icons/md';
+import { GiArrowCursor, GiCube, GiStoneSphere } from 'react-icons/gi';
 import { useTransition } from 'react-spring';
 
 import { useTools } from '../../contexts/tools';
@@ -32,6 +32,10 @@ const Toolbar: React.FC = () => {
             return <MdChevronLeft size={24} />;
         } else if (id === '3d-element' || id === 'cube') {
             return <GiCube size={24} />;
+        } else if (id === 'sphere') {
+            return <GiStoneSphere size={24} />;
+        } else if (id === 'math') {
+            return <MdFunctions size={24} />;
         }
         return <></>;
     };
