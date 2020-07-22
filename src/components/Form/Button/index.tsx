@@ -1,8 +1,16 @@
-import React from 'react';
+import React, { MouseEvent } from 'react';
 import Container from './styles';
 
-const Button: React.FC = ({ children }) => {
-    return <Container type="button">{children}</Container>;
+interface ButtonProps {
+    onClick: ((event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => void) | undefined;
+}
+
+const Button: React.FC<ButtonProps> = ({ children, onClick }) => {
+    return (
+        <Container type="button" onClick={onClick}>
+            {children}
+        </Container>
+    );
 };
 
 export default Button;

@@ -14,14 +14,25 @@ import {
 
 interface TextBlockProps {
     children: string;
-    supportLatex?: boolean;
+    supportLatex: boolean;
+    initialWidth: number;
+    initialHeight: number;
+    initialLeft: number;
+    initialTop: number;
 }
 
-const TextBlock: React.FC<TextBlockProps> = ({ children, supportLatex }) => {
-    const [width, setWidth] = useState(200);
-    const [height, setHeight] = useState(200);
-    const [left, setLeft] = useState(0);
-    const [top, setTop] = useState(0);
+const TextBlock: React.FC<TextBlockProps> = ({
+    children,
+    supportLatex,
+    initialWidth,
+    initialHeight,
+    initialLeft,
+    initialTop
+}) => {
+    const [width, setWidth] = useState(initialWidth);
+    const [height, setHeight] = useState(initialHeight);
+    const [left, setLeft] = useState(initialLeft);
+    const [top, setTop] = useState(initialTop);
     const tools = useTools();
 
     function handleOnResize(event: SyntheticEvent, data: ResizeCallbackData) {

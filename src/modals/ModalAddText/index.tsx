@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import Modal from '../../components/Modal';
 import ModalProps from '../interfaces';
 
+import { useBoard } from '../../contexts/board';
+
 import {
     Form,
     TextWriter,
@@ -21,6 +23,27 @@ const ModalAddText: React.FC<ModalProps> = ({
     const [supportLatex, setSupportLatex] = useState(true);
     const [supportMarkdown, setSupportMarkdown] = useState(false);
     const [text, setText] = useState('');
+
+    const boardData = useBoard();
+
+    function handleAdd() {
+        const array = [
+            ...boardData.elements,
+            {
+                id: Date.now(),
+                type: 'text',
+                width: 300,
+                height: 150,
+                left: 0,
+                top: 0,
+                text,
+                supportLatex,
+                markdown: supportMarkdown
+            }
+        ];
+        boardData.changeElements(array);
+        handleClose(modalId);
+    }
 
     return (
         <Modal
@@ -55,7 +78,7 @@ const ModalAddText: React.FC<ModalProps> = ({
                     </div>
                 </TextWriter>
                 <ButtonArea>
-                    <Button>Adicionar</Button>
+                    <Button onClick={handleAdd}>Adicionar</Button>
                 </ButtonArea>
             </Form>
         </Modal>

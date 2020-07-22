@@ -1,14 +1,13 @@
-import React, { createRef } from 'react';
+import React from 'react';
 import { render } from 'react-dom';
 import { GlobalStyle } from './styles/GlobalStyle';
 
 import StatusBar from './components/StatusBar';
 import ToolBar from './components/ToolBar';
-import { Container, ContentContainer, BlackBoard } from './styles/app';
-import { SizeMonitorProvider } from './contexts/sizeMonitor';
+import Board from './components/Board';
+import { Container, ContentContainer } from './styles/app';
 import { ToolsContextProvider } from './contexts/tools';
-
-import TextBlock from './components/Elements/TextBlock';
+import { BoardContextProvider } from './contexts/board';
 
 import 'katex/dist/katex.min.css';
 import 'react-resizable/css/styles.css';
@@ -18,27 +17,18 @@ mainElement.setAttribute('id', 'root');
 document.body.appendChild(mainElement);
 
 const App = () => {
-    const boardRef = createRef<HTMLDivElement>();
-
     return (
         <>
             <Container>
-                <ToolsContextProvider>
-                    <ContentContainer>
-                        <ToolBar />
-                        <BlackBoard ref={boardRef}>
-                            <SizeMonitorProvider elementReference={boardRef}>
-                                <TextBlock supportLatex={true}>
-                                    What is this? looook hahahahhaha. Seja
-                                    $$
-                                        x = \pm x^2+2xa + c^2
-                                    $$
-                                </TextBlock>
-                            </SizeMonitorProvider>
-                        </BlackBoard>
-                    </ContentContainer>
-                    <StatusBar />
-                </ToolsContextProvider>
+                <BoardContextProvider>
+                    <ToolsContextProvider>
+                        <ContentContainer>
+                            <ToolBar />
+                            <Board />
+                        </ContentContainer>
+                        <StatusBar />
+                    </ToolsContextProvider>
+                </BoardContextProvider>
             </Container>
             <GlobalStyle />
         </>

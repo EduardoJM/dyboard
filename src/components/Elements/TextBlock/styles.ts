@@ -28,6 +28,8 @@ interface DraggableContainerProps {
 export const DraggableContainer = styled.div<DraggableContainerProps>`
     user-select: none;
 
+    position: absolute;
+
     width: ${props => props.width}px;
     height: ${props => props.height}px;
 
