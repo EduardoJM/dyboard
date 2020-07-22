@@ -59,6 +59,9 @@ const Toolbar: React.FC = () => {
                             onClick={() => handleButtonClick(button)}
                         >
                             {renderIcon(button.id)}
+                            {button.deep && (
+                                <span className="deep" />
+                            )}
                         </Button>
                     ))}
                 </Animation>

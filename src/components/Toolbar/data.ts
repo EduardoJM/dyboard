@@ -2,6 +2,7 @@ export interface ToolBarObjectItem {
     id: string;
     title: string;
     tool: string;
+    deep: boolean;
     goToId?: number;
 }
 
@@ -10,13 +11,15 @@ const toolBarData: ToolBarObjectItem[][] = [
         {
             id: 'cursor',
             title: 'Cursor',
-            tool: 'none'
+            tool: 'none',
+            deep: false
         },
         {
             id: 'add',
             title: 'Adicionar Elementos',
             tool: 'goto',
-            goToId: 1
+            goToId: 1,
+            deep: true
         }
     ],
     // add bar
@@ -25,23 +28,27 @@ const toolBarData: ToolBarObjectItem[][] = [
             id: 'parent',
             title: 'Ferramentas',
             tool: 'goto',
-            goToId: 0
+            goToId: 0,
+            deep: false
         },
         {
             id: 'add-text',
             title: 'Adicionar Texto',
-            tool: 'add-text'
+            tool: 'add-text',
+            deep: false
         },
         {
             id: 'add-image',
             title: 'Adicionar Imagem',
-            tool: 'add-image'
+            tool: 'add-image',
+            deep: false
         },
         {
             id: '3d-element',
             title: 'Adicionar Elementos Tridimensional',
             tool: 'goto',
-            goToId: 2
+            goToId: 2,
+            deep: true
         }
     ],
     // 3d element
@@ -50,12 +57,14 @@ const toolBarData: ToolBarObjectItem[][] = [
             id: 'parent',
             title: 'Adicionar Elementos',
             tool: 'goto',
-            goToId: 1
+            goToId: 1,
+            deep: false
         },
         {
             id: 'cube',
             title: 'Desenhar Caixa Tridimensional',
-            tool: 'cube'
+            tool: 'cube',
+            deep: false
         }
     ]
 ];
