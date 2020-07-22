@@ -8,7 +8,7 @@ import { useTools } from '../../contexts/tools';
 import { Container, Button, Animation } from './styles';
 import toolBarData, { ToolBarObjectItem } from './data';
 
-const Toolbar: React.FC = () => {
+const ToolBar: React.FC = () => {
     const tools = useTools();
 
     const [currentTools, setCurrentTools] = useState(0);
@@ -84,4 +84,4 @@ const Toolbar: React.FC = () => {
     );
 };
 
-export default Toolbar;
+export default ToolBar;

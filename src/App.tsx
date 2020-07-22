@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import { GlobalStyle } from './styles/GlobalStyle';
 
 import StatusBar from './components/StatusBar';
-import Toolbar from './components/Toolbar';
+import ToolBar from './components/ToolBar';
 import { Container, ContentContainer, BlackBoard } from './styles/app';
 import { SizeMonitorProvider } from './contexts/sizeMonitor';
 import { ToolsContextProvider } from './contexts/tools';
@@ -25,7 +25,7 @@ const App = () => {
             <Container>
                 <ToolsContextProvider>
                     <ContentContainer>
-                        <Toolbar />
+                        <ToolBar />
                         <BlackBoard ref={boardRef}>
                             <SizeMonitorProvider elementReference={boardRef}>
                                 <TextBlock supportLatex={true}>
