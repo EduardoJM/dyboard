@@ -9,6 +9,7 @@ const StatusBar: React.FC = () => {
     const tools = useTools();
 
     const getToolString = () => {
+        if (tools.elementToAdd) return 'Clique para adicionar';
         if (tools.currentTool === 'cursor') return 'Cursor';
         if (tools.currentTool === 'drag') return 'Mover';
         if (tools.currentTool === 'resize') return 'Redimensionar';

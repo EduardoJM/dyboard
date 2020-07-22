@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Modal from '../../components/Modal';
 import ModalProps from '../interfaces';
 
-import { useBoard } from '../../contexts/board';
+import { useTools } from '../../contexts/tools';
 
 import {
     Form,
@@ -24,24 +24,21 @@ const ModalAddText: React.FC<ModalProps> = ({
     const [supportMarkdown, setSupportMarkdown] = useState(false);
     const [text, setText] = useState('');
 
-    const boardData = useBoard();
+    const tools = useTools();
 
     function handleAdd() {
-        const array = [
-            ...boardData.elements,
-            {
-                id: Date.now(),
-                type: 'text',
-                width: 300,
-                height: 150,
-                left: 0,
-                top: 0,
-                text,
-                supportLatex,
-                markdown: supportMarkdown
-            }
-        ];
-        boardData.changeElements(array);
+        const item = {
+            id: Date.now(),
+            type: 'text',
+            width: 300,
+            height: 150,
+            left: 0,
+            top: 0,
+            text,
+            supportLatex,
+            markdown: supportMarkdown
+        };
+        tools.setCatchClick(item);
         handleClose(modalId);
     }
 

@@ -2,6 +2,9 @@ import React, { useContext, useState, createContext } from 'react';
 
 import { ModalAddText, ModalAddImage } from '../modals';
 
+import { ElementAll } from '../data/board';
+import { useBoard } from '../contexts/board';
+
 type Tools = 'cursor' | 'drag' | 'resize';
 
 interface ToolsContextData {
@@ -9,6 +12,9 @@ interface ToolsContextData {
     changeCurrentTool: (tool: Tools) => void;
     addText: () => void;
     addImage: () => void;
+    elementToAdd: ElementAll | null;
+    setCatchClick: (element: ElementAll) => void;
+    catchedClick: (x: number, y: number) => void;
 }
 
 const ToolsContext = createContext<ToolsContextData>({} as ToolsContextData);
@@ -21,6 +27,8 @@ export const ToolsContextProvider: React.FC = ({
         addImage: false
     });
     const [currentTool, setCurrentTool] = useState<Tools>('cursor');
+    const [elementToAdd, setElementToAdd] = useState<ElementAll | null>(null);
+    const boardData = useBoard();
 
     const addText = () => {
         setModalStates({
@@ -43,18 +51,41 @@ export const ToolsContextProvider: React.FC = ({
         });
     };
 
+    function handleSetCatchClick(element: ElementAll) {
+        setElementToAdd(element);
+    }
+
+    function handleCatchedClick(x: number, y: number) {
+        if (!elementToAdd) {
+            return;
+        }
+        const array = [
+            ...boardData.elements,
+            {
+                ...elementToAdd,
+                left: x,
+                top: y
+            }
+        ];
+        boardData.changeElements(array);
+        setElementToAdd(null);
+    }
+
     return (
         <>
             <ToolsContext.Provider value={{
                 currentTool,
                 changeCurrentTool: setCurrentTool,
                 addText,
-                addImage
+                addImage,
+                elementToAdd,
+                setCatchClick: handleSetCatchClick,
+                catchedClick: handleCatchedClick
             }}>
                 { children }
+                <ModalAddText modalId="addText" opened={modalStates.addText} handleClose={handleCloseModal} />
+                <ModalAddImage modalId="addImage" opened={modalStates.addImage} handleClose={handleCloseModal} />
             </ToolsContext.Provider>
-            <ModalAddText modalId="addText" opened={modalStates.addText} handleClose={handleCloseModal} />
-            <ModalAddImage modalId="addImage" opened={modalStates.addImage} handleClose={handleCloseModal} />
         </>
     );
 };

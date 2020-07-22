@@ -1,6 +1,10 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-const Container = styled.div`
+interface ContainerProps {
+    catching: boolean;
+}
+
+const Container = styled.div<ContainerProps>`
     width: 100%;
     height: 100%;
     background: #222;
@@ -8,6 +12,10 @@ const Container = styled.div`
     overflow: hidden;
 
     position: relative;
+
+    ${(props) => props.catching && css`
+        cursor: crosshair;
+    `}
 `;
 
 export default Container;
