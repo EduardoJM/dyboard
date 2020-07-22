@@ -2,8 +2,9 @@ import React, { createRef } from 'react';
 import { render } from 'react-dom';
 import { GlobalStyle } from './styles/GlobalStyle';
 
+import StatusBar from './components/StatusBar';
 import Toolbar from './components/Toolbar';
-import { Container, BlackBoard } from './styles/app';
+import { Container, ContentContainer, BlackBoard } from './styles/app';
 import { SizeMonitorProvider } from './contexts/sizeMonitor';
 import { ToolsContextProvider } from './contexts/tools';
 
@@ -23,17 +24,20 @@ const App = () => {
         <>
             <Container>
                 <ToolsContextProvider>
-                    <Toolbar />
-                    <BlackBoard ref={boardRef}>
-                        <SizeMonitorProvider elementReference={boardRef}>
-                            <TextBlock supportLatex={true}>
-                                What is this? looook hahahahhaha. Seja
-                                $$
-                                    x = \pm x^2+2xa + c^2
-                                $$
-                            </TextBlock>
-                        </SizeMonitorProvider>
-                    </BlackBoard>
+                    <ContentContainer>
+                        <Toolbar />
+                        <BlackBoard ref={boardRef}>
+                            <SizeMonitorProvider elementReference={boardRef}>
+                                <TextBlock supportLatex={true}>
+                                    What is this? looook hahahahhaha. Seja
+                                    $$
+                                        x = \pm x^2+2xa + c^2
+                                    $$
+                                </TextBlock>
+                            </SizeMonitorProvider>
+                        </BlackBoard>
+                    </ContentContainer>
+                    <StatusBar />
                 </ToolsContextProvider>
             </Container>
             <GlobalStyle />
