@@ -1,17 +1,23 @@
 import React, { useState } from 'react';
 import { MdTitle, MdInsertPhoto, MdAdd, MdChevronLeft } from 'react-icons/md';
 import { GiArrowCursor, GiCube } from 'react-icons/gi';
+import { useTransition } from 'react-spring';
 
 import { useTools } from '../../contexts/tools';
 
-import { Container, Button } from './styles';
+import { Container, Button, Animation } from './styles';
 import toolBarData, { ToolBarObjectItem } from './data';
 
 const Toolbar: React.FC = () => {
     const tools = useTools();
 
-    const [barButtons, setBarButtons] = useState<ToolBarObjectItem[]>(toolBarData);
-    const [parents, setParents] = useState<ToolBarObjectItem[][]>([]);
+    const [currentTools, setCurrentTools] = useState(0);
+
+    const transitions = useTransition(currentTools, null, {
+        from: { position: 'absolute', opacity: 0, transform: 'translate3d(100%,0,0)' },
+        enter: { opacity: 1, transform: 'translate3d(0%,0,0)' },
+        leave: { opacity: 0, transform: 'translate3d(-50%,0,0)' }
+    });
 
     const renderIcon = (id: string) => {
         if (id === 'cursor') {
@@ -31,20 +37,9 @@ const Toolbar: React.FC = () => {
     };
 
     function handleButtonClick(button: ToolBarObjectItem) {
-        if (button.tool === 'child') {
-            if (button.childs) {
-                setParents([
-                    ...parents,
-                    barButtons
-                ]);
-                setBarButtons(button.childs);
-            }
-        } else if (button.tool === 'parent') {
-            if (parents.length > 0) {
-                const buttons = parents[parents.length - 1];
-                const array = parents.slice(0, parents.length - 1);
-                setParents(array);
-                setBarButtons(buttons);
+        if (button.tool === 'goto') {
+            if (button.goToId !== null && button.goToId !== undefined) {
+                setCurrentTools(button.goToId);
             }
         } else if (button.tool === 'add-text') {
             tools.addText();
@@ -55,14 +50,18 @@ const Toolbar: React.FC = () => {
 
     return (
         <Container>
-            {barButtons.map((button) => (
-                <Button
-                    title={button.title}
-                    key={button.id}
-                    onClick={() => handleButtonClick(button)}
-                >
-                    {renderIcon(button.id)}
-                </Button>
+            {transitions.map(({ item, key, props }) => (
+                <Animation style={props} key={key}>
+                    {toolBarData[item].map((button) => (
+                        <Button
+                            title={button.title}
+                            key={button.id}
+                            onClick={() => handleButtonClick(button)}
+                        >
+                            {renderIcon(button.id)}
+                        </Button>
+                    ))}
+                </Animation>
             ))}
         </Container>
     );
