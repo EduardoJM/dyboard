@@ -6,14 +6,11 @@ import { useTools } from '../../contexts/tools';
 
 import {
     Form,
-    TextWriter,
-    TextEditor,
-    ButtonArea,
-    Viewer
+    ButtonArea
 } from './styles';
 import Switch from '../../components/Form/Switch';
 import Button from '../../components/Form/Button';
-import Latex from '../../components/Latex';
+import TextEditor from '../../components/Form/TextEditor';
 
 const ModalAddText: React.FC<ModalProps> = ({
     opened,
@@ -62,21 +59,7 @@ const ModalAddText: React.FC<ModalProps> = ({
                     checked={supportMarkdown}
                     handleCheckChange={(value) => setSupportMarkdown(value)}
                 />
-                <TextWriter>
-                    <div>
-                        <span className="title">Escreva</span>
-                        <TextEditor
-                            value={text}
-                            onChange={(e) => setText(e.target.value)}
-                        />
-                    </div>
-                    <div>
-                        <span className="title">Visualize</span>
-                        <Viewer>
-                            <Latex throwOnError={false}>{text}</Latex>
-                        </Viewer>
-                    </div>
-                </TextWriter>
+                <TextEditor />
                 <ButtonArea>
                     <Button onClick={handleAdd}>Adicionar</Button>
                 </ButtonArea>

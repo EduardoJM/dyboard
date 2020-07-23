@@ -30,6 +30,7 @@
     "@commitlint/core": "^9.0.1",
     "@testing-library/jest-dom": "^5.11.0",
     "@testing-library/react": "^10.4.3",
+    "@types/draft-js": "^0.10.43",
     "@types/electron-devtools-installer": "^2.2.0",
     "@types/jest": "^26.0.3",
     "@types/katex": "^0.11.0",
@@ -74,6 +75,7 @@
     "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {
+    "draft-js": "^0.11.6",
     "katex": "^0.12.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
