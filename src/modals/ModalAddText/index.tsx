@@ -38,6 +38,9 @@ const ModalAddText: React.FC<ModalProps> = ({
             supportLatex,
             markdown: supportMarkdown
         };
+        setSupportMarkdown(false);
+        setSupportLatex(true);
+        setText('');
         tools.setCatchClick(item);
         handleClose(modalId);
     }
