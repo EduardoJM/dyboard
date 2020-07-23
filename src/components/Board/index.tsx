@@ -2,6 +2,7 @@ import React, { createRef, MouseEvent } from 'react';
 
 import { useBoard } from '../../contexts/board';
 import { useTools } from '../../contexts/tools';
+import { useTheme } from '../../contexts/theme';
 
 import Container from './styles';
 import renderElement from './renderer';
@@ -10,6 +11,7 @@ const Board: React.FC = () => {
     const boardRef = createRef<HTMLDivElement>();
     const boardData = useBoard();
     const tools = useTools();
+    const theme = useTheme();
 
     function handleClick(e: MouseEvent) {
         if (tools.elementToAdd && boardRef && boardRef.current) {
@@ -26,6 +28,7 @@ const Board: React.FC = () => {
             ref={boardRef}
             onClick={handleClick}
             catching={tools.elementToAdd !== null}
+            theme={theme}
         >
             {boardData.elements.map((element) => renderElement(element))}
         </Container>

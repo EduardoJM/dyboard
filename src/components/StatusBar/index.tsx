@@ -2,11 +2,13 @@ import React from 'react';
 import { MdBuild } from 'react-icons/md';
 
 import { useTools } from '../../contexts/tools';
+import { useTheme } from '../../contexts/theme';
 
 import Container from './styles';
 
 const StatusBar: React.FC = () => {
     const tools = useTools();
+    const theme = useTheme();
 
     const getToolString = () => {
         if (tools.elementToAdd) return 'Clique para adicionar';
@@ -17,7 +19,7 @@ const StatusBar: React.FC = () => {
     };
 
     return (
-        <Container>
+        <Container theme={theme}>
             <span className="iconed">
                 <MdBuild size={16} />
                 {getToolString()}

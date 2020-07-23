@@ -2,6 +2,8 @@ import React, { useState, useEffect, MouseEvent } from 'react';
 import { useTransition } from 'react-spring';
 import { MdClose } from 'react-icons/md';
 
+import { useTheme } from '../../contexts/theme';
+
 import {
     Container,
     Overlay,
@@ -34,6 +36,7 @@ const Modal: React.FC<ModalProps> = ({
         enter: { opacity: 1, transform: 'translate(-50%, -50%) translateY(0px)' },
         leave: { opacity: 0, transform: 'translate(-50%, -50%) translateY(-40px)' }
     });
+    const theme = useTheme();
 
     useEffect(() => {
         setModalState(visible);
@@ -69,10 +72,10 @@ const Modal: React.FC<ModalProps> = ({
                 )}
                 {dialogTransitions.map(
                     ({ item: dlg, key: key2, props: dlgStyle }) => dlg && (
-                        <Dialog key={key2} style={dlgStyle}>
+                        <Dialog key={key2} style={dlgStyle} theme={theme}>
                             <Header>
                                 <span className="title">{ title }</span>
-                                <HeaderButton onClick={handleCloseButtonClick}>
+                                <HeaderButton theme={theme} onClick={handleCloseButtonClick}>
                                     <MdClose size={24} />
                                 </HeaderButton>
                             </Header>

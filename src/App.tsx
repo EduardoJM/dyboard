@@ -8,6 +8,7 @@ import Board from './components/Board';
 import { Container, ContentContainer } from './styles/app';
 import { ToolsContextProvider } from './contexts/tools';
 import { BoardContextProvider } from './contexts/board';
+import { ThemeContextProvider } from './contexts/theme';
 
 import 'katex/dist/katex.min.css';
 import 'react-resizable/css/styles.css';
@@ -19,17 +20,19 @@ document.body.appendChild(mainElement);
 const App = () => {
     return (
         <>
-            <Container>
-                <BoardContextProvider>
-                    <ToolsContextProvider>
-                        <ContentContainer>
-                            <ToolBar />
-                            <Board />
-                        </ContentContainer>
-                        <StatusBar />
-                    </ToolsContextProvider>
-                </BoardContextProvider>
-            </Container>
+            <ThemeContextProvider>
+                <Container>
+                    <BoardContextProvider>
+                        <ToolsContextProvider>
+                            <ContentContainer>
+                                <ToolBar />
+                                <Board />
+                            </ContentContainer>
+                            <StatusBar />
+                        </ToolsContextProvider>
+                    </BoardContextProvider>
+                </Container>
+            </ThemeContextProvider>
             <GlobalStyle />
         </>
     );

@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { animated } from 'react-spring';
+import { ThemeContextData } from '../../contexts/theme';
 
 export const Container = styled.div`
 `;
@@ -15,7 +16,11 @@ export const Overlay = styled(animated.div)`
     background: rgba(0, 0, 0, 0.5);
 `;
 
-export const Dialog = styled(animated.div)`
+interface DialogProps {
+    theme: ThemeContextData;
+}
+
+export const Dialog = styled(animated.div)<DialogProps>`
     position: absolute;
     z-index: 405;
     left: 50%;
@@ -30,11 +35,13 @@ export const Dialog = styled(animated.div)`
     align-items: stretch;
     justify-content: flex-start;
 
-    background: #000;
-    border: 1px solid #333;
+    background: ${props => props.theme.modalBg};
+    color: ${props => props.theme.modalFg};
+    border: 1px solid ${props => props.theme.modalBorder};
 `;
 
 export const Header = styled.div`
+    user-select: none;
     height: 34px;
     display: flex;
     align-items: stretch;
@@ -48,15 +55,15 @@ export const Header = styled.div`
     }
 `;
 
-export const HeaderButton = styled.div`
+export const HeaderButton = styled.div<DialogProps>`
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 0 10px;
 
     &:hover {
-        background: red;
-        color: #FFF;
+        background: ${props => props.theme.modalActiveButtonBg};
+        color: ${props => props.theme.modalActiveButtonFg};
     }
 `;
 

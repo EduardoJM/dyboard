@@ -3,6 +3,7 @@ import { ResizeCallbackData } from 'react-resizable';
 import Draggable, { DraggableEvent, DraggableData } from 'react-draggable';
 
 import { useTools } from '../../../contexts/tools';
+import { useTheme } from '../../../contexts/theme';
 
 import Latex from '../../Latex';
 
@@ -34,6 +35,7 @@ const TextBlock: React.FC<TextBlockProps> = ({
     const [left, setLeft] = useState(initialLeft);
     const [top, setTop] = useState(initialTop);
     const tools = useTools();
+    const theme = useTheme();
 
     function handleOnResize(event: SyntheticEvent, data: ResizeCallbackData) {
         setWidth(data.size.width);
@@ -62,6 +64,7 @@ const TextBlock: React.FC<TextBlockProps> = ({
                 minConstraints={[100, 100]}
                 left={left}
                 top={top}
+                theme={theme}
             >
                 <RenderedChild />
             </ResizableContainer>
@@ -78,6 +81,7 @@ const TextBlock: React.FC<TextBlockProps> = ({
                 <DraggableContainer
                     width={width}
                     height={height}
+                    theme={theme}
                 >
                     <RenderedChild />
                 </DraggableContainer>

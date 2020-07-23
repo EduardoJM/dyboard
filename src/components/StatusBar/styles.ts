@@ -1,15 +1,23 @@
 import styled from 'styled-components';
+import { ThemeContextData } from '../../contexts/theme';
 
-const Container = styled.div`
+interface ContainerProps {
+    theme: ThemeContextData;
+}
+
+const Container = styled.div<ContainerProps>`
     user-select: none;
 
-    height: 20px;
+    height: 25px;
     padding: 0 10px;
 
     display: flex;
     flex-direction: row;
 
     overflow: hidden;
+
+    background: ${props => props.theme.statusBarBg};
+    color: ${props => props.theme.statusBarFg};
 
     > span {
         display: flex;

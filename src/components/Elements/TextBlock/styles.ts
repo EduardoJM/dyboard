@@ -1,9 +1,11 @@
 import styled from 'styled-components';
 import { ResizableBox } from 'react-resizable';
+import { ThemeContextData } from '../../../contexts/theme';
 
 interface ResizableContainerProps {
     left: number;
     top: number;
+    theme: ThemeContextData;
 }
 
 export const ResizableContainer = styled(ResizableBox)<ResizableContainerProps>`
@@ -13,7 +15,7 @@ export const ResizableContainer = styled(ResizableBox)<ResizableContainerProps>`
     left: ${props => props.left}px;
     top: ${props => props.top}px;
 
-    border: 2px dashed #CCC;
+    border: 2px dashed ${props => props.theme.elementResizeDecorator};
     
     .react-resizable-handle {
         background: red;
@@ -35,12 +37,12 @@ export const DraggableContainer = styled.div<DraggableContainerProps>`
 
     cursor: grab;
 
-    border: 2px dashed #CCC;
+    border: 2px dashed ${props => props.theme.elementDragDecorator};
     
     &.react-draggable-dragging {
         cursor: grabbing;
-        border-radius: 5px;
-        opacity: 0.6;
+        border-radius: ${props => props.theme.elementDragRadius}px;
+        opacity: ${props => props.theme.elementDragOpacity};
     }
 `;
 
@@ -53,6 +55,8 @@ interface StaticContainerProps {
 
 export const StaticContainer = styled.div<StaticContainerProps>`
     user-select: none;
+
+    border: 2px solid transparent;
 
     position: absolute;
     left: ${props => props.left}px;

@@ -4,12 +4,14 @@ import { GiArrowCursor, GiCube, GiStoneSphere, GiResize, GiMove } from 'react-ic
 import { useTransition } from 'react-spring';
 
 import { useTools } from '../../contexts/tools';
+import { useTheme } from '../../contexts/theme';
 
 import { Container, Button, Animation } from './styles';
 import toolBarData, { ToolBarObjectItem } from './data';
 
 const ToolBar: React.FC = () => {
     const tools = useTools();
+    const theme = useTheme();
 
     const [currentTools, setCurrentTools] = useState(0);
 
@@ -63,13 +65,14 @@ const ToolBar: React.FC = () => {
     }
 
     return (
-        <Container>
+        <Container theme={theme}>
             {transitions.map(({ item, key, props }) => (
                 <Animation style={props} key={key}>
                     {toolBarData[item].map((button) => (
                         <Button
                             title={button.title}
                             key={button.id}
+                            theme={theme}
                             onClick={() => handleButtonClick(button)}
                         >
                             {renderIcon(button.id)}
