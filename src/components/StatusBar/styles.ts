@@ -15,6 +15,7 @@ const Container = styled.div`
         display: flex;
         align-items: center;
         justify-content: flex-start;
+        font-size: 12px;
 
         > svg {
             margin-right: 5px;

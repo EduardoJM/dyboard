@@ -13,7 +13,7 @@ export const ResizableContainer = styled(ResizableBox)<ResizableContainerProps>`
     left: ${props => props.left}px;
     top: ${props => props.top}px;
 
-    border: 1px dashed #CCC;
+    border: 2px dashed #CCC;
     
     .react-resizable-handle {
         background: red;
@@ -35,10 +35,11 @@ export const DraggableContainer = styled.div<DraggableContainerProps>`
 
     cursor: grab;
 
-    border: 1px dashed #CCC;
+    border: 2px dashed #CCC;
     
     &.react-draggable-dragging {
         cursor: grabbing;
+        border-radius: 5px;
         opacity: 0.6;
     }
 `;
