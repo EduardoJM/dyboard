@@ -1,7 +1,9 @@
 import React from 'react';
-import { useTransition, useSpring } from 'react-spring';
+import { useSpring } from 'react-spring';
 
-import { Container, GrayBar, ColoredBar, Marker } from './styles';
+import { useTheme } from '../../../contexts/theme';
+
+import { Container, GrayBar, Marker } from './styles';
 
 interface SwitchProps {
     checked: boolean;
@@ -10,31 +12,21 @@ interface SwitchProps {
 }
 
 const Switch: React.FC<SwitchProps> = ({ checked, handleCheckChange, text }) => {
-    const transitions = useTransition(checked, null, {
-        from: { opacity: 0 },
-        enter: { opacity: 1 },
-        leave: { opacity: 0 }
-    });
     const markerProps = useSpring({
-        left: checked ? 30 : -10
+        left: checked ? 16 : 0
     });
+    const theme = useTheme();
 
     return (
         <Container onClick={() => handleCheckChange(!checked)}>
             <span>{ text }</span>
-            <GrayBar>
-                {transitions.map(
-                    ({ item, key, props: style }) => item && (
-                        <ColoredBar
-                            key={key}
-                            style={style}
-                        />
-                    )
-                )}
+            <GrayBar theme={theme} checked={checked}>
                 <Marker
                     style={{
                         ...markerProps,
-                        backgroundColor: checked ? '#90caf9' : '#bdbdbd'
+                        backgroundColor: checked
+                            ? theme.switchCheckedBgAccent
+                            : theme.switchBgAccent
                     }}
                 />
             </GrayBar>

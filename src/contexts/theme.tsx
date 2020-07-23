@@ -24,6 +24,18 @@ export interface ThemeContextData {
     modalBorder: string;
     modalActiveButtonBg: string;
     modalActiveButtonFg: string;
+
+    switchBg: string;
+    switchBgAccent: string;
+    switchCheckedBg: string;
+    switchCheckedBgAccent: string;
+
+    buttonBg: string;
+    buttonFg: string;
+    buttonBorder: string;
+    buttonHoverBg: string;
+    buttonHoverFg: string;
+    buttonHoverBorder: string;
 }
 
 const ThemeContext = createContext<ThemeContextData>({} as ThemeContextData);

@@ -20,7 +20,19 @@ const omni = {
     modalFg: '#E1E1E6',
     modalBorder: '#191622',
     modalActiveButtonBg: '#E26079',
-    modalActiveButtonFg: '#E1E1E6'
+    modalActiveButtonFg: '#E1E1E6',
+
+    switchBg: '#E1E1E6',
+    switchBgAccent: '#BBBBBB',
+    switchCheckedBg: '#5A4B81',
+    switchCheckedBgAccent: '#47396d',
+
+    buttonBg: '#5A4B81',
+    buttonFg: '#E1E1E6',
+    buttonBorder: '#47396d',
+    buttonHoverBg: '#47396d',
+    buttonHoverFg: '#E1E1E6',
+    buttonHoverBorder: '#5A4B81'
 };
 
 export default omni;

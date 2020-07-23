@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { animated } from 'react-spring';
 import { ThemeContextData } from '../../contexts/theme';
 
@@ -31,7 +31,12 @@ export const Animation = styled(animated.div)`
     height: 100%;
 `;
 
-export const Button = styled.div<ContainerProps>`
+interface ButtonProps {
+    theme: ThemeContextData;
+    current: boolean;
+}
+
+export const Button = styled.div<ButtonProps>`
     width: 50px;
     height: 50px;
     padding: 5px;
@@ -52,8 +57,12 @@ export const Button = styled.div<ContainerProps>`
 
     &:hover {
         color: ${props => props.theme.toolBarFgActive};
-        border-color: ${props => props.theme.toolBarBorderActive};
     }
+
+    ${props => props.current && css`
+        border-color: ${props => props.theme.toolBarBorderActive};
+        color: ${props => props.theme.toolBarFgActive};
+    `}
 
     .deep {
         position: absolute;

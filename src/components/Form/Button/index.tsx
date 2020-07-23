@@ -1,4 +1,7 @@
 import React, { MouseEvent } from 'react';
+
+import { useTheme } from '../../../contexts/theme';
+
 import Container from './styles';
 
 interface ButtonProps {
@@ -6,8 +9,10 @@ interface ButtonProps {
 }
 
 const Button: React.FC<ButtonProps> = ({ children, onClick }) => {
+    const theme = useTheme();
+
     return (
-        <Container type="button" onClick={onClick}>
+        <Container type="button" theme={theme} onClick={onClick}>
             {children}
         </Container>
     );

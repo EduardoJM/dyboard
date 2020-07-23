@@ -73,6 +73,7 @@ const ToolBar: React.FC = () => {
                             title={button.title}
                             key={button.id}
                             theme={theme}
+                            current={tools.currentTool === button.id}
                             onClick={() => handleButtonClick(button)}
                         >
                             {renderIcon(button.id)}

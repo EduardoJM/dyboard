@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 import { animated } from 'react-spring';
+import { ThemeContextData } from '../../../contexts/theme';
 
 export const Container = styled.div`
     user-select: none;
     cursor: pointer;
 
     padding: 5px;
-    padding-right: 10px;
 
     display: flex;
     align-items: center;
@@ -19,27 +19,21 @@ export const Container = styled.div`
     }
 `;
 
-export const GrayBar = styled.div`
+interface GrayBarProps {
+    theme: ThemeContextData;
+    checked: boolean;
+}
+
+export const GrayBar = styled.div<GrayBarProps>`
     width: 36px;
     height: 14px;
 
     border-radius: 7px;
 
-    background: #646464;
+    background-color: ${props => props.checked ? props.theme.switchCheckedBg : props.theme.switchBg};
 
     position: relative;
-`;
-
-export const ColoredBar = styled(animated.div)`
-    background: #58758d;
-
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    
-    border-radius: 7px;
+    transition: background-color ease 1s;
 `;
 
 export const Marker = styled(animated.div)`

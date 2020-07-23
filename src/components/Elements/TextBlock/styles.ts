@@ -14,11 +14,37 @@ export const ResizableContainer = styled(ResizableBox)<ResizableContainerProps>`
     position: absolute;
     left: ${props => props.left}px;
     top: ${props => props.top}px;
+    overflow: hidden;
 
     border: 2px dashed ${props => props.theme.elementResizeDecorator};
-    
+
     .react-resizable-handle {
-        background: red;
+
+        &::after {
+            content: '';
+
+            background: ${props => props.theme.elementResizeDecorator};
+
+            width: 2px;
+            height: calc(100% - 2px);
+
+            position: absolute;
+            right: 2px;
+            top: 0;
+        }
+
+        &::before {
+            content: '';
+
+            background: ${props => props.theme.elementResizeDecorator};
+
+            height: 2px;
+            width: calc(100% - 2px);
+
+            position: absolute;
+            left: 0;
+            bottom: 2px;
+        }
     }
 `;
 
