@@ -5,8 +5,6 @@ import Draggable, { DraggableEvent, DraggableData } from 'react-draggable';
 import { useTools } from '../../../contexts/tools';
 import { useTheme } from '../../../contexts/theme';
 
-import Latex from '../../Latex';
-
 import {
     ResizableContainer,
     DraggableContainer,
@@ -15,7 +13,6 @@ import {
 
 interface TextBlockProps {
     children: string;
-    supportLatex: boolean;
     initialWidth: number;
     initialHeight: number;
     initialLeft: number;
@@ -24,7 +21,6 @@ interface TextBlockProps {
 
 const TextBlock: React.FC<TextBlockProps> = ({
     children,
-    supportLatex,
     initialWidth,
     initialHeight,
     initialLeft,
@@ -47,13 +43,7 @@ const TextBlock: React.FC<TextBlockProps> = ({
         setTop(data.y);
     }
 
-    const RenderedChild = () => supportLatex ? (
-        <Latex
-            throwOnError={false}
-        >
-            { children as string }
-        </Latex>
-    ) : <>{ children }</>;
+    const html = <div dangerouslySetInnerHTML={{ __html: children }} />;
 
     if (tools.currentTool === 'resize') {
         return (
@@ -66,7 +56,7 @@ const TextBlock: React.FC<TextBlockProps> = ({
                 top={top}
                 theme={theme}
             >
-                <RenderedChild />
+                { html }
             </ResizableContainer>
         );
     } else if (tools.currentTool === 'drag') {
@@ -83,7 +73,7 @@ const TextBlock: React.FC<TextBlockProps> = ({
                     height={height}
                     theme={theme}
                 >
-                    <RenderedChild />
+                    { html }
                 </DraggableContainer>
             </Draggable>
         );
@@ -95,7 +85,7 @@ const TextBlock: React.FC<TextBlockProps> = ({
                 left={left}
                 top={top}
             >
-                <RenderedChild />
+                { html }
             </StaticContainer>
         );
     }

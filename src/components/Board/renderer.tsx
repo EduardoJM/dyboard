@@ -6,7 +6,6 @@ import TextBlock from '../Elements/TextBlock';
 function renderTextBlock(data: ElementText): JSX.Element {
     return (
         <TextBlock
-            supportLatex={data.supportLatex}
             initialWidth={data.width}
             initialHeight={data.height}
             initialLeft={data.left}

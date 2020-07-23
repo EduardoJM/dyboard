@@ -6,8 +6,6 @@ export interface ElementText {
     left: number;
     top: number;
     text: string;
-    supportLatex: boolean;
-    markdown: boolean;
 }
 
 export type ElementAll = (ElementText);

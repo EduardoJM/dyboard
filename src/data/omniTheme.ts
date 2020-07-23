@@ -32,7 +32,11 @@ const omni = {
     buttonBorder: '#47396d',
     buttonHoverBg: '#47396d',
     buttonHoverFg: '#E1E1E6',
-    buttonHoverBorder: '#5A4B81'
+    buttonHoverBorder: '#5A4B81',
+
+    textEditorToolsBg: '#15121e',
+    textEditorButtonFg: '#E1E1E6',
+    textEditorButtonHoverFg: '#5A4B81'
 };
 
 export default omni;
