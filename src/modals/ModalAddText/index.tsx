@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { EditorState } from 'draft-js';
 import { stateToHTML } from 'draft-js-export-html';
+import katex from 'katex';
 
 import Modal from '../../components/Modal';
 import ModalProps from '../interfaces';
@@ -23,12 +24,60 @@ const ModalAddText: React.FC<ModalProps> = ({
     const [editorState, setEditorState] = useState(
         () => EditorState.createEmpty()
     );
-
     const tools = useTools();
+
+    // TODO: move all of this from this file to the tex.ts in TextEditor and import here
+
+    // eslint-disable-next-line no-useless-escape
+    const inlineLatexRegex = /\\\([\s\S]+?\\\)|\$[\s\S]+?\$/g;
+    const stripDollars = (stringToStrip: string) => {
+        if (stringToStrip[0] === '$' && stringToStrip[1] !== '$') {
+            return stringToStrip.slice(1, -1);
+        }
+        return stringToStrip.slice(2, -2);
+    };
+
+    const renderLatexString = (s: string) => {
+        let renderedString;
+        try {
+            // returns HTML markup
+            renderedString = katex.renderToString(s);
+        } catch (err) {
+            return s;
+        }
+        return renderedString;
+    };
+
+    function renderInlineLaTeX(text: string): string {
+        const result: string[] = [];
+        const latexMatch = text.match(inlineLatexRegex);
+        const stringWithoutLatex = text.split(inlineLatexRegex);
+        if (latexMatch) {
+            stringWithoutLatex.forEach((s: string, index: number) => {
+                result.push(s);
+                if (latexMatch[index]) {
+                    result.push(renderLatexString(stripDollars(latexMatch[index])));
+                }
+            });
+        } else {
+            result.push(text);
+        }
+        return result.join('');
+    }
 
     function handleAdd() {
         const contentState = editorState.getCurrentContent();
-        const text = stateToHTML(contentState);
+        let text = stateToHTML(contentState, {
+            blockRenderers: {
+                atomic: (block) => {
+                    const tex = contentState
+                        .getEntity(block.getEntityAt(0))
+                        .getData().content;
+                    return katex.renderToString(tex, { displayMode: true });
+                }
+            }
+        });
+        text = renderInlineLaTeX(text);
         const item = {
             id: Date.now(),
             type: 'text',

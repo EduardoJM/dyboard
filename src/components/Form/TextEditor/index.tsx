@@ -1,10 +1,20 @@
-import React from 'react';
-import { Editor, EditorState, RichUtils } from 'draft-js';
+import React, { useState, useEffect } from 'react';
+import {
+    Editor,
+    EditorState,
+    RichUtils,
+    ContentState,
+    ContentBlock
+} from 'draft-js';
+import { Map } from 'immutable';
 
 import { Container, ToolBar } from './styles';
 
 import { BlockTypes, InlineStyles } from '../../../data/textEditor';
 import { useTheme } from '../../../contexts/theme';
+
+import TeXBlock from './TeXBlock';
+import { setInlineDecorator, insertTeXBlock, removeTeXBlock } from './tex';
 
 import 'draft-js/dist/Draft.css';
 
@@ -17,14 +27,51 @@ const TextEditor: React.FC<TextEditorProps> = ({
     editorState,
     setEditorState
 }) => {
+    const [liveTeXEdits, setLiveTeXEdits] = useState(Map());
     const theme = useTheme();
 
+    useEffect(() => {
+        setEditorState(setInlineDecorator(editorState));
+    }, []);
+
     const toggleInlineStyle = (style: string) => {
-        setEditorState(RichUtils.toggleInlineStyle(editorState, style));
+        setEditorState(setInlineDecorator(RichUtils.toggleInlineStyle(editorState, style)));
     };
 
     const toggleBlockType = (style: string) => {
-        setEditorState(RichUtils.toggleBlockType(editorState, style));
+        setEditorState(setInlineDecorator(RichUtils.toggleBlockType(editorState, style)));
+    };
+
+    const inserTex = () => {
+        setEditorState(setInlineDecorator(insertTeXBlock(editorState, 'ax^2+bx+c=0')));
+        setLiveTeXEdits(Map());
+    };
+
+    const removeTex = (blockKey: string) => {
+        setLiveTeXEdits(liveTeXEdits.remove(blockKey));
+        setEditorState(setInlineDecorator(removeTeXBlock(editorState, blockKey)));
+    };
+
+    const handleBlockRenderer = (block: ContentBlock) => {
+        if (block.getType() === 'atomic') {
+            return {
+                component: TeXBlock,
+                editable: false,
+                props: {
+                    onStartEdit: (blockKey: string) => {
+                        setLiveTeXEdits(liveTeXEdits.set(blockKey, true));
+                    },
+                    onFinishEdit: (blockKey: string, newContentState: ContentState) => {
+                        setEditorState(setInlineDecorator(
+                            EditorState.createWithContent(newContentState)
+                        ));
+                        setLiveTeXEdits(liveTeXEdits.remove(blockKey));
+                    },
+                    onRemove: (blockKey: string) => removeTex(blockKey)
+                }
+            };
+        }
+        return null;
     };
 
     return (
@@ -51,11 +98,15 @@ const TextEditor: React.FC<TextEditorProps> = ({
                             { item.label }
                         </button>
                     ))}
+                    <button type="button" onClick={inserTex}>TEX</button>
                 </ToolBar>
             </div>
             <Editor
                 editorState={editorState}
                 onChange={setEditorState}
+                blockRendererFn={handleBlockRenderer}
+                readOnly={liveTeXEdits.count() > 0}
+                spellCheck={true}
             />
         </Container>
     );

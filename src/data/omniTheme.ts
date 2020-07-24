@@ -38,7 +38,17 @@ const omni = {
     textEditorBorder: '#15121e',
     textEditorSeparatorBorder: '#15121e',
     textEditorButtonFg: '#E1E1E6',
-    textEditorButtonHoverFg: '#5A4B81'
+    textEditorButtonHoverFg: '#5A4B81',
+
+    textEditorEditPanelBg: '#E1E1E6',
+    textEditorEditPanelFg: '#191622',
+    textEditorEditPanelRadius: 5,
+    textEditorEditPanelButtonBg: '#191622',
+    textEditorEditPanelButtonFg: '#E1E1E6',
+    textEditorEditPanelButtonBorder: '#15121e',
+    textEditorEditPanelButtonHoverBg: '#E1E1E6',
+    textEditorEditPanelButtonHoverFg: '#191622',
+    textEditorEditPanelButtonHoverBorder: '#15121e'
 };
 
 export default omni;
