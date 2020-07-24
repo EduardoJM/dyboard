@@ -28,8 +28,8 @@ const TextEditor: React.FC<TextEditorProps> = ({
     };
 
     return (
-        <Container>
-            <div>
+        <Container theme={theme}>
+            <div className="toolbar-container">
                 <ToolBar theme={theme}>
                     {BlockTypes.map((item) => (
                         <button

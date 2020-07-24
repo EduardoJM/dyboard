@@ -37,7 +37,9 @@ export interface ThemeContextData {
     buttonHoverFg: string;
     buttonHoverBorder: string;
 
-    textEditorToolsBg: string;
+    textEditorBg: string;
+    textEditorBorder: string;
+    textEditorSeparatorBorder: string;
     textEditorButtonFg: string;
     textEditorButtonHoverFg: string;
 }

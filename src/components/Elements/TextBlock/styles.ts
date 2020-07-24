@@ -58,6 +58,8 @@ export const DraggableContainer = styled.div<DraggableContainerProps>`
 
     position: absolute;
 
+    overflow: hidden;
+
     width: ${props => props.width}px;
     height: ${props => props.height}px;
 
@@ -81,6 +83,8 @@ interface StaticContainerProps {
 
 export const StaticContainer = styled.div<StaticContainerProps>`
     user-select: none;
+    
+    overflow: hidden;
 
     border: 2px solid transparent;
 

@@ -1,38 +1,43 @@
 import styled from 'styled-components';
-
 import { ThemeContextData } from '../../../contexts/theme';
 
-export const Container = styled.div`
-    width: 100%;
-    height: 100%;
+interface ContainerProps {
+    theme: ThemeContextData;
+}
 
-    padding: 5px;
+export const Container = styled.div<ContainerProps>`
+    width: 100%;
+    height: calc(100% - 10px);
 
     display: flex;
     flex-direction: column;
     align-items: stretch;
     justify-content: space-between;
 
+    background: ${props => props.theme.textEditorBg};
+    border: 1px solid ${props => props.theme.textEditorBorder};
+    padding: 10px;
+    
+    > .toolbar-container {
+        border-bottom: 1px solid ${props => props.theme.textEditorSeparatorBorder};
+    }
+
     .DraftEditor-root {
         height: 300px;
 
         overflow-x: hidden;
-        overflow-y: scroll;
+        overflow-y: auto;
     }
 `;
 
-interface ToolBarProps {
-    theme: ThemeContextData;
-}
-
-export const ToolBar = styled.div<ToolBarProps>`
+export const ToolBar = styled.div<ContainerProps>`
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     align-items: flex-start;
     justify-content: flex-start;
 
-    background: ${props => props.theme.textEditorToolsBg};
+    margin-bottom: 10px;
 
     button {
         padding: 5px;

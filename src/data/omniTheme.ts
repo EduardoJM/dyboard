@@ -34,7 +34,9 @@ const omni = {
     buttonHoverFg: '#E1E1E6',
     buttonHoverBorder: '#5A4B81',
 
-    textEditorToolsBg: '#15121e',
+    textEditorBg: '#191622',
+    textEditorBorder: '#15121e',
+    textEditorSeparatorBorder: '#15121e',
     textEditorButtonFg: '#E1E1E6',
     textEditorButtonHoverFg: '#5A4B81'
 };
