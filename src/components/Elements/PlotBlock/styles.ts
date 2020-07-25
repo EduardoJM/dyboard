@@ -14,7 +14,7 @@ const Container = styled.canvas<ContainerProps>`
 
     ${props => props.absolute && css`
         border: 2px solid transparent;
-        
+
         position: absolute;
         left: ${props => props.left}px;
         top: ${props => props.top}px;

@@ -30,7 +30,9 @@ const Board: React.FC = () => {
             catching={tools.elementToAdd !== null}
             theme={theme}
         >
-            {boardData.elements.map((element) => renderElement(element))}
+            <div onClick={handleClick} ref={boardRef}>
+                {boardData.elements.map((element) => renderElement(element))}
+            </div>
         </Container>
     );
 };

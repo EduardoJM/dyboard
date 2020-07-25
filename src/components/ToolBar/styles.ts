@@ -8,6 +8,8 @@ interface ContainerProps {
 
 export const Container = styled.div<ContainerProps>`
     width: 50px;
+    min-width: 50px;
+    max-width: 50px;
     height: 100%;
     overflow-y: auto;
     overflow-x: hidden;

@@ -52,6 +52,11 @@ export interface ThemeContextData {
     textEditorEditPanelButtonHoverBg: string;
     textEditorEditPanelButtonHoverFg: string;
     textEditorEditPanelButtonHoverBorder: string;
+
+    contentBarBg: string;
+    contentBarFg: string;
+    contentBarPanelBg: string;
+    contentBarPanelFg: string;
 }
 
 const ThemeContext = createContext<ThemeContextData>({} as ThemeContextData);

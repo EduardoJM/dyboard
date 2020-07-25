@@ -5,28 +5,20 @@ import Draggable, { DraggableEvent, DraggableData } from 'react-draggable';
 import { useTools } from '../../../contexts/tools';
 import { useTheme } from '../../../contexts/theme';
 
+import { ElementText } from '../../../data/board';
+
 import StaticContainer from './styles';
 import { ResizableContainer, DraggableContainer } from '../commonStyles';
 
 interface TextBlockProps {
-    children: string;
-    initialWidth: number;
-    initialHeight: number;
-    initialLeft: number;
-    initialTop: number;
+    data: ElementText;
 }
 
-const TextBlock: React.FC<TextBlockProps> = ({
-    children,
-    initialWidth,
-    initialHeight,
-    initialLeft,
-    initialTop
-}) => {
-    const [width, setWidth] = useState(initialWidth);
-    const [height, setHeight] = useState(initialHeight);
-    const [left, setLeft] = useState(initialLeft);
-    const [top, setTop] = useState(initialTop);
+const TextBlock: React.FC<TextBlockProps> = ({ data }) => {
+    const [width, setWidth] = useState(data.width);
+    const [height, setHeight] = useState(data.height);
+    const [left, setLeft] = useState(data.left);
+    const [top, setTop] = useState(data.top);
     const tools = useTools();
     const theme = useTheme();
 
@@ -40,7 +32,13 @@ const TextBlock: React.FC<TextBlockProps> = ({
         setTop(data.y);
     }
 
-    const html = <div dangerouslySetInnerHTML={{ __html: children }} />;
+    function handleClick() {
+        if (tools.currentTool === 'cursor') {
+            tools.setCurrentElement(data);
+        }
+    }
+
+    const html = <div dangerouslySetInnerHTML={{ __html: data.text }} />;
 
     if (tools.currentTool === 'resize') {
         return (
@@ -81,6 +79,7 @@ const TextBlock: React.FC<TextBlockProps> = ({
                 height={height}
                 left={left}
                 top={top}
+                onClick={handleClick}
             >
                 { html }
             </StaticContainer>

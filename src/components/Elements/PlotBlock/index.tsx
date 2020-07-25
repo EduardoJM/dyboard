@@ -5,28 +5,22 @@ import Draggable, { DraggableEvent, DraggableData } from 'react-draggable';
 
 import Container from './styles';
 
+import { ElementPlot } from '../../../data/board';
+
 import { useTools } from '../../../contexts/tools';
 import { useTheme } from '../../../contexts/theme';
 
 import { ResizableContainer, DraggableContainer } from '../commonStyles';
 
 interface PlotProps {
-    initialLeft: number;
-    initialTop: number;
-    initialWidth: number;
-    initialHeight: number;
+    data: ElementPlot;
 }
 
-const PlotBlock: React.FC<PlotProps> = ({
-    initialLeft,
-    initialTop,
-    initialWidth,
-    initialHeight
-}) => {
-    const [left, setLeft] = useState(initialLeft);
-    const [top, setTop] = useState(initialTop);
-    const [width, setWidth] = useState(initialWidth);
-    const [height, setHeight] = useState(initialHeight);
+const PlotBlock: React.FC<PlotProps> = ({ data }) => {
+    const [left, setLeft] = useState(data.left);
+    const [top, setTop] = useState(data.top);
+    const [width, setWidth] = useState(data.width);
+    const [height, setHeight] = useState(data.height);
     const canvasRef = createRef<HTMLCanvasElement>();
     const tools = useTools();
     const theme = useTheme();
@@ -45,7 +39,7 @@ const PlotBlock: React.FC<PlotProps> = ({
         }));
 
         view.zoom = { x: 100, y: 100 };
-        view.translation = { x: -2.5, y: -2.5 };
+        view.translation = { x: -1.5, y: -1.5 };
 
         view.render();
     }, [canvasRef]);
@@ -60,6 +54,12 @@ const PlotBlock: React.FC<PlotProps> = ({
         setTop(data.y);
     }
 
+    function handleClick() {
+        if (tools.currentTool === 'cursor') {
+            tools.setCurrentElement(data);
+        }
+    }
+
     const html = (
         <Container
             ref={canvasRef}
@@ -68,6 +68,7 @@ const PlotBlock: React.FC<PlotProps> = ({
             top={top}
             width={width}
             height={height}
+            onClick={handleClick}
         />
     );
 

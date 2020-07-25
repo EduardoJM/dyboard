@@ -48,7 +48,12 @@ const omni = {
     textEditorEditPanelButtonBorder: '#15121e',
     textEditorEditPanelButtonHoverBg: '#E1E1E6',
     textEditorEditPanelButtonHoverFg: '#191622',
-    textEditorEditPanelButtonHoverBorder: '#15121e'
+    textEditorEditPanelButtonHoverBorder: '#15121e',
+
+    contentBarBg: '#201b2d',
+    contentBarFg: '#E1E1E6',
+    contentBarPanelBg: '#15121e',
+    contentBarPanelFg: '#E1E1E6'
 };
 
 export default omni;

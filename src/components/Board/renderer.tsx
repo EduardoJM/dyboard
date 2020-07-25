@@ -5,29 +5,11 @@ import TextBlock from '../Elements/TextBlock';
 import PlotBlock from '../Elements/PlotBlock';
 
 function renderTextBlock(data: ElementText): JSX.Element {
-    return (
-        <TextBlock
-            initialWidth={data.width}
-            initialHeight={data.height}
-            initialLeft={data.left}
-            initialTop={data.top}
-            key={data.id}
-        >
-            {data.text}
-        </TextBlock>
-    );
+    return <TextBlock data={data} key={data.id} />;
 }
 
 function renderPlotBlock(data: ElementPlot): JSX.Element {
-    return (
-        <PlotBlock
-            initialWidth={data.width}
-            initialHeight={data.height}
-            initialLeft={data.left}
-            initialTop={data.top}
-            key={data.id}
-        />
-    );
+    return <PlotBlock data={data} key={data.id} />;
 }
 
 export default function renderElement(el: ElementAll): JSX.Element {

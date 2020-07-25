@@ -4,6 +4,7 @@ import { GlobalStyle } from './styles/GlobalStyle';
 
 import StatusBar from './components/StatusBar';
 import ToolBar from './components/ToolBar';
+import ContentBar from './components/ContentBar';
 import Board from './components/Board';
 import { Container, ContentContainer } from './styles/app';
 import { ToolsContextProvider } from './contexts/tools';
@@ -27,6 +28,7 @@ const App = () => {
                             <ContentContainer>
                                 <ToolBar />
                                 <Board />
+                                <ContentBar />
                             </ContentContainer>
                             <StatusBar />
                         </ToolsContextProvider>

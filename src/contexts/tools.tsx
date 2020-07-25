@@ -15,6 +15,8 @@ interface ToolsContextData {
     elementToAdd: ElementAll | null;
     setCatchClick: (element: ElementAll) => void;
     catchedClick: (x: number, y: number) => void;
+    currentElement: ElementAll | null;
+    setCurrentElement: (element: ElementAll | null) => void;
 }
 
 const ToolsContext = createContext<ToolsContextData>({} as ToolsContextData);
@@ -28,6 +30,7 @@ export const ToolsContextProvider: React.FC = ({
     });
     const [currentTool, setCurrentTool] = useState<Tools>('cursor');
     const [elementToAdd, setElementToAdd] = useState<ElementAll | null>(null);
+    const [currentElement, setCurrentElement] = useState<ElementAll | null>(null);
     const boardData = useBoard();
 
     const addText = () => {
@@ -80,7 +83,9 @@ export const ToolsContextProvider: React.FC = ({
                 addImage,
                 elementToAdd,
                 setCatchClick: handleSetCatchClick,
-                catchedClick: handleCatchedClick
+                catchedClick: handleCatchedClick,
+                currentElement,
+                setCurrentElement
             }}>
                 { children }
                 <ModalAddText modalId="addText" opened={modalStates.addText} handleClose={handleCloseModal} />

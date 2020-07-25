@@ -13,9 +13,7 @@ const Container = styled.div<ContainerProps>`
     color: ${props => props.theme.fg};
     flex: 1;
     overflow: hidden;
-
     position: relative;
-
     ${(props) => props.catching && css`
         cursor: crosshair;
     `}
