@@ -8,6 +8,15 @@ export interface ElementText {
     text: string;
 }
 
-export type ElementAll = (ElementText);
+export interface ElementPlot {
+    id: number | string;
+    type: string;
+    width: number;
+    height: number;
+    left: number;
+    top: number;
+}
+
+export type ElementAll = (ElementText | ElementPlot);
 
 export type ElementsCollection = ElementAll[];

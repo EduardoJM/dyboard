@@ -1,34 +1,54 @@
-import React, { useState, SyntheticEvent } from 'react';
+import React, { useState, useEffect, createRef, SyntheticEvent } from 'react';
+import jPlot from 'jplot';
 import { ResizeCallbackData } from 'react-resizable';
 import Draggable, { DraggableEvent, DraggableData } from 'react-draggable';
+
+import Container from './styles';
 
 import { useTools } from '../../../contexts/tools';
 import { useTheme } from '../../../contexts/theme';
 
-import StaticContainer from './styles';
 import { ResizableContainer, DraggableContainer } from '../commonStyles';
 
-interface TextBlockProps {
-    children: string;
-    initialWidth: number;
-    initialHeight: number;
+interface PlotProps {
     initialLeft: number;
     initialTop: number;
+    initialWidth: number;
+    initialHeight: number;
 }
 
-const TextBlock: React.FC<TextBlockProps> = ({
-    children,
-    initialWidth,
-    initialHeight,
+const PlotBlock: React.FC<PlotProps> = ({
     initialLeft,
-    initialTop
+    initialTop,
+    initialWidth,
+    initialHeight
 }) => {
-    const [width, setWidth] = useState(initialWidth);
-    const [height, setHeight] = useState(initialHeight);
     const [left, setLeft] = useState(initialLeft);
     const [top, setTop] = useState(initialTop);
+    const [width, setWidth] = useState(initialWidth);
+    const [height, setHeight] = useState(initialHeight);
+    const canvasRef = createRef<HTMLCanvasElement>();
     const tools = useTools();
     const theme = useTheme();
+
+    useEffect(() => {
+        if (!canvasRef) {
+            return;
+        }
+        if (!canvasRef.current) {
+            return;
+        }
+        const view = new jPlot.View(canvasRef.current);
+        view.items.push(new jPlot.Function({
+            function: 'x^3',
+            color: 'red'
+        }));
+
+        view.zoom = { x: 100, y: 100 };
+        view.translation = { x: -2.5, y: -2.5 };
+
+        view.render();
+    }, [canvasRef]);
 
     function handleOnResize(event: SyntheticEvent, data: ResizeCallbackData) {
         setWidth(data.size.width);
@@ -40,7 +60,16 @@ const TextBlock: React.FC<TextBlockProps> = ({
         setTop(data.y);
     }
 
-    const html = <div dangerouslySetInnerHTML={{ __html: children }} />;
+    const html = (
+        <Container
+            ref={canvasRef}
+            absolute={tools.currentTool === 'cursor'}
+            left={left}
+            top={top}
+            width={width}
+            height={height}
+        />
+    );
 
     if (tools.currentTool === 'resize') {
         return (
@@ -74,18 +103,8 @@ const TextBlock: React.FC<TextBlockProps> = ({
                 </DraggableContainer>
             </Draggable>
         );
-    } else {
-        return (
-            <StaticContainer
-                width={width}
-                height={height}
-                left={left}
-                top={top}
-            >
-                { html }
-            </StaticContainer>
-        );
     }
+    return html;
 };
 
-export default TextBlock;
+export default PlotBlock;

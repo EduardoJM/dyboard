@@ -62,6 +62,12 @@ const toolBarData: ToolBarObjectItem[][] = [
             deep: false
         },
         {
+            id: 'plot',
+            title: 'Adicionar Área de Plotagem',
+            tool: 'add-plot',
+            deep: false
+        },
+        {
             id: '3d-element',
             title: 'Adicionar Elementos Tridimensional',
             tool: 'goto',

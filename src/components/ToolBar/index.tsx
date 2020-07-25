@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { MdFunctions, MdTitle, MdInsertPhoto, MdAdd, MdChevronLeft } from 'react-icons/md';
 import { GiArrowCursor, GiCube, GiStoneSphere, GiResize, GiMove } from 'react-icons/gi';
+import { BsGraphDown } from 'react-icons/bs';
 import { useTransition } from 'react-spring';
 
 import { useTools } from '../../contexts/tools';
@@ -42,6 +43,8 @@ const ToolBar: React.FC = () => {
             return <GiMove size={24} />;
         } else if (id === 'resize') {
             return <GiResize size={24} />;
+        } else if (id === 'plot') {
+            return <BsGraphDown size={24} />;
         }
         return <></>;
     };
@@ -61,6 +64,15 @@ const ToolBar: React.FC = () => {
             tools.changeCurrentTool('drag');
         } else if (button.tool === 'set-resize') {
             tools.changeCurrentTool('resize');
+        } else if (button.tool === 'add-plot') {
+            tools.setCatchClick({
+                id: Date.now(),
+                width: 300,
+                height: 300,
+                left: 0,
+                top: 0,
+                type: 'plot'
+            });
         }
     }
 
