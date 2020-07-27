@@ -73,6 +73,15 @@ const ToolBar: React.FC = () => {
                 top: 0,
                 type: 'plot'
             });
+        } else if (button.tool === 'add-3dspace') {
+            tools.setCatchClick({
+                id: Date.now(),
+                width: 300,
+                height: 300,
+                left: 0,
+                top: 0,
+                type: '3d-space'
+            });
         }
     }
 

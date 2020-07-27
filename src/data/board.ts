@@ -17,6 +17,15 @@ export interface ElementPlot {
     top: number;
 }
 
-export type ElementAll = (ElementText | ElementPlot);
+export interface ElementSpace3D {
+    id: number | string;
+    type: string;
+    width: number;
+    height: number;
+    left: number;
+    top: number;
+}
+
+export type ElementAll = (ElementText | ElementPlot | ElementSpace3D);
 
 export type ElementsCollection = ElementAll[];

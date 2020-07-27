@@ -1,22 +1,25 @@
 import React, { useState, useEffect, createRef, SyntheticEvent } from 'react';
-import jPlot from 'jplot';
 import { ResizeCallbackData } from 'react-resizable';
 import Draggable, { DraggableEvent, DraggableData } from 'react-draggable';
 
-import Container from './styles';
-
-import { ElementPlot } from '../../../data/board';
+import { ElementSpace3D } from '../../../data/board';
 
 import { useTools } from '../../../contexts/tools';
 import { useTheme } from '../../../contexts/theme';
 
 import { ResizableContainer, DraggableContainer } from '../commonStyles';
 
-interface PlotBlockProps {
-    data: ElementPlot;
+import Container from './styles';
+
+import { SpaceDrawner } from './drawner';
+import DrawnerBase from './drawner/Base';
+import CubeDrawner from './drawner/Cube';
+
+interface Space3DBlockProps {
+    data: ElementSpace3D;
 }
 
-const PlotBlock: React.FC<PlotBlockProps> = ({ data }) => {
+const Space3DBlock: React.FC<Space3DBlockProps> = ({ data }) => {
     const [left, setLeft] = useState(data.left);
     const [top, setTop] = useState(data.top);
     const [width, setWidth] = useState(data.width);
@@ -25,6 +28,9 @@ const PlotBlock: React.FC<PlotBlockProps> = ({ data }) => {
     const tools = useTools();
     const theme = useTheme();
 
+    const [drawnerTool, setDrawnerTool] = useState<DrawnerBase | null>(new CubeDrawner());
+    const [drawner, setDrawner] = useState<SpaceDrawner>(new SpaceDrawner());
+
     useEffect(() => {
         if (!canvasRef) {
             return;
@@ -32,17 +38,12 @@ const PlotBlock: React.FC<PlotBlockProps> = ({ data }) => {
         if (!canvasRef.current) {
             return;
         }
-        const view = new jPlot.View(canvasRef.current);
-        view.items.push(new jPlot.Function({
-            function: 'x^3',
-            color: 'red'
-        }));
-
-        view.zoom = { x: 100, y: 100 };
-        view.translation = { x: -1.5, y: -1.5 };
-
-        view.render();
+        drawner.setCanvas(canvasRef.current);
     }, [canvasRef]);
+
+    useEffect(() => {
+        drawner.setCurrent(drawnerTool);
+    }, [drawnerTool]);
 
     function handleOnResize(event: SyntheticEvent, data: ResizeCallbackData) {
         setWidth(data.size.width);
@@ -59,6 +60,21 @@ const PlotBlock: React.FC<PlotBlockProps> = ({ data }) => {
             tools.setCurrentElement(data);
         }
     }
+
+    useEffect(() => {
+        if (!drawner) {
+            return;
+        }
+        if (tools.currentTool === 'cursor') {
+            if (tools.currentElement === data) {
+                drawner.enableClicks();
+            } else {
+                drawner.disableClicks();
+            }
+        } else {
+            drawner.disableClicks();
+        }
+    }, [tools.currentElement, tools.currentTool]);
 
     const html = (
         <Container
@@ -108,4 +124,4 @@ const PlotBlock: React.FC<PlotBlockProps> = ({ data }) => {
     return html;
 };
 
-export default PlotBlock;
+export default Space3DBlock;

@@ -74,11 +74,16 @@ export const ToolsContextProvider: React.FC = ({
         setElementToAdd(null);
     }
 
+    function changeCurrentTool(newTool: Tools) {
+        setCurrentTool(newTool);
+        setElementToAdd(null);
+    }
+
     return (
         <>
             <ToolsContext.Provider value={{
                 currentTool,
-                changeCurrentTool: setCurrentTool,
+                changeCurrentTool,
                 addText,
                 addImage,
                 elementToAdd,

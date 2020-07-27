@@ -70,30 +70,7 @@ const toolBarData: ToolBarObjectItem[][] = [
         {
             id: '3d-element',
             title: 'Adicionar Elementos Tridimensional',
-            tool: 'goto',
-            goToId: 2,
-            deep: true
-        }
-    ],
-    // 3d element
-    [
-        {
-            id: 'parent',
-            title: 'Adicionar Elementos',
-            tool: 'goto',
-            goToId: 1,
-            deep: false
-        },
-        {
-            id: 'cube',
-            title: 'Desenhar Caixa Tridimensional',
-            tool: 'cube',
-            deep: false
-        },
-        {
-            id: 'sphere',
-            title: 'Desenhar Esfera Tridimensional',
-            tool: 'sphere',
+            tool: 'add-3dspace',
             deep: false
         }
     ]

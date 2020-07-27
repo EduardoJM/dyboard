@@ -35,7 +35,8 @@
       }
     ],
     "indent": ["error", 4],
-    "semi": ["error", "always"],
+    "semi": "off",
+    "@typescript-eslint/semi": ["error"],
     "space-before-function-paren": ["error", "never"]
   },
   "settings": {
