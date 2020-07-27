@@ -5,6 +5,8 @@ import { Container, Content, Bar } from './styles';
 
 import PlotConfigurator from './PlotConfigurator';
 
+import { ElementPlot } from '../../data/board';
+
 import { useTheme } from '../../contexts/theme';
 import { useTools } from '../../contexts/tools';
 
@@ -18,16 +20,20 @@ const ContentBar: React.FC = () => {
         leave: { opacity: 0 }
     });
 
-    let content = '';
-    if (tools.currentElement) {
-        content = JSON.stringify(tools.currentElement);
+    function renderContent(): JSX.Element | null {
+        if (tools.currentElement === null) {
+            return null;
+        } else if (tools.currentElement.type === 'plot') {
+            return <PlotConfigurator data={tools.currentElement as ElementPlot} />;
+        }
+        return null;
     }
 
     return (
         <Container>
             {contentTransition.map(({ item, key, props }) => item && (
                 <Content theme={theme} style={props} key={key}>
-                    { content }
+                    {renderContent()}
                 </Content>
             ))}
             <Bar theme={theme}>

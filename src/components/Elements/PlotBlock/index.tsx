@@ -33,10 +33,7 @@ const PlotBlock: React.FC<PlotBlockProps> = ({ data }) => {
             return;
         }
         const view = new jPlot.View(canvasRef.current);
-        view.items.push(new jPlot.Function({
-            function: 'x^3',
-            color: 'red'
-        }));
+        data.items.forEach((item) => view.items.push(item));
 
         view.zoom = { x: 100, y: 100 };
         view.translation = { x: -1.5, y: -1.5 };

@@ -1,3 +1,5 @@
+import * as jPlot from 'jplot';
+
 export interface ElementText {
     id: number | string;
     type: string;
@@ -15,6 +17,7 @@ export interface ElementPlot {
     height: number;
     left: number;
     top: number;
+    items: jPlot.RenderItem[];
 }
 
 export interface ElementSpace3D {
