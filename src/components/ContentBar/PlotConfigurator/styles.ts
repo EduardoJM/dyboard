@@ -16,7 +16,7 @@ export const Container = styled.div<ThemedProps>`
     justify-content: flex-start;
 
     .heading {
-        text-decoration: uppercase;
+        text-transform: uppercase;
         padding: 10px 5px;
 
         background: ${props => props.theme.contentBarPanelHeadingBg};
@@ -91,4 +91,13 @@ export const PlotsList = styled(ResizableBox)<ThemedProps>`
 
 export const PlotsConfig = styled.div`
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+
+    .editor {
+        padding: 10px;
+        flex: 1;
+    }
 `;

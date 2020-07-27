@@ -6,6 +6,7 @@ import { MdAdd } from 'react-icons/md';
 import { ElementPlot } from '../../../data/board';
 
 import DropDownButton from '../../Form/DropDownButton';
+import ColorDropDown from '../../Form/ColorDropDown';
 import Switch from '../../Form/Switch';
 
 import { Container, PlotsList, PlotsConfig } from './styles';
@@ -116,12 +117,37 @@ const PlotConfigurator: React.FC<PlotConfiguratorProps> = ({ data }) => {
         updateEditing(idx);
     }
 
+    function handleSetAxisColor(axis: string, color: string) {
+        if (!editing || !(editing instanceof jPlot.Axis)) {
+            return;
+        }
+        const idx = data.items.indexOf(editing);
+        const hexColor = `#${color}`;
+        if (axis === 'x') {
+            editing.xAxisColor = hexColor;
+            editing.xAxisThickColor = hexColor;
+        } else {
+            editing.yAxisColor = hexColor;
+            editing.yAxisThickColor = hexColor;
+        }
+        updateEditing(idx);
+    }
+
     function handleFunctionChange(value: string) {
         if (!editing || !(editing instanceof jPlot.Function)) {
             return;
         }
         const idx = data.items.indexOf(editing);
         editing.function = value;
+        updateEditing(idx);
+    }
+
+    function handleSetFunctionColor(color: string) {
+        if (!editing || !(editing instanceof jPlot.Function)) {
+            return;
+        }
+        const idx = data.items.indexOf(editing);
+        editing.color = `#${color}`;
         updateEditing(idx);
     }
 
@@ -145,6 +171,11 @@ const PlotConfigurator: React.FC<PlotConfiguratorProps> = ({ data }) => {
                                 handleCheckChange={(v) => handleAxisSwitchChange('xAxisThick', v)}
                                 text="Marcações em X"
                             />
+                            <ColorDropDown
+                                color={editing.xAxisColor}
+                                text="Cor do Eixo X"
+                                onSubmit={(color) => handleSetAxisColor('x', color)}
+                            />
                             <Switch
                                 checked={editing.yAxis}
                                 handleCheckChange={(v) => handleAxisSwitchChange('yAxis', v)}
@@ -154,6 +185,11 @@ const PlotConfigurator: React.FC<PlotConfiguratorProps> = ({ data }) => {
                                 checked={editing.yAxisThick}
                                 handleCheckChange={(v) => handleAxisSwitchChange('yAxisThick', v)}
                                 text="Marcações em Y"
+                            />
+                            <ColorDropDown
+                                color={editing.yAxisColor}
+                                text="Cor do Eixo Y"
+                                onSubmit={(color) => handleSetAxisColor('y', color)}
                             />
                             <Switch
                                 checked={editing.arrows}
@@ -170,6 +206,13 @@ const PlotConfigurator: React.FC<PlotConfiguratorProps> = ({ data }) => {
                                 value={editing.function}
                                 onChange={(e) => handleFunctionChange(e.target.value)}
                             />
+                            <div>
+                                <ColorDropDown
+                                    onSubmit={handleSetFunctionColor}
+                                    color={editing.color}
+                                    text="Cor"
+                                />
+                            </div>
                         </>
                     )}
                 </div>
