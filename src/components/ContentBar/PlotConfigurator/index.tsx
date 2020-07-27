@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import useMeasure from 'react-use-measure';
 import jPlot, { RenderItem } from 'jplot';
+import { MdAdd } from 'react-icons/md';
 
 import { ElementPlot } from '../../../data/board';
 
@@ -11,6 +12,7 @@ import { Container, PlotsList, PlotsConfig } from './styles';
 
 import { useBoard } from '../../../contexts/board';
 import { useTools } from '../../../contexts/tools';
+import { useTheme } from '../../../contexts/theme';
 
 interface PlotConfiguratorProps {
     data: ElementPlot;
@@ -19,8 +21,10 @@ interface PlotConfiguratorProps {
 const PlotConfigurator: React.FC<PlotConfiguratorProps> = ({ data }) => {
     const [contentRef, bounds] = useMeasure();
     const [editing, setEditing] = useState<RenderItem | null>(null);
+    const [addRenderItemsDropDown, setAddRenderItemsDropDown] = useState(false);
     const tools = useTools();
     const board = useBoard();
+    const theme = useTheme();
 
     function addPlotItem(item: RenderItem) {
         const newItem = {
@@ -43,14 +47,16 @@ const PlotConfigurator: React.FC<PlotConfiguratorProps> = ({ data }) => {
 
     function addAxis() {
         addPlotItem(new jPlot.Axis());
+        setAddRenderItemsDropDown(false);
     }
 
     function addFunction() {
         addPlotItem(new jPlot.Function());
+        setAddRenderItemsDropDown(false);
     }
 
     const addDropDownContent = (
-        <div className="dropdown-content">
+        <div className="add-dropdown-content">
             <button onClick={addAxis}>Axis</button>
             <button onClick={addFunction}>Function</button>
         </div>
@@ -125,9 +131,7 @@ const PlotConfigurator: React.FC<PlotConfiguratorProps> = ({ data }) => {
         }
         return (
             <>
-                <div className="heading">
-                    {renderListItemContent(editing, true)}
-                </div>
+                <div className="heading">Configurar</div>
                 <div className="editor">
                     {editing instanceof jPlot.Axis && (
                         <>
@@ -174,14 +178,16 @@ const PlotConfigurator: React.FC<PlotConfiguratorProps> = ({ data }) => {
     }
 
     return (
-        <Container ref={contentRef}>
+        <Container ref={contentRef} theme={theme}>
             <PlotsList
                 height={200}
                 width={bounds.width}
                 axis="y"
                 minConstraints={[200, 100]}
                 maxConstraints={[200, 400]}
+                theme={theme}
             >
+                <div className="heading">Itens</div>
                 <div className="list">
                     {data.items.map((item, index) => (
                         <div
@@ -194,7 +200,13 @@ const PlotConfigurator: React.FC<PlotConfiguratorProps> = ({ data }) => {
                     ))}
                 </div>
                 <div className="list-tools">
-                    <DropDownButton dropDown={addDropDownContent}>Add</DropDownButton>
+                    <DropDownButton
+                        dropDown={addDropDownContent}
+                        dropDownState={addRenderItemsDropDown}
+                        setDropDownState={setAddRenderItemsDropDown}
+                    >
+                        <MdAdd size={24} />
+                    </DropDownButton>
                 </div>
             </PlotsList>
             <PlotsConfig>

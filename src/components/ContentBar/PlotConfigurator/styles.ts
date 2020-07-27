@@ -1,7 +1,12 @@
 import styled from 'styled-components';
 import { ResizableBox } from 'react-resizable';
+import { ThemeContextData } from '../../../contexts/theme';
 
-export const Container = styled.div`
+interface ThemedProps {
+    theme: ThemeContextData;
+}
+
+export const Container = styled.div<ThemedProps>`
     width: 100%;
     height: 100%;
     
@@ -9,9 +14,17 @@ export const Container = styled.div`
     flex-direction: column;
     align-items: stretch;
     justify-content: flex-start;
+
+    .heading {
+        text-decoration: uppercase;
+        padding: 10px 5px;
+
+        background: ${props => props.theme.contentBarPanelHeadingBg};
+        color: ${props => props.theme.contentBarPanelHeadingFg}
+    }
 `;
 
-export const PlotsList = styled(ResizableBox)`
+export const PlotsList = styled(ResizableBox)<ThemedProps>`
     width: 100%;
     
     display: flex;
@@ -32,14 +45,45 @@ export const PlotsList = styled(ResizableBox)`
         overflow-x: hidden;
         overflow-y: auto;
         
-        background: #FFF;
+        background: ${props => props.theme.contentBarListBg};
+        color: ${props => props.theme.contentBarListFg};
 
         .list-item {
-            background: #CCC;
+            background: transparent;
+            color: ${props => props.theme.contentBarListFg};
+            transition: all ease 0.3s;
             padding: 4px 8px;
 
             &.active {
                 background: #FF0;
+
+                background: ${props => props.theme.contentBarListItemBg};
+                color: ${props => props.theme.contentBarListItemFg};
+            }
+        }
+    }
+
+    .list-tools {
+        padding: 5px 0;
+
+        > ul {
+            > li {
+                padding: 5px;
+                cursor: pointer;
+                color: #E1E1E6;
+
+                > ul {
+                    cursor: default;
+
+                    .add-dropdown-content {
+                        width: 100%;
+                        height: 100%;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: stretch;
+                        justify-content: flex-start;
+                    }
+                }
             }
         }
     }

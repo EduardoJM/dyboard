@@ -57,6 +57,12 @@ export interface ThemeContextData {
     contentBarFg: string;
     contentBarPanelBg: string;
     contentBarPanelFg: string;
+    contentBarPanelHeadingBg: string;
+    contentBarPanelHeadingFg: string;
+    contentBarListBg: string;
+    contentBarListFg: string;
+    contentBarListItemBg: string;
+    contentBarListItemFg: string;
 }
 
 const ThemeContext = createContext<ThemeContextData>({} as ThemeContextData);

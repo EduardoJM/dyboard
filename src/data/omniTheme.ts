@@ -53,7 +53,13 @@ const omni = {
     contentBarBg: '#201b2d',
     contentBarFg: '#E1E1E6',
     contentBarPanelBg: '#15121e',
-    contentBarPanelFg: '#E1E1E6'
+    contentBarPanelFg: '#E1E1E6',
+    contentBarPanelHeadingBg: '#201b2d',
+    contentBarPanelHeadingFg: '#E1E1E6',
+    contentBarListBg: '#13111d',
+    contentBarListFg: '#E1E1E6',
+    contentBarListItemBg: '#181621',
+    contentBarListItemFg: '#988bc7'
 };
 
 export default omni;
