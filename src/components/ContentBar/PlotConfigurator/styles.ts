@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { ResizableBox } from 'react-resizable';
 import { ThemeContextData } from '../../../contexts/theme';
 
 interface ThemedProps {
@@ -13,7 +12,6 @@ export const Container = styled.div<ThemedProps>`
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    justify-content: flex-start;
 
     .heading {
         text-transform: uppercase;
@@ -24,21 +22,14 @@ export const Container = styled.div<ThemedProps>`
     }
 `;
 
-export const PlotsList = styled(ResizableBox)<ThemedProps>`
+export const PlotsList = styled.div<ThemedProps>`
     width: 100%;
+    height: 250px;
     
     display: flex;
     flex-direction: column;
     align-items: stretch;
     justify-content: flex-start;
-
-    .react-resizable-handle {
-        background: transparent;
-        width: 100%;
-        height: 5px;
-        border-bottom: 1px solid #FFF;
-        cursor: row-resize;
-    }
 
     .list {
         flex: 1;
@@ -90,14 +81,15 @@ export const PlotsList = styled(ResizableBox)<ThemedProps>`
 `;
 
 export const PlotsConfig = styled.div`
+    overflow: hidden;
+
     flex: 1;
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    justify-content: flex-start;
 
     .editor {
-        padding: 10px;
+        width: 200px;
         flex: 1;
     }
 `;

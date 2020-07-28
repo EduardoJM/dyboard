@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { ThemeContextData } from '../../../contexts/theme';
 
 export const TextBlock = styled.div`
     padding: 5px;
@@ -7,6 +8,7 @@ export const TextBlock = styled.div`
 interface ContainerProps {
     pos: number;
     isMax: boolean;
+    theme: ThemeContextData;
 }
 
 export const Container = styled.div<ContainerProps>`
@@ -21,7 +23,7 @@ export const Container = styled.div<ContainerProps>`
 
     .bar {
         height: 10px;
-        background: #CCC;
+        background: ${props => props.theme.sliderBar};
 
         position: absolute;
         top: 50%;
@@ -37,7 +39,7 @@ export const Container = styled.div<ContainerProps>`
 
             border-radius: 5px;
 
-            background: #F00;
+            background: ${props => props.theme.sliderButton};
 
             cursor: pointer;
 
@@ -47,8 +49,8 @@ export const Container = styled.div<ContainerProps>`
             left: ${props => props.isMax ? `calc(${props.pos}% - 10px)` : `${props.pos}%`};
 
             .popup {
-                background: #F00;
-                color: #FFF;
+                background: ${props => props.theme.sliderPopupBg};
+                color: ${props => props.theme.sliderPopupFg};
 
                 border-radius: 5px;
 

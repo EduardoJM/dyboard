@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import useMeasure from 'react-use-measure';
 import jPlot, { RenderItem } from 'jplot';
 import { MdAdd } from 'react-icons/md';
 
@@ -9,6 +8,7 @@ import DropDownButton from '../../Form/DropDownButton';
 import ColorPicker from '../../Form/ColorPicker';
 import Switch from '../../Form/Switch';
 import Slider from '../../Form/Slider';
+import Scrollbars from '../../Scrollbars';
 
 import { Container, PlotsList, PlotsConfig } from './styles';
 
@@ -21,7 +21,6 @@ interface PlotConfiguratorProps {
 }
 
 const PlotConfigurator: React.FC<PlotConfiguratorProps> = ({ data }) => {
-    const [contentRef, bounds] = useMeasure();
     const [editing, setEditing] = useState<RenderItem | null>(null);
     const [addRenderItemsDropDown, setAddRenderItemsDropDown] = useState(false);
     const tools = useTools();
@@ -185,106 +184,103 @@ const PlotConfigurator: React.FC<PlotConfiguratorProps> = ({ data }) => {
             <>
                 <div className="heading">Configurar</div>
                 <div className="editor">
-                    {editing instanceof jPlot.Axis && (
-                        <>
-                            <Switch
-                                checked={editing.xAxis}
-                                handleCheckChange={(v) => handleAxisSwitchChange('xAxis', v)}
-                                text="Eixo X"
-                            />
-                            <Slider
-                                text="Esperçura do Eixo X"
-                                min={1}
-                                max={10}
-                                value={editing.xAxisWidth}
-                                onValueChange={(v) => handleSetAxisLineWidth('xAxisWidth', v)}
-                            />
-                            <Switch
-                                checked={editing.xAxisThick}
-                                handleCheckChange={(v) => handleAxisSwitchChange('xAxisThick', v)}
-                                text="Marcações em X"
-                            />
-                            <Switch
-                                checked={editing.xAxisThickNumbers}
-                                handleCheckChange={(v) => handleAxisSwitchChange('xAxisThickNumbers', v)}
-                                text="Números em X"
-                            />
-                            <ColorPicker
-                                color={editing.xAxisColor}
-                                text="Cor do Eixo X"
-                                onSubmit={(color) => handleSetAxisColor('x', color)}
-                            />
-                            <Switch
-                                checked={editing.yAxis}
-                                handleCheckChange={(v) => handleAxisSwitchChange('yAxis', v)}
-                                text="Eixo Y"
-                            />
-                            <Slider
-                                text="Esperçura do Eixo Y"
-                                min={1}
-                                max={10}
-                                value={editing.yAxisWidth}
-                                onValueChange={(v) => handleSetAxisLineWidth('yAxisWidth', v)}
-                            />
-                            <Switch
-                                checked={editing.yAxisThick}
-                                handleCheckChange={(v) => handleAxisSwitchChange('yAxisThick', v)}
-                                text="Marcações em Y"
-                            />
-                            <Switch
-                                checked={editing.yAxisThickNumbers}
-                                handleCheckChange={(v) => handleAxisSwitchChange('yAxisThickNumbers', v)}
-                                text="Números em Y"
-                            />
-                            <ColorPicker
-                                color={editing.yAxisColor}
-                                text="Cor do Eixo Y"
-                                onSubmit={(color) => handleSetAxisColor('y', color)}
-                            />
-                            <Switch
-                                checked={editing.arrows}
-                                handleCheckChange={(v) => handleAxisSwitchChange('arrows', v)}
-                                text="Setas"
-                            />
-                        </>
-                    )}
-                    {editing instanceof jPlot.Function && (
-                        <>
-                            <p>Função</p>
-                            <input
-                                type="text"
-                                value={editing.function}
-                                onChange={(e) => handleFunctionChange(e.target.value)}
-                            />
-                            <ColorPicker
-                                onSubmit={handleSetFunctionColor}
-                                color={editing.color}
-                                text="Cor"
-                            />
-                            <Slider
-                                text="Esperçura do Traço"
-                                min={1}
-                                max={10}
-                                value={editing.lineWidth}
-                                onValueChange={handleSetFunctionLineWidth}
-                            />
-                        </>
-                    )}
+                    <Scrollbars>
+                        <div className="content">
+                            {editing instanceof jPlot.Axis && (
+                                <>
+                                    <Switch
+                                        checked={editing.xAxis}
+                                        handleCheckChange={(v) => handleAxisSwitchChange('xAxis', v)}
+                                        text="Eixo X"
+                                    />
+                                    <Slider
+                                        text="Espessura do Eixo X"
+                                        min={1}
+                                        max={10}
+                                        value={editing.xAxisWidth}
+                                        onValueChange={(v) => handleSetAxisLineWidth('xAxisWidth', v)}
+                                    />
+                                    <Switch
+                                        checked={editing.xAxisThick}
+                                        handleCheckChange={(v) => handleAxisSwitchChange('xAxisThick', v)}
+                                        text="Marcações em X"
+                                    />
+                                    <Switch
+                                        checked={editing.xAxisThickNumbers}
+                                        handleCheckChange={(v) => handleAxisSwitchChange('xAxisThickNumbers', v)}
+                                        text="Números em X"
+                                    />
+                                    <ColorPicker
+                                        color={editing.xAxisColor}
+                                        text="Cor do Eixo X"
+                                        onSubmit={(color) => handleSetAxisColor('x', color)}
+                                    />
+                                    <Switch
+                                        checked={editing.yAxis}
+                                        handleCheckChange={(v) => handleAxisSwitchChange('yAxis', v)}
+                                        text="Eixo Y"
+                                    />
+                                    <Slider
+                                        text="Espessura do Eixo Y"
+                                        min={1}
+                                        max={10}
+                                        value={editing.yAxisWidth}
+                                        onValueChange={(v) => handleSetAxisLineWidth('yAxisWidth', v)}
+                                    />
+                                    <Switch
+                                        checked={editing.yAxisThick}
+                                        handleCheckChange={(v) => handleAxisSwitchChange('yAxisThick', v)}
+                                        text="Marcações em Y"
+                                    />
+                                    <Switch
+                                        checked={editing.yAxisThickNumbers}
+                                        handleCheckChange={(v) => handleAxisSwitchChange('yAxisThickNumbers', v)}
+                                        text="Números em Y"
+                                    />
+                                    <ColorPicker
+                                        color={editing.yAxisColor}
+                                        text="Cor do Eixo Y"
+                                        onSubmit={(color) => handleSetAxisColor('y', color)}
+                                    />
+                                    <Switch
+                                        checked={editing.arrows}
+                                        handleCheckChange={(v) => handleAxisSwitchChange('arrows', v)}
+                                        text="Setas"
+                                    />
+                                </>
+                            )}
+                            {editing instanceof jPlot.Function && (
+                                <>
+                                    <p>Função</p>
+                                    <input
+                                        type="text"
+                                        value={editing.function}
+                                        onChange={(e) => handleFunctionChange(e.target.value)}
+                                    />
+                                    <ColorPicker
+                                        onSubmit={handleSetFunctionColor}
+                                        color={editing.color}
+                                        text="Cor"
+                                    />
+                                    <Slider
+                                        text="Espessura do Traço"
+                                        min={1}
+                                        max={10}
+                                        value={editing.lineWidth}
+                                        onValueChange={handleSetFunctionLineWidth}
+                                    />
+                                </>
+                            )}
+                        </div>
+                    </Scrollbars>
                 </div>
             </>
         );
     }
 
     return (
-        <Container ref={contentRef} theme={theme}>
-            <PlotsList
-                height={200}
-                width={bounds.width}
-                axis="y"
-                minConstraints={[200, 100]}
-                maxConstraints={[200, 400]}
-                theme={theme}
-            >
+        <Container theme={theme}>
+            <PlotsList theme={theme}>
                 <div className="heading">Itens</div>
                 <div className="list">
                     {data.items.map((item, index) => (

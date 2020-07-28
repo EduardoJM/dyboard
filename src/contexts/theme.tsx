@@ -30,6 +30,11 @@ export interface ThemeContextData {
     switchCheckedBg: string;
     switchCheckedBgAccent: string;
 
+    sliderBar: string;
+    sliderButton: string;
+    sliderPopupBg: string;
+    sliderPopupFg: string;
+
     buttonBg: string;
     buttonFg: string;
     buttonBorder: string;

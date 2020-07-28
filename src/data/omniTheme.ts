@@ -27,6 +27,11 @@ const omni = {
     switchCheckedBg: '#5A4B81',
     switchCheckedBgAccent: '#47396d',
 
+    sliderBar: '#5A4B81',
+    sliderButton: '#47396d',
+    sliderPopupBg: '#47396d',
+    sliderPopupFg: '#E1E1E6',
+
     buttonBg: '#5A4B81',
     buttonFg: '#E1E1E6',
     buttonBorder: '#47396d',

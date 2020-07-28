@@ -3,6 +3,8 @@ import { useTransition, animated } from 'react-spring';
 
 import { Container, TextBlock } from './styles';
 
+import { useTheme } from '../../../contexts/theme';
+
 interface SliderProps {
     text: string;
     min: number;
@@ -25,6 +27,7 @@ const Slider: React.FC<SliderProps> = ({
         enter: { opacity: 1 },
         leave: { opacity: 0 }
     });
+    const theme = useTheme();
 
     function handleMouseDown(e: MouseEvent<HTMLDivElement>) {
         if (!sliderRef.current) {
@@ -60,6 +63,7 @@ const Slider: React.FC<SliderProps> = ({
                 pos={((value - min) / (max - min)) * 100}
                 isMax={value === max}
                 onMouseDown={handleMouseDown}
+                theme={theme}
             >
                 <div className="bar">
                     <div className="bar-btn">
