@@ -1,12 +1,36 @@
+/**
+ * A interface for RGB (Red, Green, Blue) color format.
+ */
 export interface RGB {
+    /**
+     * Red (0-255).
+     */
     r: number;
+    /**
+     * Green (0-255).
+     */
     g: number;
+    /**
+     * Blue (0-255).
+     */
     b: number;
 }
 
+/**
+ * A interface for HSB (Hue, Saturation, Brightness) color format.
+ */
 export interface HSB {
+    /**
+     * Hue (0-360).
+     */
     h: number;
+    /**
+     * Saturation (0-100).
+     */
     s: number;
+    /**
+     * Brightness (0-100).
+     */
     b: number;
 }
 
@@ -126,35 +150,6 @@ export function HEXtoHSB(hex: string): HSB {
     return RGBtoHSB(HEXtoRGB(hex));
 }
 
-export function fixHSB(hsb: HSB): HSB {
-    return {
-        h: Math.min(360, Math.max(0, hsb.h)),
-        s: Math.min(100, Math.max(0, hsb.s)),
-        b: Math.min(100, Math.max(0, hsb.b))
-    };
-}
-
-export function fixRGB(rgb: RGB): RGB {
-    return {
-        r: Math.min(255, Math.max(0, rgb.r)),
-        g: Math.min(255, Math.max(0, rgb.g)),
-        b: Math.min(255, Math.max(0, rgb.b))
-    };
-}
-
-export function fixHex(hex: string): string {
-    const len = 6 - hex.length;
-    if (len > 0) {
-        const o = [];
-        for (let i = 0; i < len; i += 1) {
-            o.push('0');
-        }
-        o.push(hex);
-        hex = o.join('');
-    }
-    return hex;
-}
-
 export function getColorFromString(str: string): HSB {
     const trimed = str.trim();
     if (trimed.startsWith('rgb(') && trimed.endsWith(')')) {
@@ -180,4 +175,33 @@ export function getColorFromString(str: string): HSB {
         }
     }
     return HEXtoHSB(str);
+}
+
+export function fixHSB(hsb: HSB): HSB {
+    return {
+        h: Math.min(360, Math.max(0, Math.round(hsb.h))),
+        s: Math.min(100, Math.max(0, Math.round(hsb.s))),
+        b: Math.min(100, Math.max(0, Math.round(hsb.b)))
+    };
+}
+
+export function fixRGB(rgb: RGB): RGB {
+    return {
+        r: Math.min(255, Math.max(0, Math.round(rgb.r))),
+        g: Math.min(255, Math.max(0, Math.round(rgb.g))),
+        b: Math.min(255, Math.max(0, Math.round(rgb.b)))
+    };
+}
+
+export function fixHex(hex: string): string {
+    const len = 6 - hex.length;
+    if (len > 0) {
+        const o = [];
+        for (let i = 0; i < len; i += 1) {
+            o.push('0');
+        }
+        o.push(hex);
+        hex = o.join('');
+    }
+    return hex;
 }

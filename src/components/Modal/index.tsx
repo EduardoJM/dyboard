@@ -16,6 +16,8 @@ import {
 export interface ModalProps {
     visible: boolean;
     title: string;
+    width?: number;
+    height?: number;
     closeModalRequest?: () => void;
 }
 
@@ -23,6 +25,8 @@ const Modal: React.FC<ModalProps> = ({
     children,
     visible,
     title,
+    width,
+    height,
     closeModalRequest
 }) => {
     const [modalState, setModalState] = useState(false);
@@ -72,7 +76,13 @@ const Modal: React.FC<ModalProps> = ({
                 )}
                 {dialogTransitions.map(
                     ({ item: dlg, key: key2, props: dlgStyle }) => dlg && (
-                        <Dialog key={key2} style={dlgStyle} theme={theme}>
+                        <Dialog
+                            key={key2}
+                            style={dlgStyle}
+                            theme={theme}
+                            width={width}
+                            height={height}
+                        >
                             <Header>
                                 <span className="title">{ title }</span>
                                 <HeaderButton theme={theme} onClick={handleCloseButtonClick}>

@@ -6,7 +6,7 @@ export const Container = styled.div`
 `;
 
 export const Overlay = styled(animated.div)`
-    position: absolute;
+    position: fixed;
     z-index: 400;
     left: 0;
     right: 0;
@@ -18,17 +18,19 @@ export const Overlay = styled(animated.div)`
 
 interface DialogProps {
     theme: ThemeContextData;
+    width?: number;
+    height?: number;
 }
 
 export const Dialog = styled(animated.div)<DialogProps>`
-    position: absolute;
+    position: fixed;
     z-index: 405;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
 
-    width: 500px;
-    height: 500px;
+    width: ${props => props.width ? props.width : 500}px;
+    height: ${props => props.height ? props.height : 500}px;
 
     display: flex;
     flex-direction: column;

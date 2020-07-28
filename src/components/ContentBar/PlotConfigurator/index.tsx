@@ -122,13 +122,12 @@ const PlotConfigurator: React.FC<PlotConfiguratorProps> = ({ data }) => {
             return;
         }
         const idx = data.items.indexOf(editing);
-        const hexColor = `#${color}`;
         if (axis === 'x') {
-            editing.xAxisColor = hexColor;
-            editing.xAxisThickColor = hexColor;
+            editing.xAxisColor = color;
+            editing.xAxisThickColor = color;
         } else {
-            editing.yAxisColor = hexColor;
-            editing.yAxisThickColor = hexColor;
+            editing.yAxisColor = color;
+            editing.yAxisThickColor = color;
         }
         updateEditing(idx);
     }
@@ -147,7 +146,7 @@ const PlotConfigurator: React.FC<PlotConfiguratorProps> = ({ data }) => {
             return;
         }
         const idx = data.items.indexOf(editing);
-        editing.color = `#${color}`;
+        editing.color = color;
         updateEditing(idx);
     }
 
