@@ -8,6 +8,7 @@ import { ElementPlot } from '../../../data/board';
 import DropDownButton from '../../Form/DropDownButton';
 import ColorPicker from '../../Form/ColorPicker';
 import Switch from '../../Form/Switch';
+import Slider from '../../Form/Slider';
 
 import { Container, PlotsList, PlotsConfig } from './styles';
 
@@ -113,6 +114,23 @@ const PlotConfigurator: React.FC<PlotConfiguratorProps> = ({ data }) => {
             editing.xAxisThick = value;
         } else if (prop === 'yAxisThick') {
             editing.yAxisThick = value;
+        } else if (prop === 'xAxisThickNumbers') {
+            editing.xAxisThickNumbers = value;
+        } else if (prop === 'yAxisThickNumbers') {
+            editing.yAxisThickNumbers = value;
+        }
+        updateEditing(idx);
+    }
+
+    function handleSetAxisLineWidth(prop: string, value: number) {
+        if (!editing || !(editing instanceof jPlot.Axis)) {
+            return;
+        }
+        const idx = data.items.indexOf(editing);
+        if (prop === 'yAxisWidth') {
+            editing.yAxisWidth = value;
+        } else if (prop === 'xAxisWidth') {
+            editing.xAxisWidth = value;
         }
         updateEditing(idx);
     }
@@ -150,6 +168,15 @@ const PlotConfigurator: React.FC<PlotConfiguratorProps> = ({ data }) => {
         updateEditing(idx);
     }
 
+    function handleSetFunctionLineWidth(width: number) {
+        if (!editing || !(editing instanceof jPlot.Function)) {
+            return;
+        }
+        const idx = data.items.indexOf(editing);
+        editing.lineWidth = width;
+        updateEditing(idx);
+    }
+
     function renderConfigs() {
         if (!editing) {
             return null;
@@ -165,10 +192,22 @@ const PlotConfigurator: React.FC<PlotConfiguratorProps> = ({ data }) => {
                                 handleCheckChange={(v) => handleAxisSwitchChange('xAxis', v)}
                                 text="Eixo X"
                             />
+                            <Slider
+                                text="Esperçura do Eixo X"
+                                min={1}
+                                max={10}
+                                value={editing.xAxisWidth}
+                                onValueChange={(v) => handleSetAxisLineWidth('xAxisWidth', v)}
+                            />
                             <Switch
                                 checked={editing.xAxisThick}
                                 handleCheckChange={(v) => handleAxisSwitchChange('xAxisThick', v)}
                                 text="Marcações em X"
+                            />
+                            <Switch
+                                checked={editing.xAxisThickNumbers}
+                                handleCheckChange={(v) => handleAxisSwitchChange('xAxisThickNumbers', v)}
+                                text="Números em X"
                             />
                             <ColorPicker
                                 color={editing.xAxisColor}
@@ -180,10 +219,22 @@ const PlotConfigurator: React.FC<PlotConfiguratorProps> = ({ data }) => {
                                 handleCheckChange={(v) => handleAxisSwitchChange('yAxis', v)}
                                 text="Eixo Y"
                             />
+                            <Slider
+                                text="Esperçura do Eixo Y"
+                                min={1}
+                                max={10}
+                                value={editing.yAxisWidth}
+                                onValueChange={(v) => handleSetAxisLineWidth('yAxisWidth', v)}
+                            />
                             <Switch
                                 checked={editing.yAxisThick}
                                 handleCheckChange={(v) => handleAxisSwitchChange('yAxisThick', v)}
                                 text="Marcações em Y"
+                            />
+                            <Switch
+                                checked={editing.yAxisThickNumbers}
+                                handleCheckChange={(v) => handleAxisSwitchChange('yAxisThickNumbers', v)}
+                                text="Números em Y"
                             />
                             <ColorPicker
                                 color={editing.yAxisColor}
@@ -205,13 +256,18 @@ const PlotConfigurator: React.FC<PlotConfiguratorProps> = ({ data }) => {
                                 value={editing.function}
                                 onChange={(e) => handleFunctionChange(e.target.value)}
                             />
-                            <div>
-                                <ColorPicker
-                                    onSubmit={handleSetFunctionColor}
-                                    color={editing.color}
-                                    text="Cor"
-                                />
-                            </div>
+                            <ColorPicker
+                                onSubmit={handleSetFunctionColor}
+                                color={editing.color}
+                                text="Cor"
+                            />
+                            <Slider
+                                text="Esperçura do Traço"
+                                min={1}
+                                max={10}
+                                value={editing.lineWidth}
+                                onValueChange={handleSetFunctionLineWidth}
+                            />
                         </>
                     )}
                 </div>
