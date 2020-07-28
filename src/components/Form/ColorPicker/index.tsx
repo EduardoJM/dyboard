@@ -6,13 +6,13 @@ import Modal from '../../Modal';
 import ColorPanel from '../ColorPanel';
 import Button from '../Button';
 
-interface ColorDropDownProps {
+interface ColorPickerProps {
     color: string;
     text: string;
     onSubmit: (color: string) => void;
 }
 
-const ColorDropDown: React.FC<ColorDropDownProps> = ({
+const ColorPicker: React.FC<ColorPickerProps> = ({
     color,
     text,
     onSubmit
@@ -60,4 +60,4 @@ const ColorDropDown: React.FC<ColorDropDownProps> = ({
     );
 };
 
-export default ColorDropDown;
+export default ColorPicker;

@@ -6,7 +6,7 @@ import { MdAdd } from 'react-icons/md';
 import { ElementPlot } from '../../../data/board';
 
 import DropDownButton from '../../Form/DropDownButton';
-import ColorDropDown from '../../Form/ColorDropDown';
+import ColorPicker from '../../Form/ColorPicker';
 import Switch from '../../Form/Switch';
 
 import { Container, PlotsList, PlotsConfig } from './styles';
@@ -170,7 +170,7 @@ const PlotConfigurator: React.FC<PlotConfiguratorProps> = ({ data }) => {
                                 handleCheckChange={(v) => handleAxisSwitchChange('xAxisThick', v)}
                                 text="Marcações em X"
                             />
-                            <ColorDropDown
+                            <ColorPicker
                                 color={editing.xAxisColor}
                                 text="Cor do Eixo X"
                                 onSubmit={(color) => handleSetAxisColor('x', color)}
@@ -185,7 +185,7 @@ const PlotConfigurator: React.FC<PlotConfiguratorProps> = ({ data }) => {
                                 handleCheckChange={(v) => handleAxisSwitchChange('yAxisThick', v)}
                                 text="Marcações em Y"
                             />
-                            <ColorDropDown
+                            <ColorPicker
                                 color={editing.yAxisColor}
                                 text="Cor do Eixo Y"
                                 onSubmit={(color) => handleSetAxisColor('y', color)}
@@ -206,7 +206,7 @@ const PlotConfigurator: React.FC<PlotConfiguratorProps> = ({ data }) => {
                                 onChange={(e) => handleFunctionChange(e.target.value)}
                             />
                             <div>
-                                <ColorDropDown
+                                <ColorPicker
                                     onSubmit={handleSetFunctionColor}
                                     color={editing.color}
                                     text="Cor"
