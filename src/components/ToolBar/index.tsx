@@ -7,7 +7,8 @@ import { useTransition } from 'react-spring';
 import { useTools } from '../../contexts/tools';
 import { useTheme } from '../../contexts/theme';
 
-import { Container, Button, Animation } from './styles';
+import { ToolBarButton } from '../../styles/toolbar';
+import { Container, Animation } from './styles';
 import toolBarData, { ToolBarObjectItem } from './data';
 
 const ToolBar: React.FC = () => {
@@ -91,7 +92,7 @@ const ToolBar: React.FC = () => {
             {transitions.map(({ item, key, props }) => (
                 <Animation style={props} key={key}>
                     {toolBarData[item].map((button) => (
-                        <Button
+                        <ToolBarButton
                             title={button.title}
                             key={button.id}
                             theme={theme}
@@ -102,7 +103,7 @@ const ToolBar: React.FC = () => {
                             {button.deep && (
                                 <span className="deep" />
                             )}
-                        </Button>
+                        </ToolBarButton>
                     ))}
                 </Animation>
             ))}
