@@ -15,9 +15,6 @@ const InlineTeX: React.FC = ({ children }) => {
         leave: { opacity: 0 }
     });
 
-    // TODO: use the useMeasure and create an context to make the
-    // display tooltips not expand out of the editor container
-
     const handleMouseEnter = () => {
         setMouse(true);
     };

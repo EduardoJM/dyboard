@@ -92,10 +92,7 @@
     "ts-phoria": "^0.1.6"
   },
   "build": {
-    "appId": "your.id",
-    "mac": {
-      "category": "public.app-category.video"
-    },
+    "appId": "io.github.eduardojm.dyboard",
     "directories": {
       "output": "packages"
     },
