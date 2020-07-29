@@ -33,9 +33,7 @@ export const PlotsList = styled.div<ThemedProps>`
 
     .list {
         flex: 1;
-        overflow-x: hidden;
-        overflow-y: auto;
-        
+
         background: ${props => props.theme.contentBarListBg};
         color: ${props => props.theme.contentBarListFg};
 
@@ -80,6 +78,12 @@ export const PlotsList = styled.div<ThemedProps>`
     }
 `;
 
+export const ListToolButton = styled.span`
+    padding: 5px;
+    cursor: pointer;
+    color: #E1E1E6;
+`;
+
 export const PlotsConfig = styled.div`
     overflow: hidden;
 
@@ -91,5 +95,14 @@ export const PlotsConfig = styled.div`
     .editor {
         width: 200px;
         flex: 1;
+    }
+
+    .fit-center-text {
+        flex: 1;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
     }
 `;
