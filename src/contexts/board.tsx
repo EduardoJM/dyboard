@@ -1,6 +1,5 @@
 import React, { useContext, useState, createContext } from 'react';
 import { ElementsCollection } from '../data/board';
-import testElements from '../data/mockup';
 
 interface BoardContextData {
     elements: ElementsCollection;
@@ -12,7 +11,7 @@ const BoardContext = createContext<BoardContextData>({} as BoardContextData);
 export const BoardContextProvider: React.FC = ({
     children
 }) => {
-    const [elements, setElements] = useState<ElementsCollection>(testElements);
+    const [elements, setElements] = useState<ElementsCollection>([]);
 
     return (
         <BoardContext.Provider value={{

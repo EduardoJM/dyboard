@@ -6,8 +6,9 @@ import { MdDelete } from 'react-icons/md';
 import { Container, Content, Bar } from './styles';
 
 import PlotConfigurator from './PlotConfigurator';
+import TextConfigurator from './TextConfigurator';
 
-import { ElementPlot } from '../../data/board';
+import { ElementPlot, ElementText } from '../../data/board';
 
 import { ToolBarButton } from '../../styles/toolbar';
 
@@ -31,6 +32,8 @@ const ContentBar: React.FC = () => {
             return null;
         } else if (tools.currentElement.type === 'plot') {
             return <PlotConfigurator data={tools.currentElement as ElementPlot} />;
+        } else if (tools.currentElement.type === 'text') {
+            return <TextConfigurator data={tools.currentElement as ElementText} />;
         }
         return null;
     }

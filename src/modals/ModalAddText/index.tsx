@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { EditorState } from 'draft-js';
+import { EditorState, convertToRaw } from 'draft-js';
 import { stateToHTML } from 'draft-js-export-html';
 import katex from 'katex';
 
@@ -47,7 +47,8 @@ const ModalAddText: React.FC<ModalProps> = ({
             height: 150,
             left: 0,
             top: 0,
-            text
+            text,
+            rawContent: convertToRaw(contentState)
         };
         setEditorState(EditorState.createEmpty());
         tools.setCatchClick(item);

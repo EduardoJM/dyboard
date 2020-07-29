@@ -1,4 +1,5 @@
 import * as jPlot from 'jplot';
+import { RawDraftContentState } from 'draft-js';
 
 export interface ElementText {
     id: number | string;
@@ -8,6 +9,7 @@ export interface ElementText {
     left: number;
     top: number;
     text: string;
+    rawContent: RawDraftContentState;
 }
 
 export interface ElementPlot {
