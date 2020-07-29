@@ -18,11 +18,14 @@ interface ColorPanelProps {
     changeColor: (newColor: string) => void;
 }
 
+// TODO: recreate some parts of this component
+
 const ColorPanel: React.FC<ColorPanelProps> = ({ color, oldColor, changeColor }) => {
     const currentColor = getColorFromString(oldColor);
     // color states
     const [newColor, setNewColor] = useState<HSB>(getColorFromString(color));
     const [rgbColor, setRgbColor] = useState<RGB>({ r: 0, g: 0, b: 0 });
+    const [displayColor, setDisplayColor] = useState('');
     const [hexNewColor, setHexNewColor] = useState('');
 
     // hue drag
@@ -101,7 +104,9 @@ const ColorPanel: React.FC<ColorPanelProps> = ({ color, oldColor, changeColor })
         const hex = HSBtoHEX(newColor);
         setHexNewColor(hex);
         setRgbColor(HSBtoRGB(newColor));
-        changeColor(`#${hex}`);
+        const dHex = `#${hex}`;
+        changeColor(dHex);
+        setDisplayColor(dHex);
     }, [newColor]);
 
     function handleHexColorChange(e: ChangeEvent<HTMLInputElement>) {
@@ -114,14 +119,28 @@ const ColorPanel: React.FC<ColorPanelProps> = ({ color, oldColor, changeColor })
         const rgb = { ...rgbColor };
         if (name === 'r') {
             rgb.r = Math.min(255, Math.max(0, parseInt(value, 10)));
+            if (Number.isNaN(rgb.r)) {
+                rgb.r = 0;
+            }
         } else if (name === 'g') {
             rgb.g = Math.min(255, Math.max(0, parseInt(value, 10)));
+            if (Number.isNaN(rgb.g)) {
+                rgb.g = 0;
+            }
         } else if (name === 'b') {
             rgb.b = Math.min(255, Math.max(0, parseInt(value, 10)));
+            if (Number.isNaN(rgb.b)) {
+                rgb.b = 0;
+            }
         } else {
             return;
         }
-        setNewColor(RGBtoHSB(rgb));
+        setRgbColor(rgb);
+        setDisplayColor(`rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`);
+    }
+
+    function applyRgbColor() {
+        setNewColor(RGBtoHSB(rgbColor));
     }
 
     function handleHsbColorChange(e: ChangeEvent<HTMLInputElement>) {
@@ -174,7 +193,7 @@ const ColorPanel: React.FC<ColorPanelProps> = ({ color, oldColor, changeColor })
             <div
                 className="colorpicker_new_color"
                 style={{
-                    backgroundColor: `#${hexNewColor}`
+                    backgroundColor: displayColor
                 }}
             />
             <div
@@ -202,6 +221,7 @@ const ColorPanel: React.FC<ColorPanelProps> = ({ color, oldColor, changeColor })
                     maxLength={3}
                     value={rgbColor.r}
                     onChange={handleRgbColorChange}
+                    onBlur={applyRgbColor}
                 />
             </div>
             <div className="colorpicker_rgb_g colorpicker_field">
@@ -212,6 +232,7 @@ const ColorPanel: React.FC<ColorPanelProps> = ({ color, oldColor, changeColor })
                     maxLength={3}
                     value={rgbColor.g}
                     onChange={handleRgbColorChange}
+                    onBlur={applyRgbColor}
                 />
             </div>
             <div className="colorpicker_rgb_b colorpicker_field">
@@ -222,6 +243,7 @@ const ColorPanel: React.FC<ColorPanelProps> = ({ color, oldColor, changeColor })
                     maxLength={3}
                     value={rgbColor.b}
                     onChange={handleRgbColorChange}
+                    onBlur={applyRgbColor}
                 />
             </div>
             <div className="colorpicker_hsb_h colorpicker_field">

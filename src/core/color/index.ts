@@ -108,7 +108,10 @@ export function RGBtoHSB(rgb: RGB): HSB {
     const max = Math.max(rgb.r, rgb.g, rgb.b);
     const delta = max - min;
     let b = max;
-    let s = max !== 0 ? ((255 * delta) / max) : 0;
+    let s = 0;
+    if (max !== 0) {
+        s = ((255 * delta) / max);
+    }
     let h = 0;
     if (s !== 0) {
         if (rgb.r === max) {
