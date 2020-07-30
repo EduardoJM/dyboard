@@ -36,20 +36,6 @@ export const PlotsList = styled.div<ThemedProps>`
 
         background: ${props => props.theme.contentBarListBg};
         color: ${props => props.theme.contentBarListFg};
-
-        .list-item {
-            background: transparent;
-            color: ${props => props.theme.contentBarListFg};
-            transition: all ease 0.3s;
-            padding: 4px 8px;
-
-            &.active {
-                background: #FF0;
-
-                background: ${props => props.theme.contentBarListItemBg};
-                color: ${props => props.theme.contentBarListItemFg};
-            }
-        }
     }
 
     .list-tools {

@@ -1,5 +1,8 @@
 import React from 'react';
 import { render } from 'react-dom';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+
 import { GlobalStyle } from './styles/GlobalStyle';
 
 import StatusBar from './components/StatusBar';
@@ -21,21 +24,23 @@ document.body.appendChild(mainElement);
 const App = () => {
     return (
         <>
-            <ThemeContextProvider>
-                <Container>
-                    <BoardContextProvider>
-                        <ToolsContextProvider>
-                            <ContentContainer>
-                                <ToolBar />
-                                <Board />
-                                <ContentBar />
-                            </ContentContainer>
-                            <StatusBar />
-                        </ToolsContextProvider>
-                    </BoardContextProvider>
-                </Container>
-            </ThemeContextProvider>
-            <GlobalStyle />
+            <DndProvider backend={HTML5Backend}>
+                <ThemeContextProvider>
+                    <Container>
+                        <BoardContextProvider>
+                            <ToolsContextProvider>
+                                <ContentContainer>
+                                    <ToolBar />
+                                    <Board />
+                                    <ContentBar />
+                                </ContentContainer>
+                                <StatusBar />
+                            </ToolsContextProvider>
+                        </BoardContextProvider>
+                    </Container>
+                </ThemeContextProvider>
+                <GlobalStyle />
+            </DndProvider>
         </>
     );
 };

@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { useTransition } from 'react-spring';
 import { RiListSettingsLine } from 'react-icons/ri';
-import { MdDelete } from 'react-icons/md';
+import { MdDelete, MdList } from 'react-icons/md';
 
 import { Container, Content, Bar } from './styles';
 
 import PlotConfigurator from './PlotConfigurator';
 import TextConfigurator from './TextConfigurator';
+import BoardPanel from './BoardPanel';
 
 import { ElementPlot, ElementText } from '../../data/board';
 
@@ -18,6 +19,7 @@ import { useTools } from '../../contexts/tools';
 
 const ContentBar: React.FC = () => {
     const [contentVisible, setContentVisible] = useState(true);
+    const [contentIsBoardItems, setContentIsBoardItems] = useState(false);
     const theme = useTheme();
     const tools = useTools();
     const board = useBoard();
@@ -28,6 +30,9 @@ const ContentBar: React.FC = () => {
     });
 
     function renderContent(): JSX.Element | null {
+        if (contentIsBoardItems) {
+            return <BoardPanel />;
+        }
         if (tools.currentElement === null) {
             return null;
         } else if (tools.currentElement.type === 'plot') {
@@ -51,6 +56,29 @@ const ContentBar: React.FC = () => {
         tools.setCurrentElement(null);
     }
 
+    function handleContentButtonClick() {
+        if (contentVisible && !contentIsBoardItems) {
+            setContentVisible(false);
+        } else if (contentVisible && contentIsBoardItems) {
+            setContentIsBoardItems(false);
+        } else if (!contentVisible) {
+            setContentVisible(true);
+            setContentIsBoardItems(false);
+        }
+    }
+
+    function handleBoardButtonClick() {
+        if (contentVisible && contentIsBoardItems) {
+            setContentVisible(false);
+            setContentIsBoardItems(false);
+        } else if (contentVisible && !contentIsBoardItems) {
+            setContentIsBoardItems(true);
+        } else if (!contentVisible) {
+            setContentVisible(true);
+            setContentIsBoardItems(true);
+        }
+    }
+
     return (
         <Container>
             {contentTransition.map(({ item, key, props }) => item && (
@@ -63,8 +91,8 @@ const ContentBar: React.FC = () => {
                     title="Exibir o Painel de Conteúdo"
                     theme={theme}
                     markerSide="right"
-                    current={contentVisible}
-                    onClick={() => setContentVisible(!contentVisible)}
+                    current={contentVisible && !contentIsBoardItems}
+                    onClick={handleContentButtonClick}
                 >
                     <RiListSettingsLine size={24} />
                 </ToolBarButton>
@@ -79,6 +107,16 @@ const ContentBar: React.FC = () => {
                         <MdDelete size={24} />
                     </ToolBarButton>
                 )}
+                <div style={{ flex: 1 }}></div>
+                <ToolBarButton
+                    title="Exibir os Conteúdos"
+                    theme={theme}
+                    markerSide="right"
+                    current={contentVisible && contentIsBoardItems}
+                    onClick={handleBoardButtonClick}
+                >
+                    <MdList size={24} />
+                </ToolBarButton>
             </Bar>
         </Container>
     );

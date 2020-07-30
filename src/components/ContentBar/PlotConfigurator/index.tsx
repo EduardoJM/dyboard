@@ -5,7 +5,7 @@ import { MdAdd, MdDelete } from 'react-icons/md';
 import { ElementPlot } from '../../../data/board';
 
 import DropDownButton from '../../Form/DropDownButton';
-import Scrollbars from '../../Scrollbars';
+import { ListBox, ListBoxItem } from '../../Form/DraggableListBox';
 
 import { Container, PlotsList, PlotsConfig, ListToolButton } from './styles';
 
@@ -101,22 +101,46 @@ const PlotConfigurator: React.FC<PlotConfiguratorProps> = ({ data }) => {
         setEditing(null);
     }
 
+    function handleMovePlotItem(fromIndex: number, toIndex: number) {
+        const dragged = data.items[fromIndex];
+        const newItems = [...data.items];
+        newItems.splice(fromIndex, 1);
+        newItems.splice(toIndex, 0, dragged);
+        const newItem = {
+            ...data,
+            items: newItems
+        };
+        const { elements, changeElements } = board;
+        const idx = elements.indexOf(data);
+        const newElements = [
+            ...elements.slice(0, idx),
+            newItem,
+            ...elements.slice(idx + 1)
+        ];
+        changeElements(newElements);
+        tools.setCurrentElement(newItem);
+        setEditing(null);
+    }
+
     return (
         <Container theme={theme}>
             <PlotsList theme={theme}>
                 <div className="heading">Itens</div>
                 <div className="list">
-                    <Scrollbars>
+                    <ListBox>
                         {data.items.map((item, index) => (
-                            <div
-                                className={`list-item${editing === item ? ' active' : ''}`}
+                            <ListBoxItem
+                                dragType="PLOT_ITEM"
+                                dragMove={handleMovePlotItem}
+                                selected={editing === item}
                                 key={`index${index}`}
+                                index={index}
                                 onClick={() => setEditing(item)}
                             >
                                 {renderListItemContent(item, false)}
-                            </div>
+                            </ListBoxItem>
                         ))}
-                    </Scrollbars>
+                    </ListBox>
                 </div>
                 <div className="list-tools">
                     <DropDownButton
