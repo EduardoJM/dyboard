@@ -3,6 +3,9 @@ import * as path from 'path';
 import * as url from 'url';
 import installExtension, { REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } from 'electron-devtools-installer';
 
+import registerMenu from './menu';
+import { registerIO } from './io';
+
 let mainWindow: Electron.BrowserWindow | null;
 
 function createWindow() {
@@ -14,6 +17,8 @@ function createWindow() {
             nodeIntegration: true
         }
     });
+
+    registerMenu(mainWindow);
 
     mainWindow.webContents.openDevTools();
 
@@ -48,3 +53,5 @@ app.on('ready', createWindow)
     });
 
 app.allowRendererProcessReuse = true;
+
+registerIO();
