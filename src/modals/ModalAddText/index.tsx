@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
-import { EditorState, convertToRaw } from 'draft-js';
+import {
+    EditorState,
+    RawDraftContentState,
+    convertToRaw,
+    convertFromRaw
+} from 'draft-js';
 import { stateToHTML } from 'draft-js-export-html';
 import katex from 'katex';
 
 import { renderInlineLaTeX } from '../../core/latex';
 import Modal from '../../components/Modal';
-import ModalProps from '../interfaces';
 
 import { useTools } from '../../contexts/tools';
 
@@ -17,13 +21,27 @@ import {
 import Button from '../../components/Form/Button';
 import TextEditor from '../../components/Form/TextEditor';
 
-const ModalAddText: React.FC<ModalProps> = ({
+interface ModalAddTextProps {
+    opened: boolean;
+    modalId: string;
+    handleClose: (id: string) => void;
+    isEditing?: boolean;
+    editingInitialContent: RawDraftContentState;
+    editComplete?: (state: RawDraftContentState, text: string) => void;
+}
+
+const ModalAddText: React.FC<ModalAddTextProps> = ({
     opened,
     modalId,
-    handleClose
+    handleClose,
+    isEditing,
+    editingInitialContent,
+    editComplete
 }) => {
     const [editorState, setEditorState] = useState(
-        () => EditorState.createEmpty()
+        () => isEditing && editingInitialContent
+            ? EditorState.createWithContent(convertFromRaw(editingInitialContent))
+            : EditorState.createEmpty()
     );
     const tools = useTools();
 
@@ -40,6 +58,10 @@ const ModalAddText: React.FC<ModalProps> = ({
             }
         });
         text = renderInlineLaTeX(text);
+        if (isEditing && editComplete) {
+            editComplete(convertToRaw(contentState), text);
+            return;
+        }
         const item = {
             id: Date.now(),
             type: 'text',
@@ -58,7 +80,7 @@ const ModalAddText: React.FC<ModalProps> = ({
     return (
         <Modal
             visible={opened}
-            title="Adicionar Texto"
+            title={isEditing ? 'Editar Texto' : 'Adicionar Texto'}
             closeModalRequest={() => handleClose(modalId)}
         >
             <Form>
@@ -69,7 +91,9 @@ const ModalAddText: React.FC<ModalProps> = ({
                     />
                 </div>
                 <ButtonArea>
-                    <Button onClick={handleAdd}>Adicionar</Button>
+                    <Button onClick={handleAdd}>
+                        {isEditing ? 'Atualizar' : 'Adicionar'}
+                    </Button>
                 </ButtonArea>
             </Form>
         </Modal>
