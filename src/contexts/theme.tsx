@@ -25,6 +25,10 @@ export interface ThemeContextData {
     modalActiveButtonBg: string;
     modalActiveButtonFg: string;
 
+    imageSelectorBg: string;
+    imageSelectorFg: string;
+    imageSelectorBorder: string;
+
     switchBg: string;
     switchBgAccent: string;
     switchCheckedBg: string;

@@ -22,6 +22,10 @@ const omni = {
     modalActiveButtonBg: '#E26079',
     modalActiveButtonFg: '#E1E1E6',
 
+    imageSelectorBg: '#15121e',
+    imageSelectorFg: '#E1E1E6',
+    imageSelectorBorder: '#191622',
+
     switchBg: '#E1E1E6',
     switchBgAccent: '#BBBBBB',
     switchCheckedBg: '#5A4B81',

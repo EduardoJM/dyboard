@@ -12,6 +12,16 @@ export interface ElementText {
     rawContent: RawDraftContentState;
 }
 
+export interface ElementImage {
+    id: number | string;
+    type: string;
+    width: number;
+    height: number;
+    left: number;
+    top: number;
+    imageContent: string;
+}
+
 export interface ElementPlot {
     id: number | string;
     type: string;
@@ -31,6 +41,6 @@ export interface ElementSpace3D {
     top: number;
 }
 
-export type ElementAll = (ElementText | ElementPlot | ElementSpace3D);
+export type ElementAll = (ElementText | ElementPlot | ElementSpace3D | ElementImage);
 
 export type ElementsCollection = ElementAll[];
