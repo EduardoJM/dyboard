@@ -10,9 +10,7 @@ const Scrollbars: React.FC = ({ children }) => {
                 className="box"
                 style={{
                     ...style,
-                    padding: 10,
-                    marginRight: -14,
-                    marginBottom: -14
+                    padding: 10
                 }}
             />
         );
