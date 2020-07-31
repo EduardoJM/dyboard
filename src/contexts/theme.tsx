@@ -39,6 +39,11 @@ export interface ThemeContextData {
     sliderPopupBg: string;
     sliderPopupFg: string;
 
+    spinnerBg: string;
+    spinnerFg: string;
+    spinnerButtonsBg: string;
+    spinnerButtonsFg: string;
+
     buttonBg: string;
     buttonFg: string;
     buttonBorder: string;

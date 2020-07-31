@@ -36,6 +36,11 @@ const omni = {
     sliderPopupBg: '#47396d',
     sliderPopupFg: '#E1E1E6',
 
+    spinnerBg: '#201b2d',
+    spinnerFg: '#E1E1E6',
+    spinnerButtonsBg: '#15121e',
+    spinnerButtonsFg: '#E1E1E6',
+
     buttonBg: '#5A4B81',
     buttonFg: '#E1E1E6',
     buttonBorder: '#47396d',
