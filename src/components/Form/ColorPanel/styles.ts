@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import * as images from './styles.images';
 
 const Container = styled.div`
-    width: 356px;
+    width: 400px;
     height: 176px;
 
     position: relative;
@@ -65,7 +65,7 @@ const Container = styled.div`
     }
 
     .colorpicker_new_color {
-        width: 60px;
+        width: 72px;
         height: 30px;
 
         position: absolute;
@@ -74,11 +74,11 @@ const Container = styled.div`
     }
 
     .colorpicker_current_color {
-        width: 60px;
+        width: 72px;
         height: 30px;
 
         position: absolute;
-        left: 283px;
+        left: 302px;
         top: 13px;
     }
 
@@ -112,7 +112,7 @@ const Container = styled.div`
     .colorpicker_field {
         position: absolute;
 
-        width: 62px;
+        width: 82px;
         height: 22px;
         display: flex;
         align-items: center;
@@ -122,14 +122,8 @@ const Container = styled.div`
             padding: 0 5px;
         }
 
-        > input {
+        > .spinner {
             flex: 1;
-            width: 10px;
-
-            background: #201b2d;
-            color: #E1E1EA;
-            border: none;
-            outline: none;
         }
     }
 
@@ -150,17 +144,17 @@ const Container = styled.div`
 
     .colorpicker_hsb_h {
         top: 52px;
-        left: 282px;
+        left: 302px;
     }
 
     .colorpicker_hsb_s {
         top: 82px;
-        left: 282px;
+        left: 302px;
     }
 
     .colorpicker_hsb_b {
         top: 112px;
-        left: 282px;
+        left: 302px;
     }
 `;
 

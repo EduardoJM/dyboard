@@ -17,8 +17,6 @@ import { useTheme } from '../../contexts/theme';
 import { useBoard } from '../../contexts/board';
 import { useTools } from '../../contexts/tools';
 
-import Spinner from '../Form/Spinner';
-
 const ContentBar: React.FC = () => {
     const [contentVisible, setContentVisible] = useState(true);
     const [contentIsBoardItems, setContentIsBoardItems] = useState(false);
@@ -31,26 +29,12 @@ const ContentBar: React.FC = () => {
         leave: { opacity: 0 }
     });
 
-    const [spinnerValue, setSpinnerValue] = useState(20);
-
     function renderContent(): JSX.Element | null {
         if (contentIsBoardItems) {
             return <BoardPanel />;
         }
         if (tools.currentElement === null) {
-            // return null;
-            return (
-                <>
-                    <div style={{ height: 300 }} />
-                    <Spinner
-                        width={100}
-                        min={0}
-                        max={100}
-                        value={spinnerValue}
-                        onChange={setSpinnerValue}
-                    />
-                </>
-            );
+            return null;
         } else if (tools.currentElement.type === 'plot') {
             return <PlotConfigurator data={tools.currentElement as ElementPlot} />;
         } else if (tools.currentElement.type === 'text') {

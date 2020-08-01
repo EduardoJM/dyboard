@@ -44,7 +44,7 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
                 title="Alterar Cor"
                 closeModalRequest={handleCloseModal}
                 visible={visible}
-                width={356}
+                width={400}
                 height={280}
             >
                 <ColorPanel

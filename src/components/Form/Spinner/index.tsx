@@ -12,6 +12,8 @@ interface SpinnerProps {
     max: number;
     value: number;
     onChange: (newValue: number) => void;
+    onInputBlur?: () => void;
+    onDragStop?: () => void;
 }
 
 const Spinner: React.FC<SpinnerProps> = ({
@@ -20,7 +22,10 @@ const Spinner: React.FC<SpinnerProps> = ({
     min,
     max,
     value,
-    onChange
+    onChange,
+
+    onInputBlur,
+    onDragStop
 }) => {
     const theme = useTheme();
 
@@ -38,6 +43,9 @@ const Spinner: React.FC<SpinnerProps> = ({
         const mouseUp = () => {
             document.removeEventListener('mousemove', mouseMove);
             document.removeEventListener('mouseup', mouseUp);
+            if (onDragStop) {
+                onDragStop();
+            }
         };
         const mouseMove = (evt: globalThis.MouseEvent) => {
             const integerValue = Math.round(value - (evt.pageY - startY));
@@ -48,12 +56,19 @@ const Spinner: React.FC<SpinnerProps> = ({
         document.addEventListener('mouseup', mouseUp);
     }
 
+    function handleInputBlur() {
+        if (onInputBlur) {
+            onInputBlur();
+        }
+    }
+
     return (
-        <Container width={width} theme={theme}>
+        <Container className="spinner" width={width} theme={theme}>
             <input
                 type="text"
                 value={value}
                 onChange={handleInputChange}
+                onBlur={handleInputBlur}
             />
             <div className="buttons" onMouseDown={handleDown}>
                 <div className="up-button">

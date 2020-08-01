@@ -2,6 +2,8 @@ import React, { useState, useEffect, createRef, MouseEvent, ChangeEvent } from '
 
 import Container from './styles';
 
+import Spinner from '../Spinner';
+
 import {
     HSB,
     RGB,
@@ -9,7 +11,9 @@ import {
     HSBtoHEX,
     HSBtoRGB,
     RGBtoHSB,
-    HEXtoHSB
+    HEXtoHSB,
+    HEXtoRGB,
+    RGBtoHEX
 } from '../../../core/color';
 
 interface ColorPanelProps {
@@ -18,63 +22,72 @@ interface ColorPanelProps {
     changeColor: (newColor: string) => void;
 }
 
-// TODO: recreate some parts of this component
+interface PickerState {
+    livePreview: 'none' | 'rgb' | 'hsb' | 'hex';
+    rgb: RGB;
+    hsb: HSB;
+    hex: string;
+    displayColor: string;
+};
 
 const ColorPanel: React.FC<ColorPanelProps> = ({ color, oldColor, changeColor }) => {
     const currentColor = getColorFromString(oldColor);
-    // color states
-    const [newColor, setNewColor] = useState<HSB>(getColorFromString(color));
-    const [rgbColor, setRgbColor] = useState<RGB>({ r: 0, g: 0, b: 0 });
-    const [displayColor, setDisplayColor] = useState('');
-    const [hexNewColor, setHexNewColor] = useState('');
-
+    const [pickerState, setPickerState] = useState<PickerState>({
+        livePreview: 'none',
+        rgb: HSBtoRGB(getColorFromString(color)),
+        hsb: getColorFromString(color),
+        hex: HSBtoHEX(getColorFromString(color)),
+        displayColor: color
+    });
     // hue drag
     const hueRef = createRef<HTMLDivElement>();
     // saturation/bright drag
     const colorBoxRef = createRef<HTMLDivElement>();
 
-    function setHueFromMouse(y: number, boxY: number) {
-        const posY = y - boxY;
-        const hue = Math.min(360, Math.max(0, (150 - posY) / 150 * 360));
-        setNewColor({
-            ...newColor,
-            h: Math.round(hue)
-        });
-    }
+    useEffect(() => {
+        if (pickerState.livePreview === 'none') {
+            changeColor(`#${pickerState.hex}`);
+        }
+    }, [pickerState]);
 
     function handleHueMouseDown(e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) {
         if (!hueRef.current) {
             return;
         }
         const rc = hueRef.current.getBoundingClientRect();
-        setHueFromMouse(e.pageY, rc.top);
-        const boxY = rc.top;
-        const handleHueMouseMove = (e: globalThis.MouseEvent) => {
-            setHueFromMouse(e.pageY, boxY);
+
+        const applyHue = (y: number): void => {
+            const posY = y - rc.top;
+            const hue = Math.min(360, Math.max(0, (150 - posY) / 150 * 360));
+            setPickerState((prevState) => {
+                const hsb = { h: hue, s: prevState.hsb.s, b: prevState.hsb.b };
+                const hex = HSBtoHEX(hsb);
+                return {
+                    livePreview: 'hsb',
+                    hsb,
+                    hex,
+                    rgb: HSBtoRGB(hsb),
+                    displayColor: `#${hex}`
+                };
+            });
+        };
+
+        applyHue(e.pageY);
+        const handleHueMouseMove = (evt: globalThis.MouseEvent) => {
+            applyHue(evt.pageY);
         };
         const handleHueMouseUp = () => {
             document.removeEventListener('mouseup', handleHueMouseUp);
             document.removeEventListener('mousemove', handleHueMouseMove);
+            setPickerState((prevState) => {
+                return {
+                    ...prevState,
+                    livePreview: 'none'
+                };
+            });
         };
         document.addEventListener('mouseup', handleHueMouseUp);
         document.addEventListener('mousemove', handleHueMouseMove);
-    }
-
-    function setBSFromMouse(
-        x: number,
-        y: number,
-        boxX: number,
-        boxY: number
-    ) {
-        const posY = y - boxY;
-        const posX = x - boxX;
-        const sat = Math.min(100, Math.max(0, posX * 100 / 150));
-        const bri = Math.min(100, Math.max(0, 100 - posY * 100 / 150));
-        setNewColor({
-            ...newColor,
-            s: Math.round(sat),
-            b: Math.round(bri)
-        });
     }
 
     function handleColorBoxMouseDown(e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) {
@@ -82,80 +95,127 @@ const ColorPanel: React.FC<ColorPanelProps> = ({ color, oldColor, changeColor })
             return;
         }
         const rc = colorBoxRef.current.getBoundingClientRect();
-        setBSFromMouse(e.pageX, e.pageY, rc.left, rc.top);
-        const boxX = rc.left;
-        const boxY = rc.top;
+
+        const applySB = (x: number, y: number): void => {
+            const posY = y - rc.top;
+            const posX = x - rc.left;
+            const sat = Math.min(100, Math.max(0, posX * 100 / 150));
+            const bri = Math.min(100, Math.max(0, 100 - posY * 100 / 150));
+            setPickerState((prevState) => {
+                const hsb = { h: prevState.hsb.h, s: sat, b: bri };
+                const hex = HSBtoHEX({ h: prevState.hsb.h, s: sat, b: bri });
+                return {
+                    livePreview: 'hsb',
+                    hsb,
+                    rgb: HSBtoRGB({ h: prevState.hsb.h, s: sat, b: bri }),
+                    hex,
+                    displayColor: `#${hex}`
+                };
+            });
+        };
+
+        applySB(e.pageX, e.pageY);
+
         const handleColorBoxMouseUp = () => {
             document.removeEventListener('mouseup', handleColorBoxMouseUp);
             document.removeEventListener('mousemove', handleColorBoxMouseMove);
+            setPickerState((prevState) => {
+                return {
+                    ...prevState,
+                    livePreview: 'none'
+                };
+            });
         };
         const handleColorBoxMouseMove = (e: globalThis.MouseEvent) => {
-            setBSFromMouse(e.pageX, e.pageY, boxX, boxY);
+            applySB(e.pageX, e.pageY);
         };
         document.addEventListener('mouseup', handleColorBoxMouseUp);
         document.addEventListener('mousemove', handleColorBoxMouseMove);
     }
 
     function handleCurrentColorClick() {
-        setNewColor(currentColor);
+        const hex = HSBtoHEX(currentColor);
+        setPickerState({
+            livePreview: 'none',
+            rgb: HSBtoRGB(currentColor),
+            hsb: currentColor,
+            hex,
+            displayColor: `#${hex}`
+        });
     }
-
-    useEffect(() => {
-        const hex = HSBtoHEX(newColor);
-        setHexNewColor(hex);
-        setRgbColor(HSBtoRGB(newColor));
-        const dHex = `#${hex}`;
-        changeColor(dHex);
-        setDisplayColor(dHex);
-    }, [newColor]);
 
     function handleHexColorChange(e: ChangeEvent<HTMLInputElement>) {
         const hex = e.target.value;
-        setNewColor(HEXtoHSB(hex));
+        setPickerState({
+            livePreview: 'hex',
+            rgb: HEXtoRGB(hex),
+            hsb: HEXtoHSB(hex),
+            hex,
+            displayColor: `#${hex}`
+        });
     }
 
-    function handleRgbColorChange(e: ChangeEvent<HTMLInputElement>) {
-        const { name, value } = e.target;
-        const rgb = { ...rgbColor };
-        if (name === 'r') {
-            rgb.r = Math.min(255, Math.max(0, parseInt(value, 10)));
-            if (Number.isNaN(rgb.r)) {
-                rgb.r = 0;
-            }
-        } else if (name === 'g') {
-            rgb.g = Math.min(255, Math.max(0, parseInt(value, 10)));
-            if (Number.isNaN(rgb.g)) {
-                rgb.g = 0;
-            }
-        } else if (name === 'b') {
-            rgb.b = Math.min(255, Math.max(0, parseInt(value, 10)));
-            if (Number.isNaN(rgb.b)) {
-                rgb.b = 0;
-            }
-        } else {
-            return;
+    function handleHexBlur() {
+        setPickerState((prevState) => {
+            return {
+                ...prevState,
+                livePreview: 'none'
+            };
+        });
+    }
+
+    function handleRGBSpinnerChange(comp: 'r' | 'g' | 'b', value: number) {
+        const rgb = { ...pickerState.rgb };
+        if (comp === 'r') {
+            rgb.r = Math.min(255, Math.max(0, value));
+        } else if (comp === 'g') {
+            rgb.g = Math.min(255, Math.max(0, value));
+        } else if (comp === 'b') {
+            rgb.b = Math.min(255, Math.max(0, value));
         }
-        setRgbColor(rgb);
-        setDisplayColor(`rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`);
+        setPickerState({
+            livePreview: 'rgb',
+            rgb,
+            hsb: RGBtoHSB(rgb),
+            hex: RGBtoHEX(rgb),
+            displayColor: `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`
+        });
     }
 
     function applyRgbColor() {
-        setNewColor(RGBtoHSB(rgbColor));
+        setPickerState((prevState) => {
+            return {
+                ...prevState,
+                livePreview: prevState.livePreview === 'rgb' ? 'none' : prevState.livePreview
+            };
+        });
     }
 
-    function handleHsbColorChange(e: ChangeEvent<HTMLInputElement>) {
-        const { name, value } = e.target;
-        const hsb = { ...newColor };
-        if (name === 'h') {
-            hsb.h = Math.min(360, Math.max(0, parseInt(value, 10)));
-        } else if (name === 's') {
-            hsb.s = Math.min(100, Math.max(0, parseInt(value, 10)));
-        } else if (name === 'b') {
-            hsb.b = Math.min(100, Math.max(0, parseInt(value, 10)));
-        } else {
-            return;
+    function handleHSBSpinnerChange(comp: 'h' | 's' | 'b', value: number) {
+        const hsb = { ...pickerState.hsb };
+        if (comp === 'h') {
+            hsb.h = Math.min(360, Math.max(0, value));
+        } else if (comp === 's') {
+            hsb.s = Math.min(100, Math.max(0, value));
+        } else if (comp === 'b') {
+            hsb.b = Math.min(100, Math.max(0, value));
         }
-        setNewColor(hsb);
+        setPickerState({
+            livePreview: 'hsb',
+            rgb: HSBtoRGB(hsb),
+            hsb,
+            hex: HSBtoHEX(hsb),
+            displayColor: `#${HSBtoHEX(hsb)}`
+        });
+    }
+
+    function applyHsbColor() {
+        setPickerState((prevState) => {
+            return {
+                ...prevState,
+                livePreview: prevState.livePreview === 'hsb' ? 'none' : prevState.livePreview
+            };
+        });
     }
 
     return (
@@ -163,7 +223,7 @@ const ColorPanel: React.FC<ColorPanelProps> = ({ color, oldColor, changeColor })
             <div
                 className="colorpicker_color"
                 style={{
-                    backgroundColor: `#${HSBtoHEX({ h: newColor.h, s: 100, b: 100 })}`
+                    backgroundColor: `#${HSBtoHEX({ h: pickerState.hsb.h, s: 100, b: 100 })}`
                 }}
                 ref={colorBoxRef}
                 onMouseDown={handleColorBoxMouseDown}
@@ -172,8 +232,8 @@ const ColorPanel: React.FC<ColorPanelProps> = ({ color, oldColor, changeColor })
                     <div
                         className="select"
                         style={{
-                            left: (150 * newColor.s) / 100,
-                            top: (150 * (100 - newColor.b)) / 100
+                            left: (150 * pickerState.hsb.s) / 100,
+                            top: (150 * (100 - pickerState.hsb.b)) / 100
                         }}
                     />
                 </div>
@@ -186,14 +246,14 @@ const ColorPanel: React.FC<ColorPanelProps> = ({ color, oldColor, changeColor })
                 <div
                     className="select"
                     style={{
-                        top: (150 - (150 * newColor.h) / 360)
+                        top: (150 - (150 * pickerState.hsb.h) / 360)
                     }}
                 />
             </div>
             <div
                 className="colorpicker_new_color"
                 style={{
-                    backgroundColor: displayColor
+                    backgroundColor: pickerState.displayColor
                 }}
             />
             <div
@@ -209,71 +269,75 @@ const ColorPanel: React.FC<ColorPanelProps> = ({ color, oldColor, changeColor })
                     type="text"
                     size={6}
                     maxLength={6}
-                    value={hexNewColor}
+                    value={pickerState.hex}
                     onChange={handleHexColorChange}
+                    onBlur={handleHexBlur}
                 />
             </div>
             <div className="colorpicker_rgb_r colorpicker_field">
                 <span>R</span>
-                <input
-                    type="text"
-                    name="r"
-                    maxLength={3}
-                    value={rgbColor.r}
-                    onChange={handleRgbColorChange}
-                    onBlur={applyRgbColor}
+                <Spinner
+                    min={0}
+                    max={255}
+                    value={pickerState.rgb.r}
+                    onChange={(v) => handleRGBSpinnerChange('r', v)}
+                    onInputBlur={applyRgbColor}
+                    onDragStop={applyRgbColor}
                 />
             </div>
             <div className="colorpicker_rgb_g colorpicker_field">
                 <span>G</span>
-                <input
-                    type="text"
-                    name="g"
-                    maxLength={3}
-                    value={rgbColor.g}
-                    onChange={handleRgbColorChange}
-                    onBlur={applyRgbColor}
+                <Spinner
+                    min={0}
+                    max={255}
+                    value={pickerState.rgb.g}
+                    onChange={(v) => handleRGBSpinnerChange('g', v)}
+                    onInputBlur={applyRgbColor}
+                    onDragStop={applyRgbColor}
                 />
             </div>
             <div className="colorpicker_rgb_b colorpicker_field">
                 <span>B</span>
-                <input
-                    type="text"
-                    name="b"
-                    maxLength={3}
-                    value={rgbColor.b}
-                    onChange={handleRgbColorChange}
-                    onBlur={applyRgbColor}
+                <Spinner
+                    min={0}
+                    max={255}
+                    value={pickerState.rgb.b}
+                    onChange={(v) => handleRGBSpinnerChange('b', v)}
+                    onInputBlur={applyRgbColor}
+                    onDragStop={applyRgbColor}
                 />
             </div>
             <div className="colorpicker_hsb_h colorpicker_field">
                 <span>H</span>
-                <input
-                    type="text"
-                    name="h"
-                    maxLength={3}
-                    value={newColor.h}
-                    onChange={handleHsbColorChange}
+                <Spinner
+                    min={0}
+                    max={360}
+                    value={pickerState.hsb.h}
+                    onChange={(v) => handleHSBSpinnerChange('h', v)}
+                    onInputBlur={applyHsbColor}
+                    onDragStop={applyHsbColor}
                 />
             </div>
             <div className="colorpicker_hsb_s colorpicker_field">
                 <span>S</span>
-                <input
-                    type="text"
-                    name="s"
-                    maxLength={3}
-                    value={newColor.s}
-                    onChange={handleHsbColorChange}
+                <Spinner
+                    min={0}
+                    max={100}
+                    value={pickerState.hsb.s}
+                    onChange={(v) => handleHSBSpinnerChange('s', v)}
+                    onInputBlur={applyHsbColor}
+                    onDragStop={applyHsbColor}
                 />
             </div>
             <div className="colorpicker_hsb_b colorpicker_field">
                 <span>B</span>
-                <input
-                    type="text"
-                    name="b"
-                    maxLength={3}
-                    value={newColor.b}
-                    onChange={handleHsbColorChange}
+                <Spinner
+                    min={0}
+                    max={100}
+                    value={pickerState.hsb.b}
+                    onChange={(v) => handleHSBSpinnerChange('b', v)}
+                    onInputBlur={applyHsbColor}
+                    onDragStop={applyHsbColor}
                 />
             </div>
         </Container>
