@@ -4,6 +4,7 @@ import Draggable, { DraggableEvent, DraggableData } from 'react-draggable';
 
 import { useTools } from '../../../contexts/tools';
 import { useTheme } from '../../../contexts/theme';
+import { useBoard } from '../../../contexts/board';
 
 import { ElementText } from '../../../data/board';
 
@@ -20,6 +21,7 @@ const TextBlock: React.FC<TextBlockProps> = ({ data }) => {
     const [left, setLeft] = useState(data.left);
     const [top, setTop] = useState(data.top);
     const tools = useTools();
+    const board = useBoard();
     const theme = useTheme();
 
     function handleOnResize(event: SyntheticEvent, data: ResizeCallbackData) {
@@ -27,9 +29,16 @@ const TextBlock: React.FC<TextBlockProps> = ({ data }) => {
         setHeight(data.size.height);
     };
 
-    function handleOnDrag(event: DraggableEvent, data: DraggableData) {
-        setLeft(data.x);
-        setTop(data.y);
+    function handleOnDrag(event: DraggableEvent, eventData: DraggableData) {
+        setLeft(eventData.x);
+        setTop(eventData.y);
+        // update bounds
+        board.updateElementBounds(data, eventData.x, eventData.y, width, height, tools);
+    }
+
+    function handleResizeStop() {
+        // update bounds
+        board.updateElementBounds(data, left, top, width, height, tools);
     }
 
     function handleClick() {
@@ -46,6 +55,7 @@ const TextBlock: React.FC<TextBlockProps> = ({ data }) => {
                 width={width}
                 height={height}
                 onResize={handleOnResize}
+                onResizeStop={handleResizeStop}
                 minConstraints={[100, 100]}
                 left={left}
                 top={top}

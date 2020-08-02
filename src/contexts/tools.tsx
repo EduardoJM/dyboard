@@ -7,7 +7,7 @@ import { useBoard } from '../contexts/board';
 
 type Tools = 'cursor' | 'drag' | 'resize';
 
-interface ToolsContextData {
+export interface ToolsContextData {
     currentTool: Tools;
     changeCurrentTool: (tool: Tools) => void;
     addText: () => void;

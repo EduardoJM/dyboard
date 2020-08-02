@@ -5,6 +5,7 @@ import Draggable, { DraggableEvent, DraggableData } from 'react-draggable';
 import { ElementSpace3D } from '../../../data/board';
 
 import { useTools } from '../../../contexts/tools';
+import { useBoard } from '../../../contexts/board';
 import { useTheme } from '../../../contexts/theme';
 
 import { ResizableContainer, DraggableContainer } from '../commonStyles';
@@ -26,6 +27,7 @@ const Space3DBlock: React.FC<Space3DBlockProps> = ({ data }) => {
     const [height, setHeight] = useState(data.height);
     const canvasRef = createRef<HTMLCanvasElement>();
     const tools = useTools();
+    const board = useBoard();
     const theme = useTheme();
 
     const [drawnerTool, setDrawnerTool] = useState<DrawnerBase | null>(new CubeDrawner());
@@ -50,9 +52,16 @@ const Space3DBlock: React.FC<Space3DBlockProps> = ({ data }) => {
         setHeight(data.size.height);
     };
 
-    function handleOnDrag(event: DraggableEvent, data: DraggableData) {
-        setLeft(data.x);
-        setTop(data.y);
+    function handleOnDrag(event: DraggableEvent, eventData: DraggableData) {
+        setLeft(eventData.x);
+        setTop(eventData.y);
+        // update bounds
+        board.updateElementBounds(data, eventData.x, eventData.y, width, height, tools);
+    }
+
+    function handleResizeStop() {
+        // update bounds
+        board.updateElementBounds(data, left, top, width, height, tools);
     }
 
     function handleClick() {
@@ -94,6 +103,7 @@ const Space3DBlock: React.FC<Space3DBlockProps> = ({ data }) => {
                 width={width}
                 height={height}
                 onResize={handleOnResize}
+                onResizeStop={handleResizeStop}
                 minConstraints={[100, 100]}
                 left={left}
                 top={top}

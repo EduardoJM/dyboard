@@ -2,15 +2,25 @@ import React, { useContext, useEffect, useState, createContext } from 'react';
 import { ipcRenderer } from 'electron';
 
 import {
+    ElementAll,
     ElementsCollection,
     LoaderHelperElement,
     parseToElements,
     elementsToString
 } from '../data/board';
+import { ToolsContextData } from './tools';
 
 interface BoardContextData {
     elements: ElementsCollection;
     changeElements: (newElements: ElementsCollection) => void;
+    updateElementBounds: (
+        el: ElementAll,
+        left: number,
+        top: number,
+        width: number,
+        height: number,
+        tools: ToolsContextData
+    ) => void;
 }
 
 const BoardContext = createContext<BoardContextData>({} as BoardContextData);
@@ -46,9 +56,40 @@ export const BoardContextProvider: React.FC = ({
         setNeedSave(false);
     }, [needSave]);
 
+    function updateElementBounds(
+        el: ElementAll,
+        left: number,
+        top: number,
+        width: number,
+        height: number,
+        tools: ToolsContextData
+    ) {
+        const idx = elements.indexOf(el);
+        if (idx < 0 || idx >= elements.length) {
+            return;
+        }
+        let currentElement = false;
+        if (tools.currentElement === el) {
+            currentElement = true;
+        }
+        el.left = left;
+        el.top = top;
+        el.width = width;
+        el.height = height;
+        setElements([
+            ...elements.slice(0, idx),
+            el,
+            ...elements.slice(idx + 1)
+        ]);
+        if (currentElement) {
+            tools.setCurrentElement(el);
+        }
+    }
+
     return (
         <BoardContext.Provider value={{
             elements,
+            updateElementBounds,
             changeElements: setElements
         }}>
             { children }

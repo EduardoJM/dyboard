@@ -9,6 +9,7 @@ import { ElementPlot } from '../../../data/board';
 
 import { useTools } from '../../../contexts/tools';
 import { useTheme } from '../../../contexts/theme';
+import { useBoard } from '../../../contexts/board';
 
 import { ResizableContainer, DraggableContainer } from '../commonStyles';
 
@@ -23,6 +24,7 @@ const PlotBlock: React.FC<PlotBlockProps> = ({ data }) => {
     const [height, setHeight] = useState(data.height);
     const canvasRef = createRef<HTMLCanvasElement>();
     const tools = useTools();
+    const board = useBoard();
     const theme = useTheme();
 
     useEffect(() => {
@@ -48,9 +50,16 @@ const PlotBlock: React.FC<PlotBlockProps> = ({ data }) => {
         setHeight(data.size.height);
     };
 
-    function handleOnDrag(event: DraggableEvent, data: DraggableData) {
-        setLeft(data.x);
-        setTop(data.y);
+    function handleOnDrag(event: DraggableEvent, eventData: DraggableData) {
+        setLeft(eventData.x);
+        setTop(eventData.y);
+        // update bounds
+        board.updateElementBounds(data, eventData.x, eventData.y, width, height, tools);
+    }
+
+    function handleResizeStop() {
+        // update bounds
+        board.updateElementBounds(data, left, top, width, height, tools);
     }
 
     function handleClick() {
@@ -77,6 +86,7 @@ const PlotBlock: React.FC<PlotBlockProps> = ({ data }) => {
                 width={width}
                 height={height}
                 onResize={handleOnResize}
+                onResizeStop={handleResizeStop}
                 minConstraints={[100, 100]}
                 left={left}
                 top={top}
