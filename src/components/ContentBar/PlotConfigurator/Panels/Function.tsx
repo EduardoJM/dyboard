@@ -5,6 +5,7 @@ import { PlotConfiguratorPanelProps } from './types';
 
 import Slider from '../../../Form/Slider';
 import ColorPicker from '../../../Form/ColorPicker';
+import Spinner from '../../../Form/Spinner';
 
 const FunctionPanel: React.FC<PlotConfiguratorPanelProps> = ({
     item,
@@ -38,6 +39,15 @@ const FunctionPanel: React.FC<PlotConfiguratorPanelProps> = ({
         updateItem(idx);
     }
 
+    function handleSetResolution(value: number) {
+        if (!item || !(item instanceof jPlot.Function)) {
+            return;
+        }
+        const idx = getUpdateItemIndex();
+        item.resolution = value;
+        updateItem(idx);
+    }
+
     if (!item || !(item instanceof jPlot.Function)) {
         return null;
     }
@@ -61,6 +71,15 @@ const FunctionPanel: React.FC<PlotConfiguratorPanelProps> = ({
                 value={item.lineWidth}
                 onValueChange={handleSetLineWidth}
             />
+            <div>
+                <span>Resolução</span>
+                <Spinner
+                    min={10}
+                    max={1000}
+                    value={item.resolution}
+                    onChange={handleSetResolution}
+                />
+            </div>
         </>
     );
 };
