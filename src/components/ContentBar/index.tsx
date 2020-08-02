@@ -17,6 +17,8 @@ import { useTheme } from '../../contexts/theme';
 import { useBoard } from '../../contexts/board';
 import { useTools } from '../../contexts/tools';
 
+// TODO: add translation support HERE!
+
 const ContentBar: React.FC = () => {
     const [contentVisible, setContentVisible] = useState(true);
     const [contentIsBoardItems, setContentIsBoardItems] = useState(false);

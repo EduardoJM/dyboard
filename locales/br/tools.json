@@ -1,0 +1,22 @@
+{
+    "statusBar": {
+        "to-add": "Clique para adicionar",
+        "cursor": "Cursor",
+        "drag": "Mover",
+        "resize": "Redimensionar"
+    },
+    "toolBar": {
+        "titles": {
+            "cursor": "Cursor",
+            "drag": "Mover",
+            "resize": "Redimensionar",
+            "add": "Adicionar Elementos",
+            "parent": "Ferramentas",
+            "add-text": "Adicionar Texto",
+            "math": "Adicionar Equação LaTeX",
+            "add-image": "Adicionar Imagem",
+            "plot": "Adicionar Área de Plotagem",
+            "3d-element": "Adicionar Elementos Tridimensional"
+        }
+    }
+}

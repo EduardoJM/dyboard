@@ -1,0 +1,23 @@
+{
+    "text": {
+        "add": {
+            "title": "Adicionar Texto",
+            "button": "Adicionar"
+        },
+        "edit": {
+            "title": "Editar Texto",
+            "button": "Atualizar"
+        }
+    },
+    "image": {
+        "add": {
+            "title": "Adicionar Imagem",
+            "dropZone": "Selecione a imagem.",
+            "button": "Adicionar"
+        }
+    },
+    "color": {
+        "title": "Selecionar Cor",
+        "button": "Aplicar"
+    }
+}

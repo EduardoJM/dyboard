@@ -7,6 +7,7 @@ import {
     ContentBlock
 } from 'draft-js';
 import { Map } from 'immutable';
+import { useTranslation } from 'react-i18next';
 
 import { Container, ToolBar } from './styles';
 
@@ -29,6 +30,7 @@ const TextEditor: React.FC<TextEditorProps> = ({
 }) => {
     const [liveTeXEdits, setLiveTeXEdits] = useState(Map());
     const theme = useTheme();
+    const { t } = useTranslation('components');
 
     useEffect(() => {
         setEditorState(setInlineDecorator(editorState));
@@ -84,7 +86,7 @@ const TextEditor: React.FC<TextEditorProps> = ({
                             key={item.label}
                             onClick={() => toggleBlockType(item.style)}
                         >
-                            { item.label }
+                            { t(item.label) }
                         </button>
                     ))}
                 </ToolBar>
@@ -95,10 +97,12 @@ const TextEditor: React.FC<TextEditorProps> = ({
                             key={item.label}
                             onClick={() => toggleInlineStyle(item.style)}
                         >
-                            { item.label }
+                            { t(item.label) }
                         </button>
                     ))}
-                    <button type="button" onClick={inserTex}>TEX</button>
+                    <button type="button" onClick={inserTex}>
+                        {t('textEditor.tex')}
+                    </button>
                 </ToolBar>
             </div>
             <Editor

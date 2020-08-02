@@ -1,19 +1,19 @@
 export const BlockTypes = [
-    { label: 'H1', style: 'header-one' },
-    { label: 'H2', style: 'header-two' },
-    { label: 'H3', style: 'header-three' },
-    { label: 'H4', style: 'header-four' },
-    { label: 'H5', style: 'header-five' },
-    { label: 'H6', style: 'header-six' },
-    { label: 'Blockquote', style: 'blockquote' },
-    { label: 'UL', style: 'unordered-list-item' },
-    { label: 'OL', style: 'ordered-list-item' },
-    { label: 'Code Block', style: 'code-block' }
+    { label: 'textEditor.h1', style: 'header-one' },
+    { label: 'textEditor.h2', style: 'header-two' },
+    { label: 'textEditor.h3', style: 'header-three' },
+    { label: 'textEditor.h4', style: 'header-four' },
+    { label: 'textEditor.h5', style: 'header-five' },
+    { label: 'textEditor.h6', style: 'header-six' },
+    { label: 'textEditor.blockquote', style: 'blockquote' },
+    { label: 'textEditor.ul', style: 'unordered-list-item' },
+    { label: 'textEditor.ol', style: 'ordered-list-item' },
+    { label: 'textEditor.code', style: 'code-block' }
 ];
 
 export const InlineStyles = [
-    { label: 'Bold', style: 'BOLD' },
-    { label: 'Italic', style: 'ITALIC' },
-    { label: 'Underline', style: 'UNDERLINE' },
-    { label: 'Monospace', style: 'CODE' }
+    { label: 'textEditor.bold', style: 'BOLD' },
+    { label: 'textEditor.italic', style: 'ITALIC' },
+    { label: 'textEditor.underline', style: 'UNDERLINE' },
+    { label: 'textEditor.monospace', style: 'CODE' }
 ];

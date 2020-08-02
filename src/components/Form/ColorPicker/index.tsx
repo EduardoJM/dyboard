@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { Container, ButtonArea } from './styles';
 
@@ -20,6 +21,7 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
     const [newColor, setNewColor] = useState(color);
     // dropDown state
     const [visible, setVisible] = useState(false);
+    const { t } = useTranslation('modals');
 
     function handleSubmit() {
         setVisible(false);
@@ -41,7 +43,7 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
                 }} />
             </div>
             <Modal
-                title="Alterar Cor"
+                title={t('color.title')}
                 closeModalRequest={handleCloseModal}
                 visible={visible}
                 width={400}
@@ -53,7 +55,7 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
                     oldColor={color}
                 />
                 <ButtonArea>
-                    <Button onClick={handleSubmit}>Aplicar</Button>
+                    <Button onClick={handleSubmit}>{t('color.button')}</Button>
                 </ButtonArea>
             </Modal>
         </Container>

@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { FiUpload } from 'react-icons/fi';
+import { useTranslation } from 'react-i18next';
 
 import Button from '../../components/Form/Button';
 
@@ -19,6 +20,7 @@ const ModalAddImage: React.FC<ModalProps> = ({
 }) => {
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [selectedFileUrl, setSelectedFileUrl] = useState('');
+    const { t } = useTranslation('modals');
     const tools = useTools();
     const theme = useTheme();
 
@@ -69,7 +71,7 @@ const ModalAddImage: React.FC<ModalProps> = ({
     return (
         <Modal
             visible={opened}
-            title="Adicionar Imagem"
+            title={t('image.add.title')}
             closeModalRequest={() => handleClose(modalId)}
         >
             <Container>
@@ -80,14 +82,14 @@ const ModalAddImage: React.FC<ModalProps> = ({
                         : (
                             <p className="drop-zone-content">
                                 <FiUpload size={64} />
-                                Selecione a imagem.
+                                {t('image.add.dropZone')}
                             </p>
                         )
                     }
                 </ImageDropzone>
 
                 <ButtonArea>
-                    <Button onClick={handleAddClick}>Adicionar</Button>
+                    <Button onClick={handleAddClick}>{t('image.add.button')}</Button>
                 </ButtonArea>
             </Container>
         </Modal>

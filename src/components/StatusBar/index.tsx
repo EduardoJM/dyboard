@@ -1,5 +1,6 @@
 import React from 'react';
 import { MdBuild } from 'react-icons/md';
+import { useTranslation } from 'react-i18next';
 
 import { useTools } from '../../contexts/tools';
 import { useTheme } from '../../contexts/theme';
@@ -9,13 +10,14 @@ import Container from './styles';
 const StatusBar: React.FC = () => {
     const tools = useTools();
     const theme = useTheme();
+    const { t } = useTranslation('tools');
 
     const getToolString = () => {
-        if (tools.elementToAdd) return 'Clique para adicionar';
-        if (tools.currentTool === 'cursor') return 'Cursor';
-        if (tools.currentTool === 'drag') return 'Mover';
-        if (tools.currentTool === 'resize') return 'Redimensionar';
-        return '';
+        let key = 'to-add';
+        if (!tools.elementToAdd) {
+            key = tools.currentTool;
+        }
+        return t(`statusBar.${key}`);
     };
 
     return (

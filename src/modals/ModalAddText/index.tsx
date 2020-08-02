@@ -7,6 +7,7 @@ import {
 } from 'draft-js';
 import { stateToHTML } from 'draft-js-export-html';
 import katex from 'katex';
+import { useTranslation } from 'react-i18next';
 
 import { renderInlineLaTeX } from '../../core/latex';
 import Modal from '../../components/Modal';
@@ -26,7 +27,7 @@ interface ModalAddTextProps {
     modalId: string;
     handleClose: (id: string) => void;
     isEditing?: boolean;
-    editingInitialContent: RawDraftContentState;
+    editingInitialContent?: RawDraftContentState;
     editComplete?: (state: RawDraftContentState, text: string) => void;
 }
 
@@ -43,6 +44,7 @@ const ModalAddText: React.FC<ModalAddTextProps> = ({
             ? EditorState.createWithContent(convertFromRaw(editingInitialContent))
             : EditorState.createEmpty()
     );
+    const { t } = useTranslation('modals');
     const tools = useTools();
 
     function handleAdd() {
@@ -80,7 +82,7 @@ const ModalAddText: React.FC<ModalAddTextProps> = ({
     return (
         <Modal
             visible={opened}
-            title={isEditing ? 'Editar Texto' : 'Adicionar Texto'}
+            title={isEditing ? t('text.edit.title') : t('text.add.title')}
             closeModalRequest={() => handleClose(modalId)}
         >
             <Form>
@@ -92,7 +94,7 @@ const ModalAddText: React.FC<ModalAddTextProps> = ({
                 </div>
                 <ButtonArea>
                     <Button onClick={handleAdd}>
-                        {isEditing ? 'Atualizar' : 'Adicionar'}
+                        {isEditing ? t('text.edit.button') : t('text.add.button')}
                     </Button>
                 </ButtonArea>
             </Form>

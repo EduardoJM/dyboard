@@ -1,0 +1,12 @@
+{
+    "text": {
+        "add": {
+            "title": "Add Text",
+            "button": "Add"
+        },
+        "edit": {
+            "title": "Edit Texto",
+            "button": "Update"
+        }
+    }
+}

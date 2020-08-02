@@ -3,6 +3,7 @@ import { MdFunctions, MdTitle, MdInsertPhoto, MdAdd, MdChevronLeft } from 'react
 import { GiArrowCursor, GiCube, GiStoneSphere, GiResize, GiMove } from 'react-icons/gi';
 import { BsGraphDown } from 'react-icons/bs';
 import { useTransition } from 'react-spring';
+import { useTranslation } from 'react-i18next';
 
 import { useTools } from '../../contexts/tools';
 import { useTheme } from '../../contexts/theme';
@@ -14,6 +15,7 @@ import toolBarData, { ToolBarObjectItem } from './data';
 const ToolBar: React.FC = () => {
     const tools = useTools();
     const theme = useTheme();
+    const { t } = useTranslation('tools');
 
     const [currentTools, setCurrentTools] = useState(0);
 
@@ -93,7 +95,7 @@ const ToolBar: React.FC = () => {
                 <Animation style={props} key={key}>
                     {toolBarData[item].map((button) => (
                         <ToolBarButton
-                            title={button.title}
+                            title={t(`toolBar.titles.${button.id}`)}
                             key={button.id}
                             theme={theme}
                             current={tools.currentTool === button.id}

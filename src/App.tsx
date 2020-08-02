@@ -17,6 +17,8 @@ import { ThemeContextProvider } from './contexts/theme';
 import 'katex/dist/katex.min.css';
 import 'react-resizable/css/styles.css';
 
+import '../i18n';
+
 const mainElement = document.createElement('div');
 mainElement.setAttribute('id', 'root');
 document.body.appendChild(mainElement);
