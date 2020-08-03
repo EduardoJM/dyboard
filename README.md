@@ -1,5 +1,12 @@
-## Electron + TypeScript + React
-Boilerplate for a project using Electron, React and Typescript
+# DyBoard
+
+![My Dyboad](.github/preview.png)
+
+This is my own (in development) digital blackboard personal project.
+
+## Observation
+
+This is constructed using the [electron-typescript-react](https://github.com/diego3g/electron-typescript-react) from @diego3g.
 
 ## Installation
 
@@ -14,11 +21,13 @@ yarn install
 ```
 
 ## Usage
+
 In order to run this project 2 scripts will need to be executed `dev:react` and `dev:electron`, run each one in a different terminal and always run `dev:react` before `dev:electron`, or `dev` to run them in order automatically
 
 ```bash
 npm run dev:react
 ```
+
 ```bash
 npm run dev:electron
 ```
@@ -30,18 +39,9 @@ npm run dev
 ```
 
 ## Packaging
+
 To generate a project package run `package`
 
 ```bash
 npm run package
 ```
-
-
-
-## Contributing
-
-Pull requests are always welcome 😃.
-
-## License
-
-[MIT](https://choosealicense.com/licenses/mit/)
