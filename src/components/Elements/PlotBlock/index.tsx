@@ -41,8 +41,12 @@ const PlotBlock: React.FC<PlotBlockProps> = ({ data }) => {
             view.items.push(item);
         });
 
-        view.zoom = { x: 100, y: 100 };
-        view.translation = { x: -1.5, y: -1.5 };
+        view.zoom = data.zoom;
+        view.translation = data.translation;
+
+        const mouse = new jPlot.Mouse(view);
+        mouse.enable();
+        mouse.enableZoom();
 
         view.render();
     }, [canvasRef]);

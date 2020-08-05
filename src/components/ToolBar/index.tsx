@@ -75,7 +75,9 @@ const ToolBar: React.FC = () => {
                 left: 0,
                 top: 0,
                 type: 'plot',
-                items: []
+                items: [],
+                translation: { x: -2.5, y: -2.5 },
+                zoom: { x: 100, y: 100 }
             });
         } else if (button.tool === 'add-3dspace') {
             tools.setCatchClick({

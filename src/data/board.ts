@@ -30,6 +30,14 @@ export interface ElementPlot {
     left: number;
     top: number;
     items: RenderItem[];
+    translation: {
+        x: number;
+        y: number;
+    };
+    zoom: {
+        x: number;
+        y: number;
+    };
 }
 
 export interface ElementSpace3D {
@@ -89,6 +97,14 @@ export interface LoaderHelperElement {
     rawContent?: string;
     imageContent?: string;
     items?: LoaderHelperRenderItem[];
+    translation?: {
+        x: number;
+        y: number;
+    };
+    zoom?: {
+        x: number;
+        y: number;
+    };
 }
 
 export function elementsToString(data: ElementsCollection): string {
@@ -133,6 +149,8 @@ export function elementsToString(data: ElementsCollection): string {
             });
             return {
                 ...baseElement,
+                translation: plt.translation,
+                zoom: plt.zoom,
                 items: newItems.filter((item) => item !== null)
             };
         }
@@ -184,6 +202,18 @@ export function parseToElements(data: LoaderHelperElement[]): ElementsCollection
             });
             return {
                 ...baseItem,
+                translation: item.translation
+                    ? item.translation
+                    : {
+                        x: 0,
+                        y: 0
+                    },
+                zoom: item.zoom
+                    ? item.zoom
+                    : {
+                        x: 100,
+                        y: 100
+                    },
                 items: newItems.filter((item) => item !== null)
             };
         }
