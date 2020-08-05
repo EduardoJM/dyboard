@@ -1,5 +1,6 @@
 import React from 'react';
 import jPlot from 'jplot';
+import { useTranslation } from 'react-i18next';
 
 import { PlotConfiguratorPanelProps } from './types';
 
@@ -12,6 +13,8 @@ const FunctionPanel: React.FC<PlotConfiguratorPanelProps> = ({
     getUpdateItemIndex,
     updateItem
 }) => {
+    const { t } = useTranslation('content');
+
     function handleFunctionChange(value: string) {
         if (!item || !(item instanceof jPlot.Function)) {
             return;
@@ -53,7 +56,7 @@ const FunctionPanel: React.FC<PlotConfiguratorPanelProps> = ({
     }
     return (
         <>
-            <p>Função</p>
+            <p>{t('panels.plot.items.function.props.function')}</p>
             <input
                 type="text"
                 value={item.function}
@@ -62,17 +65,17 @@ const FunctionPanel: React.FC<PlotConfiguratorPanelProps> = ({
             <ColorPicker
                 onSubmit={handleSetColor}
                 color={item.color}
-                text="Cor"
+                text={t('panels.plot.items.function.props.color')}
             />
             <Slider
-                text="Espessura do Traço"
+                text={t('panels.plot.items.function.props.lineWidth')}
                 min={1}
                 max={10}
                 value={item.lineWidth}
                 onValueChange={handleSetLineWidth}
             />
             <div>
-                <span>Resolução</span>
+                <span>{t('panels.plot.items.function.props.resolution')}</span>
                 <Spinner
                     min={10}
                     max={1000}

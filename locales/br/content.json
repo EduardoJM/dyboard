@@ -1,4 +1,57 @@
-// TODO: add contentbar translation support
 {
-    
+    "bar": {
+        "content": "Exibir o Painel de Conteúdo",
+        "delete": "Deletar Conteúdo Selecionado",
+        "contentList": "Exibir os Conteúdos"
+    },
+    "panels": {
+        "no-select": "Não há item selecionado.",
+        "plot": {
+            "name": "Gráfico 2D",
+            "itensHeading": "Itens",
+            "configHeading": "Configurar",
+            "items": {
+                "axis": {
+                    "name": "Eixo",
+                    "props": {
+                        "xAxis": "Eixo X",
+                        "xAxisWidth": "Espessura do Eixo X",
+                        "xAxisThick": "Marcações em X",
+                        "xAxisThickNumbers": "Números em X",
+                        "xAxisColor": "Cor do Eixo X",
+                        "yAxis": "Eixo Y",
+                        "yAxisWidth": "Espessura do Eixo Y",
+                        "yAxisThick": "Marcações em Y",
+                        "yAxisThickNumbers": "Números em Y",
+                        "yAxisColor": "Cor do Eixo Y",
+                        "arrows": "Setas"
+                    }
+                },
+                "function": {
+                    "name": "Função",
+                    "props": {
+                        "function": "Função",
+                        "color": "Cor",
+                        "lineWidth": "Espessura do Traço",
+                        "resolution": "Resolução"
+                    }
+                },
+                "point": {
+                    "name": "Ponto"
+                },
+                "unsupported": {
+                    "name": "Não suportado"
+                }
+            }
+        },
+        "image": {
+            "name": "Imagem"
+        },
+        "text": {
+            "name": "Texto"
+        },
+        "unsupported": {
+            "name": "Não suportado"
+        }
+    }
 }

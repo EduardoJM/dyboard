@@ -1,8 +1,10 @@
 {
     "file": "File",
-    "fileNew": "New",
-    "fileOpen": "Open",
-    "fileSave": "Save",
-    "fileSaveAs": "Save As",
-    "fileExit": "Exit"
+    "fileItems": {
+        "new": "New",
+        "open": "Open",
+        "save": "Save",
+        "saveAs": "Save As",
+        "exit": "Exit"
+    }
 }

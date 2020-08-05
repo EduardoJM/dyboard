@@ -1,0 +1,57 @@
+{
+    "bar": {
+        "content": "Show the Content Panel",
+        "delete": "Delete the selected content",
+        "contentList": "Show the contents"
+    },
+    "panels": {
+        "no-select": "No selection.",
+        "plot": {
+            "name": "2D Plot",
+            "itensHeading": "Items",
+            "configHeading": "Settings",
+            "items": {
+                "axis": {
+                    "name": "Axis",
+                    "props": {
+                        "xAxis": "X Axis",
+                        "xAxisWidth": "X Axis Line Width",
+                        "xAxisThick": "X Thicks",
+                        "xAxisThickNumbers": "X Numbers",
+                        "xAxisColor": "X Axis Color",
+                        "yAxis": "Y Axis",
+                        "yAxisWidth": "Y Axis Line Width",
+                        "yAxisThick": "Y Thicks",
+                        "yAxisThickNumbers": "Y Numbers",
+                        "yAxisColor": "Y Axis Color",
+                        "arrows": "Arrows"
+                    }
+                },
+                "function": {
+                    "name": "Function",
+                    "props": {
+                        "function": "Function",
+                        "color": "Color",
+                        "lineWidth": "Line Width",
+                        "resolution": "Resolution"
+                    }
+                },
+                "point": {
+                    "name": "Point"
+                },
+                "unsupported": {
+                    "name": "Unsupported"
+                }
+            }
+        },
+        "image": {
+            "name": "Image"
+        },
+        "text": {
+            "name": "Text"
+        },
+        "unsupported": {
+            "name": "Unsupported"
+        }
+    }
+}

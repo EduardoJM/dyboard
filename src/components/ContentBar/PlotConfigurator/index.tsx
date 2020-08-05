@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import jPlot, { RenderItem } from 'jplot';
 import { MdAdd, MdDelete } from 'react-icons/md';
+import { useTranslation } from 'react-i18next';
 
 import { ElementPlot } from '../../../data/board';
 
@@ -25,6 +26,7 @@ const PlotConfigurator: React.FC<PlotConfiguratorProps> = ({ data }) => {
     const tools = useTools();
     const board = useBoard();
     const theme = useTheme();
+    const { t } = useTranslation('content');
 
     function addPlotItem(item: RenderItem) {
         const newItem = {
@@ -64,17 +66,17 @@ const PlotConfigurator: React.FC<PlotConfiguratorProps> = ({ data }) => {
 
     function renderListItemContent(item: RenderItem, nameOnly: boolean) {
         if (item instanceof jPlot.Axis) {
-            return 'Eixo';
+            return t('panels.plot.items.axis.name');
         } else if (item instanceof jPlot.Function) {
-            return 'Função';
+            return t('panels.plot.items.function.name');
         } else if (item instanceof jPlot.Point) {
-            let str = 'Ponto';
+            let str = t('panels.plot.items.point.name');
             if (!nameOnly) {
                 str = `${str} (${item.x}, ${item.y})`;
             }
             return str;
         }
-        return 'Não Suportado';
+        return t('panels.plot.items.unsupported.name');
     }
 
     function handleDeleteItem() {
@@ -125,7 +127,7 @@ const PlotConfigurator: React.FC<PlotConfiguratorProps> = ({ data }) => {
     return (
         <Container theme={theme}>
             <PlotsList theme={theme}>
-                <div className="heading">Itens</div>
+                <div className="heading">{t('panels.plot.itensHeading')}</div>
                 <div className="list">
                     <ListBox>
                         {data.items.map((item, index) => (

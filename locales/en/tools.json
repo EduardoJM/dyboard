@@ -1,0 +1,22 @@
+{
+  "statusBar": {
+      "to-add": "Click to add",
+      "cursor": "Cursor",
+      "drag": "Move",
+      "resize": "Resize"
+  },
+  "toolBar": {
+      "titles": {
+          "cursor": "Cursor",
+          "drag": "Move",
+          "resize": "Resize",
+          "add": "Add Element",
+          "parent": "Tools",
+          "add-text": "Add Text",
+          "math": "Add LaTeX Equation",
+          "add-image": "Add Image",
+          "plot": "Add 2D Plot",
+          "3d-element": "Add 3D Element Area"
+      }
+  }
+}

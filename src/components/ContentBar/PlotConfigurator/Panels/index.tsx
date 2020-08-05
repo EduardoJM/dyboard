@@ -1,5 +1,6 @@
 import React from 'react';
 import jPlot, { RenderItem } from 'jplot';
+import { useTranslation } from 'react-i18next';
 
 import Scrollbars from '../../../Scrollbars';
 
@@ -22,6 +23,7 @@ const ConfigPanel: React.FC<ConfigPanelProps> = ({
 }) => {
     const board = useBoard();
     const tools = useTools();
+    const { t } = useTranslation('content');
 
     function updateCurrentItem(editingIndex: number) {
         const newItem = {
@@ -53,13 +55,13 @@ const ConfigPanel: React.FC<ConfigPanelProps> = ({
     if (!currentItem) {
         return (
             <div className="fit-center-text">
-                Não há item selecionado.
+                {t('panels.no-select')}
             </div>
         );
     }
     return (
         <>
-            <div className="heading">Configurar</div>
+            <div className="heading">{t('panels.plot.configHeading')}</div>
             <div className="editor">
                 <Scrollbars>
                     <div className="content">

@@ -17,21 +17,21 @@ export default function registerMenu(win: BrowserWindow): void {
                 label: i18n.t('applicationMenu:file'),
                 submenu: [
                     {
-                        label: i18n.t('applicationMenu:fileNew'),
+                        label: i18n.t('applicationMenu:fileItems.new'),
                         accelerator: 'CmdOrCtrl+N'
                     },
                     {
-                        label: i18n.t('applicationMenu:fileOpen'),
+                        label: i18n.t('applicationMenu:fileItems.open'),
                         accelerator: 'CmdOrCtrl+O',
                         click: () => open(win)
                     },
                     {
-                        label: i18n.t('applicationMenu:fileSave'),
+                        label: i18n.t('applicationMenu:fileItems.save'),
                         accelerator: 'CmdOrCtrl+S',
                         click: () => save(win)
                     },
                     {
-                        label: i18n.t('applicationMenu:fileExit'),
+                        label: i18n.t('applicationMenu:fileItems.exit'),
                         accelerator: 'CmdOrCtrl+Q',
                         role: isMac ? 'close' : 'quit'
                     }

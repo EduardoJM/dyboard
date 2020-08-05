@@ -1,8 +1,10 @@
 {
     "file": "Arquivo",
-    "fileNew": "Novo",
-    "fileOpen": "Abrir",
-    "fileSave": "Salvar",
-    "fileSaveAs": "Salvar Como",
-    "fileExit": "Sair"
+    "fileItems": {
+        "new": "Novo",
+        "open": "Abrir",
+        "save": "Salvar",
+        "saveAs": "Salvar Como",
+        "exit": "Sair"
+    }
 }

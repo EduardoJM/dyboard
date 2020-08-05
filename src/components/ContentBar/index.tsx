@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useTransition } from 'react-spring';
 import { RiListSettingsLine } from 'react-icons/ri';
 import { MdDelete, MdList } from 'react-icons/md';
+import { useTranslation } from 'react-i18next';
 
 import { Container, Content, Bar } from './styles';
 
@@ -17,8 +18,6 @@ import { useTheme } from '../../contexts/theme';
 import { useBoard } from '../../contexts/board';
 import { useTools } from '../../contexts/tools';
 
-// TODO: add translation support HERE!
-
 const ContentBar: React.FC = () => {
     const [contentVisible, setContentVisible] = useState(true);
     const [contentIsBoardItems, setContentIsBoardItems] = useState(false);
@@ -30,6 +29,7 @@ const ContentBar: React.FC = () => {
         enter: { opacity: 1 },
         leave: { opacity: 0 }
     });
+    const { t } = useTranslation('content');
 
     function renderContent(): JSX.Element | null {
         if (contentIsBoardItems) {
@@ -90,7 +90,7 @@ const ContentBar: React.FC = () => {
             ))}
             <Bar theme={theme}>
                 <ToolBarButton
-                    title="Exibir o Painel de Conteúdo"
+                    title={t('bar.content')}
                     theme={theme}
                     markerSide="right"
                     current={contentVisible && !contentIsBoardItems}
@@ -100,7 +100,7 @@ const ContentBar: React.FC = () => {
                 </ToolBarButton>
                 {tools.currentElement && (
                     <ToolBarButton
-                        title="Deletar Conteúdo Selecionado"
+                        title={t('bar.delete')}
                         theme={theme}
                         markerSide="right"
                         current={false}
@@ -109,9 +109,8 @@ const ContentBar: React.FC = () => {
                         <MdDelete size={24} />
                     </ToolBarButton>
                 )}
-                <div style={{ flex: 1 }}></div>
                 <ToolBarButton
-                    title="Exibir os Conteúdos"
+                    title={t('bar.contentList')}
                     theme={theme}
                     markerSide="right"
                     current={contentVisible && contentIsBoardItems}

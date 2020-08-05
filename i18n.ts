@@ -6,7 +6,7 @@ import Backend from 'i18next-fs-backend';
 
 const options = {
     supportedLngs: ['br', 'en'],
-    lng: 'br',
+    lng: 'en',
     fallbackLng: 'en',
     debug: true,
     whitelist: ['en', 'br'],

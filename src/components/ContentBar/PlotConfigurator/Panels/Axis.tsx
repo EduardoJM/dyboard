@@ -1,5 +1,6 @@
 import React from 'react';
 import jPlot from 'jplot';
+import { useTranslation } from 'react-i18next';
 
 import { PlotConfiguratorPanelProps } from './types';
 
@@ -12,6 +13,8 @@ const AxisPanel: React.FC<PlotConfiguratorPanelProps> = ({
     getUpdateItemIndex,
     updateItem
 }) => {
+    const { t } = useTranslation('content');
+
     type AxisProp = 'xAxis' | 'yAxis' | 'arrows'
                     | 'xAxisThick' | 'yAxisThick'
                     | 'xAxisThickNumbers' | 'yAxisThickNumbers';
@@ -75,10 +78,10 @@ const AxisPanel: React.FC<PlotConfiguratorPanelProps> = ({
             <Switch
                 checked={item.xAxis}
                 handleCheckChange={(v) => handleSwitchChange('xAxis', v)}
-                text="Eixo X"
+                text={t('panels.plot.items.axis.props.xAxis')}
             />
             <Slider
-                text="Espessura do Eixo X"
+                text={t('panels.plot.items.axis.props.xAxisWidth')}
                 min={1}
                 max={10}
                 value={item.xAxisWidth}
@@ -87,25 +90,25 @@ const AxisPanel: React.FC<PlotConfiguratorPanelProps> = ({
             <Switch
                 checked={item.xAxisThick}
                 handleCheckChange={(v) => handleSwitchChange('xAxisThick', v)}
-                text="Marcações em X"
+                text={t('panels.plot.items.axis.props.xAxisThick')}
             />
             <Switch
                 checked={item.xAxisThickNumbers}
                 handleCheckChange={(v) => handleSwitchChange('xAxisThickNumbers', v)}
-                text="Números em X"
+                text={t('panels.plot.items.axis.props.xAxisThickNumbers')}
             />
             <ColorPicker
                 color={item.xAxisColor}
-                text="Cor do Eixo X"
+                text={t('panels.plot.items.axis.props.xAxisColor')}
                 onSubmit={(color) => handleSetColor('x', color)}
             />
             <Switch
                 checked={item.yAxis}
                 handleCheckChange={(v) => handleSwitchChange('yAxis', v)}
-                text="Eixo Y"
+                text={t('panels.plot.items.axis.props.yAxis')}
             />
             <Slider
-                text="Espessura do Eixo Y"
+                text={t('panels.plot.items.axis.props.yAxisWidth')}
                 min={1}
                 max={10}
                 value={item.yAxisWidth}
@@ -114,22 +117,22 @@ const AxisPanel: React.FC<PlotConfiguratorPanelProps> = ({
             <Switch
                 checked={item.yAxisThick}
                 handleCheckChange={(v) => handleSwitchChange('yAxisThick', v)}
-                text="Marcações em Y"
+                text={t('panels.plot.items.axis.props.yAxisThick')}
             />
             <Switch
                 checked={item.yAxisThickNumbers}
                 handleCheckChange={(v) => handleSwitchChange('yAxisThickNumbers', v)}
-                text="Números em Y"
+                text={t('panels.plot.items.axis.props.yAxisThickNumbers')}
             />
             <ColorPicker
                 color={item.yAxisColor}
-                text="Cor do Eixo Y"
+                text={t('panels.plot.items.axis.props.yAxisColor')}
                 onSubmit={(color) => handleSetColor('y', color)}
             />
             <Switch
                 checked={item.arrows}
                 handleCheckChange={(v) => handleSwitchChange('arrows', v)}
-                text="Setas"
+                text={t('panels.plot.items.axis.props.arrows')}
             />
         </>
     );

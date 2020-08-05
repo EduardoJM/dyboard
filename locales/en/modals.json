@@ -5,8 +5,19 @@
             "button": "Add"
         },
         "edit": {
-            "title": "Edit Texto",
+            "title": "Edit Text",
             "button": "Update"
         }
+    },
+    "image": {
+        "add": {
+            "title": "Add Image",
+            "dropZone": "Choose the image.",
+            "button": "Add"
+        }
+    },
+    "color": {
+        "title": "Choose the Color",
+        "button": "Set"
     }
 }

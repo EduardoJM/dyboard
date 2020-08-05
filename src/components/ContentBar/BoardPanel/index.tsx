@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { ListBox, ListBoxItem } from '../../Form/DraggableListBox';
 
@@ -8,18 +9,19 @@ import { useTools } from '../../../contexts/tools';
 import { ElementAll } from '../../../data/board';
 
 const BoardPanel: React.FC = () => {
+    const { t } = useTranslation('content');
     const board = useBoard();
     const tools = useTools();
 
     function getDisplayText(name: string) {
         if (name === 'image') {
-            return 'Imagem';
+            return t('panels.image.name');
         } else if (name === 'text') {
-            return 'Texto';
+            return t('panels.text.name');
         } else if (name === 'plot') {
-            return 'Gráfico 2D';
+            return t('panels.plot.name');
         }
-        return 'Não suportado';
+        return t('panels.unsupported.name');
     }
 
     function handleListItemClick(item: ElementAll) {
