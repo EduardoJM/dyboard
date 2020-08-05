@@ -1,5 +1,6 @@
 import React, { useState, useEffect, createRef, SyntheticEvent } from 'react';
 import jPlot from 'jplot';
+import { evaluate } from 'mathjs';
 import { ResizeCallbackData } from 'react-resizable';
 import Draggable, { DraggableEvent, DraggableData } from 'react-draggable';
 
@@ -35,6 +36,7 @@ const PlotBlock: React.FC<PlotBlockProps> = ({ data }) => {
             return;
         }
         const view = new jPlot.View(canvasRef.current);
+        view.evaluate = (expr, x) => evaluate(expr, { x });
         data.items.forEach((item) => {
             view.items.push(item);
         });

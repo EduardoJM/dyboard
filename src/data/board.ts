@@ -1,4 +1,4 @@
-import * as jPlot from 'jplot';
+import jPlot, { RenderItem } from 'jplot';
 import { RawDraftContentState } from 'draft-js';
 
 export interface ElementText {
@@ -29,7 +29,7 @@ export interface ElementPlot {
     height: number;
     left: number;
     top: number;
-    items: jPlot.RenderItem[];
+    items: RenderItem[];
 }
 
 export interface ElementSpace3D {
@@ -118,12 +118,12 @@ export function elementsToString(data: ElementsCollection): string {
         } else if (element.type === 'plot') {
             const plt = element as ElementPlot;
             const newItems = plt.items.map((item) => {
-                if (item instanceof jPlot.default.Axis) {
+                if (item instanceof jPlot.Axis) {
                     return {
                         type: 'axis',
                         ...item
                     };
-                } else if (item instanceof jPlot.default.Function) {
+                } else if (item instanceof jPlot.Function) {
                     return {
                         type: 'function',
                         ...item
@@ -173,11 +173,11 @@ export function parseToElements(data: LoaderHelperElement[]): ElementsCollection
             }
             const newItems = item.items.map((renderItem) => {
                 if (renderItem.type === 'axis') {
-                    return new jPlot.default.Axis({
+                    return new jPlot.Axis({
                         ...renderItem
                     });
                 } else if (renderItem.type === 'function') {
-                    return new jPlot.default.Function({
+                    return new jPlot.Function({
                         ...renderItem
                     });
                 }
