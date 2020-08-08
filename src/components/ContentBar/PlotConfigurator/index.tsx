@@ -57,10 +57,16 @@ const PlotConfigurator: React.FC<PlotConfiguratorProps> = ({ data }) => {
         setAddRenderItemsDropDown(false);
     }
 
+    function addAreaUnderCurve() {
+        addPlotItem(new jPlot.AreaUnderCurve());
+        setAddRenderItemsDropDown(false);
+    }
+
     const addDropDownContent = (
         <div className="add-dropdown-content">
-            <button onClick={addAxis}>Axis</button>
-            <button onClick={addFunction}>Function</button>
+            <button onClick={addAxis}>{t('panels.plot.items.axis.name')}</button>
+            <button onClick={addFunction}>{t('panels.plot.items.function.name')}</button>
+            <button onClick={addAreaUnderCurve}>{t('panels.plot.items.areaUnderCurve.name')}</button>
         </div>
     );
 
@@ -69,6 +75,8 @@ const PlotConfigurator: React.FC<PlotConfiguratorProps> = ({ data }) => {
             return t('panels.plot.items.axis.name');
         } else if (item instanceof jPlot.Function) {
             return t('panels.plot.items.function.name');
+        } else if (item instanceof jPlot.AreaUnderCurve) {
+            return t('panels.plot.items.areaUnderCurve.name');
         } else if (item instanceof jPlot.Point) {
             let str = t('panels.plot.items.point.name');
             if (!nameOnly) {

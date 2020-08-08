@@ -30,10 +30,20 @@
                 "function": {
                     "name": "Função",
                     "props": {
+                        "name": "Nome",
                         "function": "Função",
                         "color": "Cor",
                         "lineWidth": "Espessura do Traço",
                         "resolution": "Resolução"
+                    }
+                },
+                "areaUnderCurve": {
+                    "name": "Area Sobre a Curva",
+                    "props": {
+                        "curveName": "Nome da curva",
+                        "left": "Esquerda",
+                        "right": "Direita",
+                        "color": "Cor"
                     }
                 },
                 "point": {

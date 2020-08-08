@@ -2,13 +2,22 @@ import styled from 'styled-components';
 
 import { ThemeContextData } from '../../../contexts/theme';
 
+interface InputContainerProps {
+    width?: number;
+}
+
+export const InputContainer = styled.div<InputContainerProps>`
+    width: ${props => props.width !== undefined ? `${props.width}px` : 'auto'};
+    padding: 5px;
+`;
+
 interface ContainerProps {
     width?: number;
 
     theme: ThemeContextData;
 }
 
-const Container = styled.div<ContainerProps>`
+export const Container = styled.div<ContainerProps>`
     display: flex;
     flex-direction: row;
     align-items: stretch;
@@ -54,5 +63,3 @@ const Container = styled.div<ContainerProps>`
         }
     }
 `;
-
-export default Container;

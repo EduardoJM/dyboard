@@ -30,10 +30,20 @@
                 "function": {
                     "name": "Function",
                     "props": {
+                        "name": "Name",
                         "function": "Function",
                         "color": "Color",
                         "lineWidth": "Line Width",
                         "resolution": "Resolution"
+                    }
+                },
+                "areaUnderCurve": {
+                    "name": "Area Under Curve",
+                    "props": {
+                        "curveName": "Curve Name",
+                        "left": "Left",
+                        "right": "Right",
+                        "color": "Color"
                     }
                 },
                 "point": {

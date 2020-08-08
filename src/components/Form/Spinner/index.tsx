@@ -1,12 +1,14 @@
 import React, { ChangeEvent, MouseEvent } from 'react';
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from 'react-icons/md';
 
-import Container from './styles';
+import { Container, InputContainer } from './styles';
 
 import { useTheme } from '../../../contexts/theme';
 
 interface SpinnerProps {
     width?: number;
+    labeled?: boolean;
+    text?: string;
 
     min: number;
     max: number;
@@ -18,6 +20,8 @@ interface SpinnerProps {
 
 const Spinner: React.FC<SpinnerProps> = ({
     width,
+    labeled,
+    text,
 
     min,
     max,
@@ -62,7 +66,7 @@ const Spinner: React.FC<SpinnerProps> = ({
         }
     }
 
-    return (
+    const spinner = (
         <Container className="spinner" width={width} theme={theme}>
             <input
                 type="text"
@@ -79,6 +83,15 @@ const Spinner: React.FC<SpinnerProps> = ({
                 </div>
             </div>
         </Container>
+    );
+    if (!labeled) {
+        return spinner;
+    }
+    return (
+        <InputContainer width={width}>
+            <label>{text}</label>
+            {spinner}
+        </InputContainer>
     );
 };
 

@@ -7,6 +7,7 @@ import { PlotConfiguratorPanelProps } from './types';
 import Slider from '../../../Form/Slider';
 import ColorPicker from '../../../Form/ColorPicker';
 import Spinner from '../../../Form/Spinner';
+import Input from '../../../Form/Input';
 
 const FunctionPanel: React.FC<PlotConfiguratorPanelProps> = ({
     item,
@@ -15,12 +16,16 @@ const FunctionPanel: React.FC<PlotConfiguratorPanelProps> = ({
 }) => {
     const { t } = useTranslation('content');
 
-    function handleFunctionChange(value: string) {
+    function handleTextChange(prop: 'name' | 'function', value: string) {
         if (!item || !(item instanceof jPlot.Function)) {
             return;
         }
         const idx = getUpdateItemIndex();
-        item.function = value;
+        if (prop === 'function') {
+            item.function = value;
+        } else if (prop === 'name') {
+            item.name = value;
+        }
         updateItem(idx);
     }
 
@@ -56,11 +61,19 @@ const FunctionPanel: React.FC<PlotConfiguratorPanelProps> = ({
     }
     return (
         <>
-            <p>{t('panels.plot.items.function.props.function')}</p>
-            <input
+            <Input
+                name="function_name"
+                text={t('panels.plot.items.function.props.name')}
+                type="text"
+                value={item.name}
+                onChange={(e) => handleTextChange('name', e.target.value)}
+            />
+            <Input
+                name="function_expr"
+                text={t('panels.plot.items.function.props.function')}
                 type="text"
                 value={item.function}
-                onChange={(e) => handleFunctionChange(e.target.value)}
+                onChange={(e) => handleTextChange('function', e.target.value)}
             />
             <ColorPicker
                 onSubmit={handleSetColor}
@@ -74,15 +87,14 @@ const FunctionPanel: React.FC<PlotConfiguratorPanelProps> = ({
                 value={item.lineWidth}
                 onValueChange={handleSetLineWidth}
             />
-            <div>
-                <span>{t('panels.plot.items.function.props.resolution')}</span>
-                <Spinner
-                    min={10}
-                    max={1000}
-                    value={item.resolution}
-                    onChange={handleSetResolution}
-                />
-            </div>
+            <Spinner
+                labeled
+                text={t('panels.plot.items.function.props.resolution')}
+                min={10}
+                max={1000}
+                value={item.resolution}
+                onChange={handleSetResolution}
+            />
         </>
     );
 };
