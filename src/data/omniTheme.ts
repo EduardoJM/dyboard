@@ -48,6 +48,27 @@ const omni = {
     buttonHoverFg: '#E1E1E6',
     buttonHoverBorder: '#5A4B81',
 
+    selectPrimary75: '#15121e',
+    selectPrimary50: '#191622',
+    selectPrimary25: '#483c67',
+    selectDanger: '#E26079',
+    selectDangerLight: '#E1E1E6',
+
+    selectNeutral0: '#201b2d',
+    selectNeutral20: '#15121e',
+    selectNeutral30: '#47396d',
+    selectNeutral50: 'red',
+    selectNeutral40: '#47396d',
+
+    selectPrimary: '#47396d',
+
+    selectNeutral5: 'red',
+    selectNeutral10: '#E1E1E6',
+    selectNeutral60: 'grey',
+    selectNeutral70: 'yellow',
+    selectNeutral80: 'marron',
+    selectNeutral90: 'black',
+
     textEditorBg: '#191622',
     textEditorBorder: '#15121e',
     textEditorSeparatorBorder: '#15121e',

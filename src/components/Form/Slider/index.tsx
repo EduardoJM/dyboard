@@ -11,6 +11,7 @@ interface SliderProps {
     max: number;
     value: number;
     onValueChange: (newValue: number) => void;
+    onDragStop?: (value: number) => void;
 }
 
 const Slider: React.FC<SliderProps> = ({
@@ -18,7 +19,8 @@ const Slider: React.FC<SliderProps> = ({
     min,
     max,
     value,
-    onValueChange
+    onValueChange,
+    onDragStop
 }) => {
     const sliderRef = createRef<HTMLDivElement>();
     const [dragging, setDragging] = useState(false);
@@ -46,10 +48,16 @@ const Slider: React.FC<SliderProps> = ({
             newValue = Math.min(max, Math.max(min, Math.round(newValue)));
             onValueChange(newValue);
         };
-        const handleMouseUp = () => {
+        const handleMouseUp = (evt: globalThis.MouseEvent) => {
             document.removeEventListener('mousemove', handleMouseMove);
             document.removeEventListener('mouseup', handleMouseUp);
             setDragging(false);
+            if (onDragStop) {
+                const x = evt.pageX - rc.left;
+                newValue = (x / width) * (max - min) + min;
+                newValue = Math.min(max, Math.max(min, Math.round(newValue)));
+                onDragStop(newValue);
+            }
         };
         document.addEventListener('mousemove', handleMouseMove);
         document.addEventListener('mouseup', handleMouseUp);

@@ -1,13 +1,12 @@
 import React from 'react';
-import jPlot from 'jplot';
+import jPlot, { LineStyle } from 'jplot';
 import { useTranslation } from 'react-i18next';
 
 import { PlotConfiguratorPanelProps } from './types';
 
-import Slider from '../../../Form/Slider';
-import ColorPicker from '../../../Form/ColorPicker';
 import Spinner from '../../../Form/Spinner';
 import Input from '../../../Form/Input';
+import LineStyleWidget from '../LineStyleWidget';
 
 const FunctionPanel: React.FC<PlotConfiguratorPanelProps> = ({
     item,
@@ -29,30 +28,21 @@ const FunctionPanel: React.FC<PlotConfiguratorPanelProps> = ({
         updateItem(idx);
     }
 
-    function handleSetColor(color: string) {
-        if (!item || !(item instanceof jPlot.Function)) {
-            return;
-        }
-        const idx = getUpdateItemIndex();
-        item.color = color;
-        updateItem(idx);
-    }
-
-    function handleSetLineWidth(width: number) {
-        if (!item || !(item instanceof jPlot.Function)) {
-            return;
-        }
-        const idx = getUpdateItemIndex();
-        item.lineWidth = width;
-        updateItem(idx);
-    }
-
     function handleSetResolution(value: number) {
         if (!item || !(item instanceof jPlot.Function)) {
             return;
         }
         const idx = getUpdateItemIndex();
         item.resolution = value;
+        updateItem(idx);
+    }
+
+    function handleSetLineStyle(style: LineStyle) {
+        if (!item || !(item instanceof jPlot.Function)) {
+            return;
+        }
+        const idx = getUpdateItemIndex();
+        item.lineStyle = style;
         updateItem(idx);
     }
 
@@ -75,17 +65,10 @@ const FunctionPanel: React.FC<PlotConfiguratorPanelProps> = ({
                 value={item.function}
                 onChange={(e) => handleTextChange('function', e.target.value)}
             />
-            <ColorPicker
-                onSubmit={handleSetColor}
-                color={item.color}
-                text={t('panels.plot.items.function.props.color')}
-            />
-            <Slider
-                text={t('panels.plot.items.function.props.lineWidth')}
-                min={1}
-                max={10}
-                value={item.lineWidth}
-                onValueChange={handleSetLineWidth}
+            <LineStyleWidget
+                text="Estilo"
+                style={item.lineStyle}
+                setStyle={handleSetLineStyle}
             />
             <Spinner
                 labeled

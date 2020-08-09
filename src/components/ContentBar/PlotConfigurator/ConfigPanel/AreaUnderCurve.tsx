@@ -1,12 +1,12 @@
 import React from 'react';
-import jPlot from 'jplot';
+import jPlot, { FillStyle } from 'jplot';
 import { useTranslation } from 'react-i18next';
 
 import { PlotConfiguratorPanelProps } from './types';
 
 import Input from '../../../Form/Input';
 import Spinner from '../../../Form/Spinner';
-import ColorPicker from '../../../Form/ColorPicker';
+import FillStyleWidget from '../FillStyleWidget';
 
 const AreaUnderCurvePanel: React.FC<PlotConfiguratorPanelProps> = ({
     item,
@@ -37,12 +37,12 @@ const AreaUnderCurvePanel: React.FC<PlotConfiguratorPanelProps> = ({
         updateItem(idx);
     }
 
-    function handleSetColor(color: string) {
+    function handleApplyFillStyle(newStyle: FillStyle) {
         if (!item || !(item instanceof jPlot.AreaUnderCurve)) {
             return;
         }
         const idx = getUpdateItemIndex();
-        item.fillStyle = color;
+        item.fillStyle = newStyle;
         updateItem(idx);
     }
 
@@ -74,10 +74,10 @@ const AreaUnderCurvePanel: React.FC<PlotConfiguratorPanelProps> = ({
                 value={item.right}
                 onChange={(v) => handleSpinnerUpdate('right', v)}
             />
-            <ColorPicker
-                onSubmit={handleSetColor}
-                color={item.fillStyle}
-                text={t('panels.plot.items.areaUnderCurve.props.color')}
+            <FillStyleWidget
+                text="Estilo"
+                style={item.fillStyle}
+                setStyle={handleApplyFillStyle}
             />
         </>
     );

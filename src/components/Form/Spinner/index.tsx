@@ -14,8 +14,8 @@ interface SpinnerProps {
     max: number;
     value: number;
     onChange: (newValue: number) => void;
-    onInputBlur?: () => void;
-    onDragStop?: () => void;
+    onInputBlur?: (currentValue: number) => void;
+    onDragStop?: (currentValue: number) => void;
 }
 
 const Spinner: React.FC<SpinnerProps> = ({
@@ -44,11 +44,13 @@ const Spinner: React.FC<SpinnerProps> = ({
 
     function handleDown(e: MouseEvent<HTMLDivElement>) {
         const startY = e.pageY;
-        const mouseUp = () => {
+        const mouseUp = (evt: globalThis.MouseEvent) => {
             document.removeEventListener('mousemove', mouseMove);
             document.removeEventListener('mouseup', mouseUp);
             if (onDragStop) {
-                onDragStop();
+                const integerValue = Math.round(value - (evt.pageY - startY));
+                const val = Math.max(min, Math.min(max, integerValue));
+                onDragStop(val);
             }
         };
         const mouseMove = (evt: globalThis.MouseEvent) => {
@@ -62,7 +64,7 @@ const Spinner: React.FC<SpinnerProps> = ({
 
     function handleInputBlur() {
         if (onInputBlur) {
-            onInputBlur();
+            onInputBlur(value);
         }
     }
 

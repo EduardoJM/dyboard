@@ -51,6 +51,24 @@ export interface ThemeContextData {
     buttonHoverFg: string;
     buttonHoverBorder: string;
 
+    selectPrimary: string;
+    selectPrimary75: string;
+    selectPrimary50: string;
+    selectPrimary25: string;
+    selectDanger: string;
+    selectDangerLight: string;
+    selectNeutral0: string;
+    selectNeutral5: string;
+    selectNeutral10: string;
+    selectNeutral20: string;
+    selectNeutral30: string;
+    selectNeutral40: string;
+    selectNeutral50: string;
+    selectNeutral60: string;
+    selectNeutral70: string;
+    selectNeutral80: string;
+    selectNeutral90: string;
+
     textEditorBg: string;
     textEditorBorder: string;
     textEditorSeparatorBorder: string;

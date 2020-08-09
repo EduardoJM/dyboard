@@ -21,6 +21,7 @@ interface BoardContextData {
         height: number,
         tools: ToolsContextData
     ) => void;
+    updateElement: (index: number, item: ElementAll) => void;
 }
 
 const BoardContext = createContext<BoardContextData>({} as BoardContextData);
@@ -68,10 +69,7 @@ export const BoardContextProvider: React.FC = ({
         if (idx < 0 || idx >= elements.length) {
             return;
         }
-        let currentElement = false;
-        if (tools.currentElement === el) {
-            currentElement = true;
-        }
+        const currentElement = tools.currentElement === el;
         el.left = left;
         el.top = top;
         el.width = width;
@@ -86,10 +84,20 @@ export const BoardContextProvider: React.FC = ({
         }
     }
 
+    function updateElement(index: number, item: ElementAll) {
+        const newElements = [
+            ...elements.slice(0, index),
+            item,
+            ...elements.slice(index + 1)
+        ];
+        setElements(newElements);
+    }
+
     return (
         <BoardContext.Provider value={{
             elements,
             updateElementBounds,
+            updateElement,
             changeElements: setElements
         }}>
             { children }

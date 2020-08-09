@@ -14,7 +14,7 @@ import { useBoard } from '../../../contexts/board';
 import { useTools } from '../../../contexts/tools';
 import { useTheme } from '../../../contexts/theme';
 
-import ConfigPanel from './Panels';
+import ConfigPanel from './ConfigPanel';
 
 interface PlotConfiguratorProps {
     data: ElementPlot;

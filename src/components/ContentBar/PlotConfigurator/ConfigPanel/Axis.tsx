@@ -1,12 +1,11 @@
 import React from 'react';
-import jPlot from 'jplot';
+import jPlot, { LineStyle } from 'jplot';
 import { useTranslation } from 'react-i18next';
 
 import { PlotConfiguratorPanelProps } from './types';
 
-import Slider from '../../../Form/Slider';
 import Switch from '../../../Form/Switch';
-import ColorPicker from '../../../Form/ColorPicker';
+import LineStyleWidget from '../LineStyleWidget';
 
 const AxisPanel: React.FC<PlotConfiguratorPanelProps> = ({
     item,
@@ -42,31 +41,21 @@ const AxisPanel: React.FC<PlotConfiguratorPanelProps> = ({
         updateItem(idx);
     }
 
-    function handleSetLineWidth(prop: 'yAxisWidth' | 'xAxisWidth', value: number) {
+    function handleApplyHorizontalAxisStyle(style: LineStyle) {
         if (!item || !(item instanceof jPlot.Axis)) {
             return;
         }
         const idx = getUpdateItemIndex();
-        if (prop === 'yAxisWidth') {
-            item.yAxisWidth = value;
-        } else if (prop === 'xAxisWidth') {
-            item.xAxisWidth = value;
-        }
+        item.xAxisStyle = style;
         updateItem(idx);
     }
 
-    function handleSetColor(axis: 'x' | 'y', color: string) {
+    function handleApplyVerticalAxisStyle(style: LineStyle) {
         if (!item || !(item instanceof jPlot.Axis)) {
             return;
         }
         const idx = getUpdateItemIndex();
-        if (axis === 'x') {
-            item.xAxisColor = color;
-            item.xAxisThickColor = color;
-        } else {
-            item.yAxisColor = color;
-            item.yAxisThickColor = color;
-        }
+        item.yAxisStyle = style;
         updateItem(idx);
     }
 
@@ -80,12 +69,10 @@ const AxisPanel: React.FC<PlotConfiguratorPanelProps> = ({
                 handleCheckChange={(v) => handleSwitchChange('xAxis', v)}
                 text={t('panels.plot.items.axis.props.xAxis')}
             />
-            <Slider
-                text={t('panels.plot.items.axis.props.xAxisWidth')}
-                min={1}
-                max={10}
-                value={item.xAxisWidth}
-                onValueChange={(v) => handleSetLineWidth('xAxisWidth', v)}
+            <LineStyleWidget
+                style={item.xAxisStyle}
+                setStyle={handleApplyHorizontalAxisStyle}
+                text="X AXIS LINE STYLE"
             />
             <Switch
                 checked={item.xAxisThick}
@@ -97,22 +84,15 @@ const AxisPanel: React.FC<PlotConfiguratorPanelProps> = ({
                 handleCheckChange={(v) => handleSwitchChange('xAxisThickNumbers', v)}
                 text={t('panels.plot.items.axis.props.xAxisThickNumbers')}
             />
-            <ColorPicker
-                color={item.xAxisColor}
-                text={t('panels.plot.items.axis.props.xAxisColor')}
-                onSubmit={(color) => handleSetColor('x', color)}
-            />
             <Switch
                 checked={item.yAxis}
                 handleCheckChange={(v) => handleSwitchChange('yAxis', v)}
                 text={t('panels.plot.items.axis.props.yAxis')}
             />
-            <Slider
-                text={t('panels.plot.items.axis.props.yAxisWidth')}
-                min={1}
-                max={10}
-                value={item.yAxisWidth}
-                onValueChange={(v) => handleSetLineWidth('yAxisWidth', v)}
+            <LineStyleWidget
+                style={item.yAxisStyle}
+                setStyle={handleApplyVerticalAxisStyle}
+                text="Y AXIS LINE STYLE"
             />
             <Switch
                 checked={item.yAxisThick}
@@ -123,11 +103,6 @@ const AxisPanel: React.FC<PlotConfiguratorPanelProps> = ({
                 checked={item.yAxisThickNumbers}
                 handleCheckChange={(v) => handleSwitchChange('yAxisThickNumbers', v)}
                 text={t('panels.plot.items.axis.props.yAxisThickNumbers')}
-            />
-            <ColorPicker
-                color={item.yAxisColor}
-                text={t('panels.plot.items.axis.props.yAxisColor')}
-                onSubmit={(color) => handleSetColor('y', color)}
             />
             <Switch
                 checked={item.arrows}
