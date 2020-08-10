@@ -26,7 +26,7 @@ const PlotConfigurator: React.FC<PlotConfiguratorProps> = ({ data }) => {
     const tools = useTools();
     const board = useBoard();
     const theme = useTheme();
-    const { t } = useTranslation('content');
+    const { t } = useTranslation('jplot');
 
     function addPlotItem(item: RenderItem) {
         const newItem = {
@@ -64,27 +64,23 @@ const PlotConfigurator: React.FC<PlotConfiguratorProps> = ({ data }) => {
 
     const addDropDownContent = (
         <div className="add-dropdown-content">
-            <button onClick={addAxis}>{t('panels.plot.items.axis.name')}</button>
-            <button onClick={addFunction}>{t('panels.plot.items.function.name')}</button>
-            <button onClick={addAreaUnderCurve}>{t('panels.plot.items.areaUnderCurve.name')}</button>
+            <button onClick={addAxis}>{t('items.axis')}</button>
+            <button onClick={addFunction}>{t('items.function')}</button>
+            <button onClick={addAreaUnderCurve}>{t('items.areaUnderCurve')}</button>
         </div>
     );
 
-    function renderListItemContent(item: RenderItem, nameOnly: boolean) {
+    function getListItemName(item: RenderItem) {
         if (item instanceof jPlot.Axis) {
-            return t('panels.plot.items.axis.name');
+            return t('items.axis');
         } else if (item instanceof jPlot.Function) {
-            return t('panels.plot.items.function.name');
+            return t('items.function');
         } else if (item instanceof jPlot.AreaUnderCurve) {
-            return t('panels.plot.items.areaUnderCurve.name');
+            return t('items.areaUnderCurve');
         } else if (item instanceof jPlot.Point) {
-            let str = t('panels.plot.items.point.name');
-            if (!nameOnly) {
-                str = `${str} (${item.x}, ${item.y})`;
-            }
-            return str;
+            return t('items.point');
         }
-        return t('panels.plot.items.unsupported.name');
+        return t('items.unsupported');
     }
 
     function handleDeleteItem() {
@@ -135,7 +131,7 @@ const PlotConfigurator: React.FC<PlotConfiguratorProps> = ({ data }) => {
     return (
         <Container theme={theme}>
             <PlotsList theme={theme}>
-                <div className="heading">{t('panels.plot.itensHeading')}</div>
+                <div className="heading">{t('itemsHeader')}</div>
                 <div className="list">
                     <ListBox>
                         {data.items.map((item, index) => (
@@ -147,7 +143,7 @@ const PlotConfigurator: React.FC<PlotConfiguratorProps> = ({ data }) => {
                                 index={index}
                                 onClick={() => setEditing(item)}
                             >
-                                {renderListItemContent(item, false)}
+                                {getListItemName(item)}
                             </ListBoxItem>
                         ))}
                     </ListBox>

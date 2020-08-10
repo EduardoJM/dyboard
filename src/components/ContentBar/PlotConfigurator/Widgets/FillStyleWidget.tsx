@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FillStyle, SolidFill, PatternLine } from 'jplot';
 import { MdKeyboardArrowDown, MdKeyboardArrowRight } from 'react-icons/md';
+import { useTranslation } from 'react-i18next';
 
 import OptionPicker from '../../../Form/OptionPicker';
 
@@ -21,7 +22,7 @@ const FillStyleWidget: React.FC<FillStyleWidgetProps> = ({
     setStyle
 }) => {
     const [propsVisible, setPropsVisible] = useState(false);
-    // TODO: add i18next translation support
+    const { t } = useTranslation('jplot');
 
     type FillType = 'solid' | 'linePattern' | 'none';
     const [fillType, setFillType] = useState<FillType>(() => {
@@ -62,12 +63,12 @@ const FillStyleWidget: React.FC<FillStyleWidgetProps> = ({
                 <div className="config-content">
                     <OptionPicker
                         options={[
-                            { value: 'solid', label: 'Solido' },
-                            { value: 'linePattern', label: 'Padrão de linhas' }
+                            { value: 'solid', label: t('widgets.fillStyle.typeSolid') },
+                            { value: 'linePattern', label: t('widgets.fillStyle.typeLinePattern') }
                         ]}
                         onChange={handleFillTypeChange}
                         value={fillType}
-                        text="Estilo"
+                        text={t('widgets.fillStyle.type')}
                     />
                     {style instanceof PatternLine && (
                         <FillStyleLinePattern

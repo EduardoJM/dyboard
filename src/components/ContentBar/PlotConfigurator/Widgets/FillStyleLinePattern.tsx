@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { PatternLine, LineStyle, Color } from 'jplot';
+import { useTranslation } from 'react-i18next';
 
 import ColorPicker from '../../../Form/ColorPicker';
 import Spinner from '../../../Form/Spinner';
@@ -18,6 +19,7 @@ const FillStyleLinePattern: React.FC<FillStyleLinePatternProps> = ({
         useState(`rgb(${style.baseColor.r}, ${style.baseColor.g}, ${style.baseColor.b})`);
     const [opacity, setOpacity] = useState(Math.floor(style.opacity * 100));
     const [patternSize, setPatternSize] = useState(style.patternSize);
+    const { t } = useTranslation('jplot');
 
     function handleApplyColor(newColor: string) {
         setColor(newColor);
@@ -47,13 +49,13 @@ const FillStyleLinePattern: React.FC<FillStyleLinePatternProps> = ({
     return (
         <>
             <ColorPicker
-                text="Color"
+                text={t('widgets.fillStyle.patternLine.baseColor')}
                 color={color}
                 onSubmit={handleApplyColor}
             />
             <Spinner
                 labeled
-                text="Opacidade"
+                text={t('widgets.fillStyle.patternLine.opacity')}
                 value={opacity}
                 min={0}
                 max={100}
@@ -63,7 +65,7 @@ const FillStyleLinePattern: React.FC<FillStyleLinePatternProps> = ({
             />
             <Spinner
                 labeled
-                text="Tamanho do Pattern"
+                text={t('widgets.fillStyle.patternLine.patternSize')}
                 value={patternSize}
                 min={1}
                 max={500}
@@ -72,7 +74,7 @@ const FillStyleLinePattern: React.FC<FillStyleLinePatternProps> = ({
                 onInputBlur={handleApplyPatternSize}
             />
             <LineStyleWidget
-                text="Linha do Pattern"
+                text={t('widgets.fillStyle.patternLine.patternLine')}
                 style={style.lineStyle}
                 setStyle={handleApplyLineStyle}
             />

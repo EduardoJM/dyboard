@@ -9,19 +9,19 @@ import { useTools } from '../../../contexts/tools';
 import { ElementAll } from '../../../data/board';
 
 const BoardPanel: React.FC = () => {
-    const { t } = useTranslation('content');
+    const { t } = useTranslation('boardPanel');
     const board = useBoard();
     const tools = useTools();
 
     function getDisplayText(name: string) {
         if (name === 'image') {
-            return t('panels.image.name');
+            return t('items.image');
         } else if (name === 'text') {
-            return t('panels.text.name');
+            return t('items.text');
         } else if (name === 'plot') {
-            return t('panels.plot.name');
+            return t('items.plot');
         }
-        return t('panels.unsupported.name');
+        return t('items.unsupported');
     }
 
     function handleListItemClick(item: ElementAll) {

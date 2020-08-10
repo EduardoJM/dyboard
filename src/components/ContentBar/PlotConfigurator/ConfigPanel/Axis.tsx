@@ -16,7 +16,7 @@ const AxisPanel: React.FC<AxisPanelrops> = ({
     getUpdateItemIndex,
     updateItem
 }) => {
-    const { t } = useTranslation('content');
+    const { t } = useTranslation('jplot');
 
     type AxisProp = 'xAxis' | 'yAxis' | 'arrows'
                     | 'xAxisThick' | 'yAxisThick'
@@ -59,47 +59,47 @@ const AxisPanel: React.FC<AxisPanelrops> = ({
             <Switch
                 checked={item.xAxis}
                 handleCheckChange={(v) => handleSwitchChange('xAxis', v)}
-                text={t('panels.plot.items.axis.props.xAxis')}
+                text={t('panels.axis.xAxis')}
             />
             <LineStyleWidget
                 style={item.xAxisStyle}
                 setStyle={handleApplyHorizontalAxisStyle}
-                text="X AXIS LINE STYLE"
+                text={t('panels.axis.xAxisStyle')}
             />
             <Switch
                 checked={item.xAxisThick}
                 handleCheckChange={(v) => handleSwitchChange('xAxisThick', v)}
-                text={t('panels.plot.items.axis.props.xAxisThick')}
+                text={t('panels.axis.xAxisThick')}
             />
             <Switch
                 checked={item.xAxisThickNumbers}
                 handleCheckChange={(v) => handleSwitchChange('xAxisThickNumbers', v)}
-                text={t('panels.plot.items.axis.props.xAxisThickNumbers')}
+                text={t('panels.axis.xAxisThickNumbers')}
             />
             <Switch
                 checked={item.yAxis}
                 handleCheckChange={(v) => handleSwitchChange('yAxis', v)}
-                text={t('panels.plot.items.axis.props.yAxis')}
+                text={t('panels.axis.yAxis')}
             />
             <LineStyleWidget
                 style={item.yAxisStyle}
                 setStyle={handleApplyVerticalAxisStyle}
-                text="Y AXIS LINE STYLE"
+                text={t('panels.axis.yAxisStyle')}
             />
             <Switch
                 checked={item.yAxisThick}
                 handleCheckChange={(v) => handleSwitchChange('yAxisThick', v)}
-                text={t('panels.plot.items.axis.props.yAxisThick')}
+                text={t('panels.axis.yAxisThick')}
             />
             <Switch
                 checked={item.yAxisThickNumbers}
                 handleCheckChange={(v) => handleSwitchChange('yAxisThickNumbers', v)}
-                text={t('panels.plot.items.axis.props.yAxisThickNumbers')}
+                text={t('panels.axis.yAxisThickNumbers')}
             />
             <Switch
                 checked={item.arrows}
                 handleCheckChange={(v) => handleSwitchChange('arrows', v)}
-                text={t('panels.plot.items.axis.props.arrows')}
+                text={t('panels.axis.arrows')}
             />
         </>
     );

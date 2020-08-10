@@ -1,0 +1,9 @@
+{
+    "items": {
+        "image": "Image",
+        "text": "Text",
+        "plot": "Plot Area",
+
+        "unsupported": "Unsupported"
+    }
+}

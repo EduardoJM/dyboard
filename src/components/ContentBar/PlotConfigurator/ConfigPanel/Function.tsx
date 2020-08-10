@@ -17,7 +17,7 @@ const FunctionPanel: React.FC<FunctionPanelProps> = ({
     getUpdateItemIndex,
     updateItem
 }) => {
-    const { t } = useTranslation('content');
+    const { t } = useTranslation('jplot');
 
     function handleTextChange(prop: 'name' | 'function', value: string) {
         const idx = getUpdateItemIndex();
@@ -45,26 +45,26 @@ const FunctionPanel: React.FC<FunctionPanelProps> = ({
         <>
             <Input
                 name="function_name"
-                text={t('panels.plot.items.function.props.name')}
+                text={t('panels.function.name')}
                 type="text"
                 value={item.name}
                 onChange={(e) => handleTextChange('name', e.target.value)}
             />
             <Input
                 name="function_expr"
-                text={t('panels.plot.items.function.props.function')}
+                text={t('panels.function.expression')}
                 type="text"
                 value={item.function}
                 onChange={(e) => handleTextChange('function', e.target.value)}
             />
             <LineStyleWidget
-                text="Estilo"
+                text={t('panels.function.style')}
                 style={item.lineStyle}
                 setStyle={handleSetLineStyle}
             />
             <Spinner
                 labeled
-                text={t('panels.plot.items.function.props.resolution')}
+                text={t('panels.function.resolution')}
                 min={10}
                 max={1000}
                 value={item.resolution}

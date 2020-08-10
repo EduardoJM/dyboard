@@ -24,7 +24,7 @@ const ConfigPanel: React.FC<ConfigPanelProps> = ({
 }) => {
     const board = useBoard();
     const tools = useTools();
-    const { t } = useTranslation('content');
+    const { t } = useTranslation('jplot');
 
     function updateCurrentItem(editingIndex: number) {
         const newItem = {
@@ -56,13 +56,13 @@ const ConfigPanel: React.FC<ConfigPanelProps> = ({
     if (!currentItem) {
         return (
             <div className="fit-center-text">
-                {t('panels.no-select')}
+                {t('noSelection')}
             </div>
         );
     }
     return (
         <>
-            <div className="heading">{t('panels.plot.configHeading')}</div>
+            <div className="heading">{t('configHeader')}</div>
             <div className="editor">
                 <Scrollbars>
                     <div className="content">

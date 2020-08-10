@@ -6873,10 +6873,10 @@ jest@^26.1.0:
     import-local "^3.0.2"
     jest-cli "^26.2.2"
 
-jplot@^1.0.6:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/jplot/-/jplot-1.0.6.tgz#76c373c7535d9f8dba1aaa3ef5a9845beaac1f20"
-  integrity sha512-kEDWNLCA39/5sZnHYeu86L6Y8w8xmUzoj3LOaeL3vZ+fw2+4KDES2uIzd3v4AwDBNWKpLepSNQqvxrxkOe96IQ==
+jplot@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/jplot/-/jplot-1.0.7.tgz#f9bc4758b0a778d7a0fcdf9612eecdd1427ee0e1"
+  integrity sha512-y2F94sDIPYDvTiaU/EyIyHwC0JJzOI3yzaEDat01Zi7iuFcfTOxvw7CUcducJiyCE1sHlb5rvHRh60hWlZhvAg==
 
 "js-tokens@^3.0.0 || ^4.0.0", js-tokens@^4.0.0:
   version "4.0.0"

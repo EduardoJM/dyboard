@@ -1,10 +1,12 @@
 import React from 'react';
-import { FillStyle, AreaUnderCurve } from 'jplot';
+import { FillStyle, LineStyle, AreaUnderCurve } from 'jplot';
 import { useTranslation } from 'react-i18next';
 
 import Input from '../../../Form/Input';
 import Spinner from '../../../Form/Spinner';
+import Switch from '../../../Form/Switch';
 import FillStyleWidget from '../Widgets/FillStyleWidget';
+import LineStyleWidget from '../Widgets/LineStyleWidget';
 
 export interface AreaUnderCurvePanelProps {
     item: AreaUnderCurve;
@@ -17,7 +19,7 @@ const AreaUnderCurvePanel: React.FC<AreaUnderCurvePanelProps> = ({
     getUpdateItemIndex,
     updateItem
 }) => {
-    const { t } = useTranslation('content');
+    const { t } = useTranslation('jplot');
 
     function handleCurveNameChange(value: string) {
         const idx = getUpdateItemIndex();
@@ -35,9 +37,27 @@ const AreaUnderCurvePanel: React.FC<AreaUnderCurvePanelProps> = ({
         updateItem(idx);
     }
 
+    function handleToggleFill(check: boolean) {
+        const idx = getUpdateItemIndex();
+        item.fill = check;
+        updateItem(idx);
+    }
+
     function handleApplyFillStyle(newStyle: FillStyle) {
         const idx = getUpdateItemIndex();
         item.fillStyle = newStyle;
+        updateItem(idx);
+    }
+
+    function handleToggleStroke(check: boolean) {
+        const idx = getUpdateItemIndex();
+        item.stroke = check;
+        updateItem(idx);
+    }
+
+    function handleApplyStrokeStyle(newStyle: LineStyle) {
+        const idx = getUpdateItemIndex();
+        item.strokeStyle = newStyle;
         updateItem(idx);
     }
 
@@ -45,14 +65,14 @@ const AreaUnderCurvePanel: React.FC<AreaUnderCurvePanelProps> = ({
         <>
             <Input
                 name="function_name"
-                text={t('panels.plot.items.areaUnderCurve.props.curveName')}
+                text={t('panels.areaUnderCurve.curveName')}
                 type="text"
                 value={item.curveName}
                 onChange={(e) => handleCurveNameChange(e.target.value)}
             />
             <Spinner
                 labeled
-                text={t('panels.plot.items.areaUnderCurve.props.left')}
+                text={t('panels.areaUnderCurve.left')}
                 min={-100}
                 max={100}
                 value={item.left}
@@ -60,16 +80,31 @@ const AreaUnderCurvePanel: React.FC<AreaUnderCurvePanelProps> = ({
             />
             <Spinner
                 labeled
-                text={t('panels.plot.items.areaUnderCurve.props.right')}
+                text={t('panels.areaUnderCurve.right')}
                 min={-100}
                 max={100}
                 value={item.right}
                 onChange={(v) => handleSpinnerUpdate('right', v)}
             />
+            <Switch
+                text={t('panels.areaUnderCurve.fill')}
+                checked={item.fill}
+                handleCheckChange={handleToggleFill}
+            />
             <FillStyleWidget
-                text="Estilo"
+                text={t('panels.areaUnderCurve.fillStyle')}
                 style={item.fillStyle}
                 setStyle={handleApplyFillStyle}
+            />
+            <Switch
+                text={t('panels.areaUnderCurve.stroke')}
+                checked={item.stroke}
+                handleCheckChange={handleToggleStroke}
+            />
+            <LineStyleWidget
+                text={t('panels.areaUnderCurve.strokeStyle')}
+                style={item.strokeStyle}
+                setStyle={handleApplyStrokeStyle}
             />
         </>
     );

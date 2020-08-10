@@ -17,6 +17,8 @@ const TextConfigurator: React.FC<TextConfiguratorProps> = ({ data }) => {
     const [editing, setEditing] = useState(false);
     const board = useBoard();
     const tools = useTools();
+    // TODO: create this component
+    // TODO: add i18next translation support
 
     function handleEditClick() {
         setEditing(true);

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { LineStyle, Color } from 'jplot';
 import { MdKeyboardArrowDown, MdKeyboardArrowRight } from 'react-icons/md';
+import { useTranslation } from 'react-i18next';
 
 import ColorPicker from '../../../Form/ColorPicker';
 import Spinner from '../../../Form/Spinner';
@@ -21,8 +22,8 @@ const LineStyleWidget: React.FC<LineStyleWidgetProps> = ({
     setStyle
 }) => {
     const [propsVisible, setPropsVisible] = useState(false);
+    const { t } = useTranslation('jplot');
 
-    // TODO: add i18next translation support
     const [color, setColor] = useState(`rgb(${style.color.r}, ${style.color.g}, ${style.color.b})`);
     const [opacity, setOpacity] = useState(Math.floor(style.opacity * 100));
     const [lineWidth, setLineWidth] = useState(style.lineWidth);
@@ -97,13 +98,13 @@ const LineStyleWidget: React.FC<LineStyleWidgetProps> = ({
             {propsVisible && (
                 <div className="config-content">
                     <ColorPicker
-                        text="Color"
+                        text={t('widgets.lineStyle.color')}
                         color={color}
                         onSubmit={handleColorChange}
                     />
                     <Spinner
                         labeled
-                        text="Opacidade"
+                        text={t('widgets.lineStyle.opacity')}
                         value={opacity}
                         min={0}
                         max={100}
@@ -112,16 +113,16 @@ const LineStyleWidget: React.FC<LineStyleWidgetProps> = ({
                         onInputBlur={handleApplyOpacity}
                     />
                     <OptionPicker
-                        text="Estilo"
+                        text={t('widgets.lineStyle.type')}
                         options={[
-                            { value: 'dash', label: 'Tracejado' },
-                            { value: 'solid', label: 'Solido' }
+                            { value: 'dash', label: t('widgets.lineStyle.typeDash') },
+                            { value: 'solid', label: t('widgets.lineStyle.typeSolid') }
                         ]}
                         value={style.type}
                         onChange={handleApplyStyle}
                     />
                     <Slider
-                        text="Espessura"
+                        text={t('widgets.lineStyle.lineWidth')}
                         min={1}
                         max={50}
                         onValueChange={setLineWidth}
@@ -129,27 +130,27 @@ const LineStyleWidget: React.FC<LineStyleWidgetProps> = ({
                         value={lineWidth}
                     />
                     <OptionPicker
-                        text="Cap"
+                        text={t('widgets.lineStyle.lineCap')}
                         options={[
-                            { value: 'butt', label: 'Butt?' },
-                            { value: 'square', label: 'Quadrado' },
-                            { value: 'round', label: 'Arredondado' }
+                            { value: 'butt', label: t('widgets.lineStyle.lineCapButt') },
+                            { value: 'square', label: t('widgets.lineStyle.lineCapSquare') },
+                            { value: 'round', label: t('widgets.lineStyle.lineCapRound') }
                         ]}
                         value={style.lineCap}
                         onChange={handleApplyCap}
                     />
                     <OptionPicker
-                        text="Join"
+                        text={t('widgets.lineStyle.lineJoin')}
                         options={[
-                            { value: 'bevel', label: 'Elevado?' },
-                            { value: 'miter', label: 'Miter?' },
-                            { value: 'round', label: 'Arredondado' }
+                            { value: 'bevel', label: t('widgets.lineStyle.lineJoinBevel') },
+                            { value: 'miter', label: t('widgets.lineStyle.lineJoinMiter') },
+                            { value: 'round', label: t('widgets.lineStyle.lineJoinRound') }
                         ]}
                         value={style.lineJoin}
                         onChange={handleApplyJoin}
                     />
                     <Slider
-                        text="Limite de Miter"
+                        text={t('widgets.lineStyle.miterLimit')}
                         min={0}
                         max={100}
                         onValueChange={setMiterLimit}
@@ -157,7 +158,7 @@ const LineStyleWidget: React.FC<LineStyleWidgetProps> = ({
                         value={miterLimit}
                     />
                     <Slider
-                        text="Dash Size"
+                        text={t('widgets.lineStyle.dashSize')}
                         min={0}
                         max={100}
                         onValueChange={setDashSize}
@@ -165,7 +166,7 @@ const LineStyleWidget: React.FC<LineStyleWidgetProps> = ({
                         value={dashSize}
                     />
                     <Slider
-                        text="Dash Distance"
+                        text={t('widgets.lineStyle.dashDistance')}
                         min={0}
                         max={100}
                         onValueChange={setDashDistance}

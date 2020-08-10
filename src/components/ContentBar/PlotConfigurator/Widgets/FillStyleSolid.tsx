@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { SolidFill, Color } from 'jplot';
+import { useTranslation } from 'react-i18next';
 
 import ColorPicker from '../../../Form/ColorPicker';
 import Spinner from '../../../Form/Spinner';
@@ -16,6 +17,7 @@ const FillStyleSolid: React.FC<FillStyleSolidProps> = ({
     const [color, setColor] =
         useState(`rgb(${style.color.r}, ${style.color.g}, ${style.color.b})`);
     const [opacity, setOpacity] = useState(Math.floor(style.opacity * 100));
+    const { t } = useTranslation('jplot');
 
     function handleApplyColor(newColor: string) {
         setColor(newColor);
@@ -31,13 +33,13 @@ const FillStyleSolid: React.FC<FillStyleSolidProps> = ({
     return (
         <>
             <ColorPicker
-                text="Color"
+                text={t('widgets.fillStyle.solid.color')}
                 color={color}
                 onSubmit={handleApplyColor}
             />
             <Spinner
                 labeled
-                text="Opacidade"
+                text={t('widgets.fillStyle.solid.opacity')}
                 value={opacity}
                 min={0}
                 max={100}

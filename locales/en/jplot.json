@@ -1,0 +1,78 @@
+{
+    "itemsHeader": "Items",
+    "configHeader": "Settings",
+    "noSelection": "No selection.",
+    "items": {
+        "axis": "Axis",
+        "function": "Função",
+        "areaUnderCurve": "Area Under Curve",
+        "point": "Point",
+
+        "unsupported": "Unsupported"
+    },
+    "panels": {
+        "axis": {
+            "xAxis": "X Axis",
+            "xAxisStyle": "X Axis Style",
+            "xAxisThick": "X Axis Thick",
+            "xAxisThickNumbers": "X Axis Numbers",
+            "yAxis": "Y Axis",
+            "yAxisStyle": "Y Axis Style",
+            "yAxisThick": "Y Axis Thick",
+            "yAxisThickNumbers": "Y Axis Numbers",
+            "arrows": "Arrows"
+        },
+        "function": {
+            "name": "Nome",
+            "expression": "Expression",
+            "style": "Style",
+            "resolution": "Resolution"
+        },
+        "areaUnderCurve": {
+            "curveName": "Curve Name",
+            "left": "Domain Left",
+            "right": "Domain Right",
+            "fill": "Fill Area",
+            "fillStyle": "Fill Style",
+            "stroke": "Stroke Area",
+            "strokeStyle": "Stroke Style"
+        }
+    },
+    "widgets": {
+        "lineStyle": {
+            "color": "Color",
+            "opacity": "Opacity",
+            "type": "Line Type",
+            "typeDash": "Dash",
+            "typeSolid": "Solid",
+            "lineWidth": "Line Width",
+            "lineCap": "Line Cap",
+            "lineCapButt": "Butt",
+            "lineCapSquare": "Square",
+            "lineCapRound": "Round",
+            "lineJoin": "Line Join",
+            "lineJoinBevel": "Bevel",
+            "lineJoinMiter": "Miter",
+            "lineJoinRound": "Round",
+            "miterLimit": "Miter Limit",
+            "dashSize": "Dash Size",
+            "dashDistance": "Dash Distance"
+        },
+        "fillStyle": {
+            "type": "Fill Style Type",
+            "typeSolid": "Solid",
+            "typeLinePattern": "Line Pattern",
+
+            "solid": {
+                "color": "Color",
+                "opacity": "Opacity"
+            },
+            "patternLine": {
+                "baseColor": "Color Base",
+                "opacity": "Opacity",
+                "patternSize": "Pattern Size",
+                "patternLine": "Pattern Line Style"
+            }
+        }
+    }
+}
