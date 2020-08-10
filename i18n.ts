@@ -5,11 +5,11 @@ import LanguageDetector from 'i18next-electron-language-detector';
 import Backend from 'i18next-fs-backend';
 
 const options = {
-    supportedLngs: ['br', 'en'],
-    lng: 'en',
-    fallbackLng: 'en',
+    supportedLngs: ['pt', 'en'],
+    lng: 'pt',
+    fallbackLng: ['en', 'pt'],
     debug: true,
-    whitelist: ['en', 'br'],
+    whitelist: ['en', 'pt'],
     backend: {
         loadPath: './locales/{{lng}}/{{ns}}.json',
         addPath: './locales/{{lng}}/{{ns}}.missing.json'

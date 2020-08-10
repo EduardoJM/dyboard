@@ -1,0 +1,12 @@
+{
+  "applicationMenu": {
+    "config": "applicationMenu.config",
+    "configItems": {
+      "language": "applicationMenu.configItems.language",
+      "languageItems": {
+        "pt": "applicationMenu.configItems.languageItems.pt",
+        "en": "applicationMenu.configItems.languageItems.en"
+      }
+    }
+  }
+}

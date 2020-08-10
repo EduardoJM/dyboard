@@ -1,0 +1,78 @@
+{
+    "itemsHeader": "Itens",
+    "configHeader": "Propriedades",
+    "noSelection": "Não há item selecionado.",
+    "items": {
+        "axis": "Eixo",
+        "function": "Função",
+        "areaUnderCurve": "Área Sobre Curva",
+        "point": "Ponto",
+
+        "unsupported": "Não Suportado"
+    },
+    "panels": {
+        "axis": {
+            "xAxis": "Eixo X",
+            "xAxisStyle": "Estilo do Eixo X",
+            "xAxisThick": "Marcação no Eixo X",
+            "xAxisThickNumbers": "Números no Eixo X",
+            "yAxis": "Eixo Y",
+            "yAxisStyle": "Estilo do Eixo Y",
+            "yAxisThick": "Marcação no Eixo Y",
+            "yAxisThickNumbers": "Números no Eixo Y",
+            "arrows": "Setas"
+        },
+        "function": {
+            "name": "Nome",
+            "expression": "Expressão",
+            "style": "Estilo",
+            "resolution": "Resolução"
+        },
+        "areaUnderCurve": {
+            "curveName": "Nome da Curva",
+            "left": "Começo do Domínio",
+            "right": "Fim do Domínio",
+            "fill": "Preencher a Área",
+            "fillStyle": "Estilo de Preenchimento",
+            "stroke": "Contornar a Área",
+            "strokeStyle": "Estilo de Contorno"
+        }
+    },
+    "widgets": {
+        "lineStyle": {
+            "color": "Cor",
+            "opacity": "Opacidade",
+            "type": "Tipo",
+            "typeDash": "Tracejado",
+            "typeSolid": "Sólido",
+            "lineWidth": "Largura",
+            "lineCap": "Limite da Linha",
+            "lineCapButt": "Plano",
+            "lineCapSquare": "Quadrado",
+            "lineCapRound": "Arredondado",
+            "lineJoin": "Junção de Linha",
+            "lineJoinBevel": "Chanfrado",
+            "lineJoinMiter": "Miter",
+            "lineJoinRound": "Arredondado",
+            "miterLimit": "Limite de Miter",
+            "dashSize": "Tamanho dos Traços",
+            "dashDistance": "Distância dos Traços"
+        },
+        "fillStyle": {
+            "type": "Tipo do Preenchimento",
+            "typeSolid": "Sólido",
+            "typeLinePattern": "Hachurado",
+
+            "solid": {
+                "color": "Cor",
+                "opacity": "Opacidade"
+            },
+            "patternLine": {
+                "baseColor": "Cor de Base",
+                "opacity": "Opacidade",
+                "patternSize": "Tamanho de Hachura",
+                "patternLine": "Estilo da Linha de Hachura"
+            }
+        }
+    }
+}

@@ -1,7 +1,7 @@
 import { app, BrowserWindow } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
-import installExtension, { REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } from 'electron-devtools-installer';
+// import installExtension, { REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } from 'electron-devtools-installer';
 
 import registerMenu from './menu';
 import { registerIO } from './io';
@@ -20,7 +20,9 @@ function createWindow() {
 
     registerMenu(mainWindow);
 
-    mainWindow.webContents.openDevTools();
+    if (process.env.NODE_ENV === 'development') {
+        mainWindow.webContents.openDevTools();
+    }
 
     if (process.env.NODE_ENV === 'development') {
         mainWindow.loadURL('http://localhost:4000');

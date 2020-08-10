@@ -6,5 +6,13 @@
         "save": "Save",
         "saveAs": "Save As",
         "exit": "Exit"
+    },
+    "config": "Config",
+    "configItems": {
+        "language": "Language",
+        "languageItems": {
+            "en": "English",
+            "pt": "Portuguese"
+        }
     }
 }

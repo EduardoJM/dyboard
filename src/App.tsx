@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { render } from 'react-dom';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { useTranslation } from 'react-i18next';
+import { ipcRenderer } from 'electron';
 
 import { GlobalStyle } from './styles/GlobalStyle';
 
@@ -24,6 +26,14 @@ mainElement.setAttribute('id', 'root');
 document.body.appendChild(mainElement);
 
 const App = () => {
+    const { i18n } = useTranslation();
+
+    useEffect(() => {
+        ipcRenderer.on('setlanguage', (event, arg: { lang: string; }) => {
+            i18n.changeLanguage(arg.lang);
+        });
+    });
+
     return (
         <>
             <DndProvider backend={HTML5Backend}>

@@ -1,0 +1,18 @@
+{
+    "file": "Arquivo",
+    "fileItems": {
+        "new": "Novo",
+        "open": "Abrir",
+        "save": "Salvar",
+        "saveAs": "Salvar Como",
+        "exit": "Sair"
+    },
+    "config": "Configurações",
+    "configItems": {
+        "language": "Idioma",
+        "languageItems": {
+            "en": "Inglês",
+            "pt": "Português"
+        }
+    }
+}

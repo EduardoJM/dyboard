@@ -4,7 +4,7 @@
     "noSelection": "No selection.",
     "items": {
         "axis": "Axis",
-        "function": "Função",
+        "function": "Function",
         "areaUnderCurve": "Area Under Curve",
         "point": "Point",
 
@@ -23,7 +23,7 @@
             "arrows": "Arrows"
         },
         "function": {
-            "name": "Nome",
+            "name": "Name",
             "expression": "Expression",
             "style": "Style",
             "resolution": "Resolution"

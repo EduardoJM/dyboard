@@ -1,0 +1,9 @@
+{
+    "items": {
+        "image": "Imagem",
+        "text": "Texto",
+        "plot": "Área de Plotagem",
+
+        "unsupported": "Não Suportado"
+    }
+}
