@@ -62,11 +62,17 @@ const PlotConfigurator: React.FC<PlotConfiguratorProps> = ({ data }) => {
         setAddRenderItemsDropDown(false);
     }
 
+    function addPoint() {
+        addPlotItem(new jPlot.Point());
+        setAddRenderItemsDropDown(false);
+    }
+
     const addDropDownContent = (
         <div className="add-dropdown-content">
             <button onClick={addAxis}>{t('items.axis')}</button>
             <button onClick={addFunction}>{t('items.function')}</button>
             <button onClick={addAreaUnderCurve}>{t('items.areaUnderCurve')}</button>
+            <button onClick={addPoint}>{t('items.point')}</button>
         </div>
     );
 

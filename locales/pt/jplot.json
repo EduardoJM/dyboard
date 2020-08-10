@@ -38,6 +38,14 @@
             "fillStyle": "Estilo de Preenchimento",
             "stroke": "Contornar a Área",
             "strokeStyle": "Estilo de Contorno"
+        },
+        "point": {
+            "x": "Coordenada X",
+            "y": "Coordenada Y",
+            "size": "Tamanho do Ponto",
+            "fillStyle": "Estilo de Preenchimento",
+            "stroke": "Contornar o Ponto",
+            "strokeStyle": "Estilo de Contorno"
         }
     },
     "widgets": {

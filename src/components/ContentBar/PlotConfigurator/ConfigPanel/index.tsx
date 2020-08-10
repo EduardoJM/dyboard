@@ -12,6 +12,7 @@ import { useTools } from '../../../../contexts/tools';
 import AxisPanel from './Axis';
 import FunctionPanel from './Function';
 import AreaUnderCurvePanel from './AreaUnderCurve';
+import PointPanel from './Point';
 
 interface ConfigPanelProps {
     data: ElementPlot;
@@ -82,6 +83,13 @@ const ConfigPanel: React.FC<ConfigPanelProps> = ({
                         )}
                         {currentItem instanceof jPlot.AreaUnderCurve && (
                             <AreaUnderCurvePanel
+                                item={currentItem}
+                                updateItem={updateCurrentItem}
+                                getUpdateItemIndex={getUpdateItemIndex}
+                            />
+                        )}
+                        {currentItem instanceof jPlot.Point && (
+                            <PointPanel
                                 item={currentItem}
                                 updateItem={updateCurrentItem}
                                 getUpdateItemIndex={getUpdateItemIndex}

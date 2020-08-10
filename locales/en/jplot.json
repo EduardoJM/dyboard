@@ -38,6 +38,14 @@
             "fillStyle": "Fill Style",
             "stroke": "Stroke Area",
             "strokeStyle": "Stroke Style"
+        },
+        "point": {
+            "x": "X Coord",
+            "y": "Y Coord",
+            "size": "Point Size",
+            "fillStyle": "Fill Style",
+            "stroke": "Stroke Point",
+            "strokeStyle": "Stroke Style"
         }
     },
     "widgets": {
