@@ -48,9 +48,21 @@ const AxisPanel: React.FC<AxisPanelrops> = ({
         updateItem(idx);
     }
 
+    function handleApplyHorizontalAxisThickStyle(style: LineStyle) {
+        const idx = getUpdateItemIndex();
+        item.xAxisThickStyle = style;
+        updateItem(idx);
+    }
+
     function handleApplyVerticalAxisStyle(style: LineStyle) {
         const idx = getUpdateItemIndex();
         item.yAxisStyle = style;
+        updateItem(idx);
+    }
+
+    function handleApplyVerticalAxisThickStyle(style: LineStyle) {
+        const idx = getUpdateItemIndex();
+        item.yAxisThickStyle = style;
         updateItem(idx);
     }
 
@@ -76,6 +88,11 @@ const AxisPanel: React.FC<AxisPanelrops> = ({
                 handleCheckChange={(v) => handleSwitchChange('xAxisThickNumbers', v)}
                 text={t('panels.axis.xAxisThickNumbers')}
             />
+            <LineStyleWidget
+                style={item.xAxisThickStyle}
+                setStyle={handleApplyHorizontalAxisThickStyle}
+                text={t('panels.axis.xAxisThickStyle')}
+            />
             <Switch
                 checked={item.yAxis}
                 handleCheckChange={(v) => handleSwitchChange('yAxis', v)}
@@ -95,6 +112,11 @@ const AxisPanel: React.FC<AxisPanelrops> = ({
                 checked={item.yAxisThickNumbers}
                 handleCheckChange={(v) => handleSwitchChange('yAxisThickNumbers', v)}
                 text={t('panels.axis.yAxisThickNumbers')}
+            />
+            <LineStyleWidget
+                style={item.yAxisThickStyle}
+                setStyle={handleApplyVerticalAxisThickStyle}
+                text={t('panels.axis.yAxisThickStyle')}
             />
             <Switch
                 checked={item.arrows}

@@ -16,10 +16,12 @@
             "xAxisStyle": "X Axis Style",
             "xAxisThick": "X Axis Thick",
             "xAxisThickNumbers": "X Axis Numbers",
+            "xAxisThickStyle": "X Axis Thick Style",
             "yAxis": "Y Axis",
             "yAxisStyle": "Y Axis Style",
             "yAxisThick": "Y Axis Thick",
             "yAxisThickNumbers": "Y Axis Numbers",
+            "yAxisThickStyle": "Y Axis Thick Style",
             "arrows": "Arrows"
         },
         "function": {

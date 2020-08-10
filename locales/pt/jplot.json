@@ -16,10 +16,12 @@
             "xAxisStyle": "Estilo do Eixo X",
             "xAxisThick": "Marcação no Eixo X",
             "xAxisThickNumbers": "Números no Eixo X",
+            "xAxisThickStyle": "Estilo das Marcações em X",
             "yAxis": "Eixo Y",
             "yAxisStyle": "Estilo do Eixo Y",
             "yAxisThick": "Marcação no Eixo Y",
             "yAxisThickNumbers": "Números no Eixo Y",
+            "yAxisThickStyle": "Estilo das Marcações em Y",
             "arrows": "Setas"
         },
         "function": {
