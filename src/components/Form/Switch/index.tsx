@@ -18,7 +18,7 @@ const Switch: React.FC<SwitchProps> = ({ checked, handleCheckChange, text }) => 
     const theme = useTheme();
 
     return (
-        <Container onClick={() => handleCheckChange(!checked)}>
+        <Container className="control-switch" onClick={() => handleCheckChange(!checked)}>
             <span>{ text }</span>
             <GrayBar theme={theme} checked={checked}>
                 <Marker

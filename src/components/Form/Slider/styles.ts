@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { ThemeContextData } from '../../../contexts/theme';
 
 export const TextBlock = styled.div`
-    padding: 5px;
 `;
 
 interface ContainerProps {
@@ -15,9 +14,10 @@ export const Container = styled.div<ContainerProps>`
     user-select: none;
 
     display: block;
-    padding: 5px;
     padding-top: 15px;
     width: 100%;
+    
+    margin-bottom: 10px;
 
     position: relative;
 
@@ -28,8 +28,8 @@ export const Container = styled.div<ContainerProps>`
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
-        left: 5px;
-        width: calc(100% - 15px);
+        left: 0;
+        width: calc(100% - 10px);
 
         border-radius: 5px;
 

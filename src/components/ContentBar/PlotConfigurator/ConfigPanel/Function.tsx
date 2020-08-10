@@ -1,14 +1,18 @@
 import React from 'react';
-import jPlot, { LineStyle } from 'jplot';
+import { LineStyle, Function as FunctionItem } from 'jplot';
 import { useTranslation } from 'react-i18next';
-
-import { PlotConfiguratorPanelProps } from './types';
 
 import Spinner from '../../../Form/Spinner';
 import Input from '../../../Form/Input';
-import LineStyleWidget from '../LineStyleWidget';
+import LineStyleWidget from '../Widgets/LineStyleWidget';
 
-const FunctionPanel: React.FC<PlotConfiguratorPanelProps> = ({
+interface FunctionPanelProps {
+    item: FunctionItem;
+    getUpdateItemIndex: () => number;
+    updateItem: (idx: number) => void;
+}
+
+const FunctionPanel: React.FC<FunctionPanelProps> = ({
     item,
     getUpdateItemIndex,
     updateItem
@@ -16,9 +20,6 @@ const FunctionPanel: React.FC<PlotConfiguratorPanelProps> = ({
     const { t } = useTranslation('content');
 
     function handleTextChange(prop: 'name' | 'function', value: string) {
-        if (!item || !(item instanceof jPlot.Function)) {
-            return;
-        }
         const idx = getUpdateItemIndex();
         if (prop === 'function') {
             item.function = value;
@@ -29,26 +30,17 @@ const FunctionPanel: React.FC<PlotConfiguratorPanelProps> = ({
     }
 
     function handleSetResolution(value: number) {
-        if (!item || !(item instanceof jPlot.Function)) {
-            return;
-        }
         const idx = getUpdateItemIndex();
         item.resolution = value;
         updateItem(idx);
     }
 
     function handleSetLineStyle(style: LineStyle) {
-        if (!item || !(item instanceof jPlot.Function)) {
-            return;
-        }
         const idx = getUpdateItemIndex();
         item.lineStyle = style;
         updateItem(idx);
     }
 
-    if (!item || !(item instanceof jPlot.Function)) {
-        return null;
-    }
     return (
         <>
             <Input

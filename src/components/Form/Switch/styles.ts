@@ -6,8 +6,6 @@ export const Container = styled.div`
     user-select: none;
     cursor: pointer;
 
-    padding: 5px;
-
     display: flex;
     align-items: center;
     justify-content: space-between;

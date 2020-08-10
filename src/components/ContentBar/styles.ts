@@ -36,7 +36,7 @@ export const Content = styled(animated.div)<ThemedProps>`
     right: 50px;
     top: 0;
 
-    width: 200px;
+    width: 250px;
     height: 100%;
 
     background: ${props => props.theme.contentBarPanelBg};

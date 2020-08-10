@@ -1,14 +1,18 @@
 import React from 'react';
-import jPlot, { FillStyle } from 'jplot';
+import { FillStyle, AreaUnderCurve } from 'jplot';
 import { useTranslation } from 'react-i18next';
-
-import { PlotConfiguratorPanelProps } from './types';
 
 import Input from '../../../Form/Input';
 import Spinner from '../../../Form/Spinner';
-import FillStyleWidget from '../FillStyleWidget';
+import FillStyleWidget from '../Widgets/FillStyleWidget';
 
-const AreaUnderCurvePanel: React.FC<PlotConfiguratorPanelProps> = ({
+export interface AreaUnderCurvePanelProps {
+    item: AreaUnderCurve;
+    getUpdateItemIndex: () => number;
+    updateItem: (idx: number) => void;
+}
+
+const AreaUnderCurvePanel: React.FC<AreaUnderCurvePanelProps> = ({
     item,
     getUpdateItemIndex,
     updateItem
@@ -16,18 +20,12 @@ const AreaUnderCurvePanel: React.FC<PlotConfiguratorPanelProps> = ({
     const { t } = useTranslation('content');
 
     function handleCurveNameChange(value: string) {
-        if (!item || !(item instanceof jPlot.AreaUnderCurve)) {
-            return;
-        }
         const idx = getUpdateItemIndex();
         item.curveName = value;
         updateItem(idx);
     }
 
     function handleSpinnerUpdate(prop: 'left' | 'right', value: number) {
-        if (!item || !(item instanceof jPlot.AreaUnderCurve)) {
-            return;
-        }
         const idx = getUpdateItemIndex();
         if (prop === 'left') {
             item.left = value;
@@ -38,24 +36,18 @@ const AreaUnderCurvePanel: React.FC<PlotConfiguratorPanelProps> = ({
     }
 
     function handleApplyFillStyle(newStyle: FillStyle) {
-        if (!item || !(item instanceof jPlot.AreaUnderCurve)) {
-            return;
-        }
         const idx = getUpdateItemIndex();
         item.fillStyle = newStyle;
         updateItem(idx);
     }
 
-    if (!item || !(item instanceof jPlot.AreaUnderCurve)) {
-        return null;
-    }
     return (
         <>
             <Input
                 name="function_name"
                 text={t('panels.plot.items.areaUnderCurve.props.curveName')}
                 type="text"
-                value={item.name}
+                value={item.curveName}
                 onChange={(e) => handleCurveNameChange(e.target.value)}
             />
             <Spinner

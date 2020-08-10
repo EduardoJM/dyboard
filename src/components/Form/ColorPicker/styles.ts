@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 export const Container = styled.ul`
     display: block;
-    padding: 5px;
     margin-bottom: 10px;
 
     > div {

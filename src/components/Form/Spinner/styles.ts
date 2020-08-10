@@ -7,8 +7,8 @@ interface InputContainerProps {
 }
 
 export const InputContainer = styled.div<InputContainerProps>`
+    margin-bottom: 10px;
     width: ${props => props.width !== undefined ? `${props.width}px` : 'auto'};
-    padding: 5px;
 `;
 
 interface ContainerProps {

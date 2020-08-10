@@ -6,7 +6,7 @@ const Container = styled.div`
     > span {
         cursor: pointer;
 
-        padding: 5px 0;
+        padding: 3px 0;
 
         display: flex;
         align-items: center;
@@ -15,7 +15,7 @@ const Container = styled.div`
         svg {
             width: 24px;
             height: 24px;
-            margin-right: 5px;
+            margin-left: -8px;
         }
     }
 

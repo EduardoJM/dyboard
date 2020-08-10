@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useTransition } from 'react-spring';
 
 import { Container, DropDownContainer } from './styles';

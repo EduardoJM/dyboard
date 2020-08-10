@@ -1,13 +1,17 @@
 import React from 'react';
-import jPlot, { LineStyle } from 'jplot';
+import { Axis, LineStyle } from 'jplot';
 import { useTranslation } from 'react-i18next';
 
-import { PlotConfiguratorPanelProps } from './types';
-
 import Switch from '../../../Form/Switch';
-import LineStyleWidget from '../LineStyleWidget';
+import LineStyleWidget from '../Widgets/LineStyleWidget';
 
-const AxisPanel: React.FC<PlotConfiguratorPanelProps> = ({
+export interface AxisPanelrops {
+    item: Axis;
+    getUpdateItemIndex: () => number;
+    updateItem: (idx: number) => void;
+}
+
+const AxisPanel: React.FC<AxisPanelrops> = ({
     item,
     getUpdateItemIndex,
     updateItem
@@ -19,9 +23,6 @@ const AxisPanel: React.FC<PlotConfiguratorPanelProps> = ({
                     | 'xAxisThickNumbers' | 'yAxisThickNumbers';
 
     function handleSwitchChange(prop: AxisProp, value: boolean) {
-        if (!item || !(item instanceof jPlot.Axis)) {
-            return;
-        }
         const idx = getUpdateItemIndex();
         if (prop === 'xAxis') {
             item.xAxis = value;
@@ -42,26 +43,17 @@ const AxisPanel: React.FC<PlotConfiguratorPanelProps> = ({
     }
 
     function handleApplyHorizontalAxisStyle(style: LineStyle) {
-        if (!item || !(item instanceof jPlot.Axis)) {
-            return;
-        }
         const idx = getUpdateItemIndex();
         item.xAxisStyle = style;
         updateItem(idx);
     }
 
     function handleApplyVerticalAxisStyle(style: LineStyle) {
-        if (!item || !(item instanceof jPlot.Axis)) {
-            return;
-        }
         const idx = getUpdateItemIndex();
         item.yAxisStyle = style;
         updateItem(idx);
     }
 
-    if (!item || !(item instanceof jPlot.Axis)) {
-        return null;
-    }
     return (
         <>
             <Switch

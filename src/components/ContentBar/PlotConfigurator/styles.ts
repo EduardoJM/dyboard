@@ -79,7 +79,7 @@ export const PlotsConfig = styled.div`
     align-items: stretch;
 
     .editor {
-        width: 200px;
+        width: 250px;
         flex: 1;
     }
 
