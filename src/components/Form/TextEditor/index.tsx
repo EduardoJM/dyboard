@@ -15,7 +15,7 @@ import { BlockTypes, InlineStyles } from '../../../data/textEditor';
 import { useTheme } from '../../../contexts/theme';
 
 import TeXBlock from './TeXBlock';
-import { setInlineDecorator, insertTeXBlock, removeTeXBlock } from './tex';
+import { setInlineDecorator, insertTeXBlock, removeTeXBlock } from '../../../utils/draft';
 
 import 'draft-js/dist/Draft.css';
 

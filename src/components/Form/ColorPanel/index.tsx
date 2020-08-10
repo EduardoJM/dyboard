@@ -14,7 +14,7 @@ import {
     HEXtoHSB,
     HEXtoRGB,
     RGBtoHEX
-} from '../../../core/color';
+} from '../../../utils/color';
 
 interface ColorPanelProps {
     color: string;

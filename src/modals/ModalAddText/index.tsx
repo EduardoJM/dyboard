@@ -5,11 +5,9 @@ import {
     convertToRaw,
     convertFromRaw
 } from 'draft-js';
-import { stateToHTML } from 'draft-js-export-html';
-import katex from 'katex';
 import { useTranslation } from 'react-i18next';
 
-import { renderInlineLaTeX } from '../../core/latex';
+import { stateToHTML } from '../../utils/draft';
 import Modal from '../../components/Modal';
 
 import { useTools } from '../../contexts/tools';
@@ -49,17 +47,7 @@ const ModalAddText: React.FC<ModalAddTextProps> = ({
 
     function handleAdd() {
         const contentState = editorState.getCurrentContent();
-        let text = stateToHTML(contentState, {
-            blockRenderers: {
-                atomic: (block) => {
-                    const tex = contentState
-                        .getEntity(block.getEntityAt(0))
-                        .getData().content;
-                    return katex.renderToString(tex, { displayMode: true });
-                }
-            }
-        });
-        text = renderInlineLaTeX(text);
+        const text = stateToHTML(contentState);
         if (isEditing && editComplete) {
             editComplete(convertToRaw(contentState), text);
             return;

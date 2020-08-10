@@ -1,15 +1,31 @@
+import { stateToHTML as rawStateToHTML } from 'draft-js-export-html';
 import {
-    AtomicBlockUtils,
-    EditorState,
     Modifier,
+    ContentState,
     ContentBlock,
-    CompositeDecorator,
-    SelectionState
+    EditorState,
+    AtomicBlockUtils,
+    SelectionState,
+    CompositeDecorator
 } from 'draft-js';
+import katex from 'katex';
+
+import { renderInlineLaTeX, inlineLatexRegex } from './latex';
 import InlineTeX from './InlineTeX';
 
-// eslint-disable-next-line no-useless-escape
-const INLINE_TEX_REGEX = /\\\([\s\S]+?\\\)|\$[\s\S]+?\$/g;
+export function stateToHTML(contentState: ContentState): string {
+    const text = rawStateToHTML(contentState, {
+        blockRenderers: {
+            atomic: (block) => {
+                const tex = contentState
+                    .getEntity(block.getEntityAt(0))
+                    .getData().content;
+                return katex.renderToString(tex, { displayMode: true });
+            }
+        }
+    });
+    return renderInlineLaTeX(text);
+}
 
 function findWithRegex(
     regex: RegExp,
@@ -28,7 +44,7 @@ function inlineTeXStrategy(
     contentBlock: ContentBlock,
     callback: (start: number, end: number) => void
 ) {
-    findWithRegex(INLINE_TEX_REGEX, contentBlock, callback);
+    findWithRegex(inlineLatexRegex, contentBlock, callback);
 }
 
 const compositeDecorator = new CompositeDecorator([
