@@ -76,7 +76,7 @@ const PlotBlock: React.FC<PlotBlockProps> = ({ data }) => {
     }
 
     function handleMouseDown(e: MouseEvent) {
-        if (!canvasRef.current) {
+        if (!canvasRef.current || tools.currentTool !== 'cursor') {
             return;
         }
         const rc = canvasRef.current.getBoundingClientRect();
