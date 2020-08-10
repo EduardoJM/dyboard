@@ -29,7 +29,7 @@ const ContentBar: React.FC = () => {
         enter: { opacity: 1 },
         leave: { opacity: 0 }
     });
-    const { t } = useTranslation('content');
+    const { t } = useTranslation('contentBar');
 
     function renderContent(): JSX.Element | null {
         if (contentIsBoardItems) {
@@ -90,7 +90,7 @@ const ContentBar: React.FC = () => {
             ))}
             <Bar theme={theme}>
                 <ToolBarButton
-                    title={t('bar.content')}
+                    title={t('content')}
                     theme={theme}
                     markerSide="right"
                     current={contentVisible && !contentIsBoardItems}
@@ -100,7 +100,7 @@ const ContentBar: React.FC = () => {
                 </ToolBarButton>
                 {tools.currentElement && (
                     <ToolBarButton
-                        title={t('bar.delete')}
+                        title={t('delete')}
                         theme={theme}
                         markerSide="right"
                         current={false}
@@ -110,7 +110,7 @@ const ContentBar: React.FC = () => {
                     </ToolBarButton>
                 )}
                 <ToolBarButton
-                    title={t('bar.contentList')}
+                    title={t('contentList')}
                     theme={theme}
                     markerSide="right"
                     current={contentVisible && contentIsBoardItems}
