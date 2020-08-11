@@ -18,7 +18,7 @@ import {
 } from './styles';
 
 import Button from '../../components/Form/Button';
-import TextEditor from '../../components/Form/TextEditor';
+import TextEditor from './TextEditor';
 
 interface ModalAddTextProps {
     opened: boolean;
