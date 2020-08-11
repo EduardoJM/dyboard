@@ -18,29 +18,32 @@ import { useTheme } from '../../contexts/theme';
 import { useBoard } from '../../contexts/board';
 import { useTools } from '../../contexts/tools';
 
+type ContentBarPanel = 'contentSetting' | 'boardItems';
+
 const ContentBar: React.FC = () => {
     const [contentVisible, setContentVisible] = useState(true);
-    const [contentIsBoardItems, setContentIsBoardItems] = useState(false);
-    const theme = useTheme();
-    const tools = useTools();
-    const board = useBoard();
+    const [currentPanel, setCurrentPanel] = useState<ContentBarPanel>('contentSetting');
     const contentTransition = useTransition(contentVisible, null, {
         from: { opacity: 0 },
         enter: { opacity: 1 },
         leave: { opacity: 0 }
     });
     const { t } = useTranslation('contentBar');
+    const theme = useTheme();
+    const tools = useTools();
+    const board = useBoard();
 
     function renderContent(): JSX.Element | null {
-        if (contentIsBoardItems) {
+        if (currentPanel === 'boardItems') {
             return <BoardPanel />;
-        }
-        if (tools.currentElement === null) {
-            return null;
-        } else if (tools.currentElement.type === 'plot') {
-            return <PlotConfigurator data={tools.currentElement as ElementPlot} />;
-        } else if (tools.currentElement.type === 'text') {
-            return <TextConfigurator data={tools.currentElement as ElementText} />;
+        } else if (currentPanel === 'contentSetting') {
+            if (tools.currentElement === null) {
+                return null;
+            } else if (tools.currentElement.type === 'plot') {
+                return <PlotConfigurator data={tools.currentElement as ElementPlot} />;
+            } else if (tools.currentElement.type === 'text') {
+                return <TextConfigurator data={tools.currentElement as ElementText} />;
+            }
         }
         return null;
     }
@@ -59,25 +62,28 @@ const ContentBar: React.FC = () => {
     }
 
     function handleContentButtonClick() {
-        if (contentVisible && !contentIsBoardItems) {
-            setContentVisible(false);
-        } else if (contentVisible && contentIsBoardItems) {
-            setContentIsBoardItems(false);
-        } else if (!contentVisible) {
+        if (contentVisible) {
+            if (currentPanel === 'contentSetting') {
+                setContentVisible(false);
+            } else {
+                setCurrentPanel('contentSetting');
+            }
+        } else {
             setContentVisible(true);
-            setContentIsBoardItems(false);
+            setCurrentPanel('contentSetting');
         }
     }
 
     function handleBoardButtonClick() {
-        if (contentVisible && contentIsBoardItems) {
-            setContentVisible(false);
-            setContentIsBoardItems(false);
-        } else if (contentVisible && !contentIsBoardItems) {
-            setContentIsBoardItems(true);
-        } else if (!contentVisible) {
+        if (contentVisible) {
+            if (currentPanel === 'boardItems') {
+                setContentVisible(false);
+            } else {
+                setCurrentPanel('boardItems');
+            }
+        } else {
             setContentVisible(true);
-            setContentIsBoardItems(true);
+            setCurrentPanel('boardItems');
         }
     }
 
@@ -93,7 +99,7 @@ const ContentBar: React.FC = () => {
                     title={t('content')}
                     theme={theme}
                     markerSide="right"
-                    current={contentVisible && !contentIsBoardItems}
+                    current={contentVisible && currentPanel === 'contentSetting'}
                     onClick={handleContentButtonClick}
                 >
                     <RiListSettingsLine size={24} />
@@ -113,7 +119,7 @@ const ContentBar: React.FC = () => {
                     title={t('contentList')}
                     theme={theme}
                     markerSide="right"
-                    current={contentVisible && contentIsBoardItems}
+                    current={contentVisible && currentPanel === 'boardItems'}
                     onClick={handleBoardButtonClick}
                 >
                     <MdList size={24} />
