@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTransition } from 'react-spring';
+import useEventListener from '@use-it/event-listener';
 
 import { Container, DropDownContainer } from './styles';
 
@@ -21,25 +22,34 @@ const DropDownButton: React.FC<DropDownButtonProps> = ({
         leave: { opacity: 0 }
     });
 
+    useEventListener('mousedown', () => {
+        if (!dropDownState) {
+            return;
+        }
+        setDropDownState(false);
+    }, document);
+
+    function handleToggleDropDown() {
+        setDropDownState(!dropDownState);
+    }
+
     return (
         <Container>
             <li
-                tabIndex={-1}
-                onFocus={() => setDropDownState(true)}
-                onBlur={() => setDropDownState(false)}
+                onClick={handleToggleDropDown}
             >
                 {children}
-                {transitions.map(
-                    ({ item, key, props }) => item && (
-                        <DropDownContainer
-                            key={key}
-                            style={props}
-                        >
-                            {dropDown}
-                        </DropDownContainer>
-                    )
-                )}
             </li>
+            {transitions.map(
+                ({ item, key, props }) => item && (
+                    <DropDownContainer
+                        key={key}
+                        style={props}
+                    >
+                        {dropDown}
+                    </DropDownContainer>
+                )
+            )}
         </Container>
     );
 };

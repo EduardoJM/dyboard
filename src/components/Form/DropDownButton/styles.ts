@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { animated } from 'react-spring';
 
-export const Container = styled.ul`
+export const Container = styled.div`
     display: inline-block;
     list-style-type: none;
     position: relative;
@@ -12,7 +12,7 @@ export const Container = styled.ul`
     }
 `;
 
-export const DropDownContainer = styled(animated.ul)`
+export const DropDownContainer = styled(animated.div)`
     position: absolute;
     left: 0;
     top: 100%;
@@ -21,7 +21,5 @@ export const DropDownContainer = styled(animated.ul)`
 
     outline: none;
 
-    list-style-type: none;
-
-    width: 200px;
+    width: 250px;
 `;
