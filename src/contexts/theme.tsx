@@ -95,6 +95,10 @@ export interface ThemeContextData {
     contentBarListFg: string;
     contentBarListItemBg: string;
     contentBarListItemFg: string;
+
+    dropDownMenuBg: string;
+    dropDownMenuFg: string;
+    dropDownMenuFgHover: string;
 }
 
 const ThemeContext = createContext<ThemeContextData>({} as ThemeContextData);

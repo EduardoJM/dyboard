@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useTransition } from 'react-spring';
 import useEventListener from '@use-it/event-listener';
 
+import { useTheme } from '../../../contexts/theme';
+
 import { Container, DropDownContainer } from './styles';
 
 interface DropDownButton {
@@ -26,6 +28,7 @@ const DropDownButton: React.FC<DropDownButtonProps> = ({
         enter: { opacity: 1 },
         leave: { opacity: 0 }
     });
+    const theme = useTheme();
 
     useEventListener('mousedown', () => {
         if (!dropDownState) {
@@ -47,7 +50,10 @@ const DropDownButton: React.FC<DropDownButtonProps> = ({
         : (renderDropDown ? renderDropDown() : null);
 
     return (
-        <Container>
+        <Container
+            theme={theme}
+            downed={dropDownState}
+        >
             <span
                 onClick={handleToggleDropDown}
             >
@@ -58,6 +64,7 @@ const DropDownButton: React.FC<DropDownButtonProps> = ({
                     <DropDownContainer
                         key={key}
                         style={props}
+                        theme={theme}
                     >
                         {content}
                     </DropDownContainer>

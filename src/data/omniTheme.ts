@@ -94,7 +94,11 @@ const omni = {
     contentBarListBg: '#13111d',
     contentBarListFg: '#E1E1E6',
     contentBarListItemBg: '#181621',
-    contentBarListItemFg: '#988bc7'
+    contentBarListItemFg: '#988bc7',
+
+    dropDownMenuBg: '#191622',
+    dropDownMenuFg: '#E1E1E6',
+    dropDownMenuFgHover: '#AAA'
 };
 
 export default omni;
