@@ -1,21 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTransition } from 'react-spring';
 import useEventListener from '@use-it/event-listener';
 
 import { Container, DropDownContainer } from './styles';
 
+interface DropDownButton {
+    key: string;
+    label: string;
+    click: () => void;
+}
+
 interface DropDownButtonProps {
-    dropDown: JSX.Element;
-    dropDownState: boolean;
-    setDropDownState: (value: boolean) => void;
+    renderDropDown?: () => JSX.Element;
+    dropDownButtons?: DropDownButton[];
 }
 
 const DropDownButton: React.FC<DropDownButtonProps> = ({
     children,
-    dropDown,
-    dropDownState,
-    setDropDownState
+    renderDropDown,
+    dropDownButtons
 }) => {
+    const [dropDownState, setDropDownState] = useState(false);
     const transitions = useTransition(dropDownState, null, {
         from: { opacity: 0 },
         enter: { opacity: 1 },
@@ -33,20 +38,28 @@ const DropDownButton: React.FC<DropDownButtonProps> = ({
         setDropDownState(!dropDownState);
     }
 
+    const content = dropDownButtons
+        ? dropDownButtons.map((button) => (
+            <button key={button.key} type="button" onClick={button.click}>
+                {button.label}
+            </button>
+        ))
+        : (renderDropDown ? renderDropDown() : null);
+
     return (
         <Container>
-            <li
+            <span
                 onClick={handleToggleDropDown}
             >
                 {children}
-            </li>
+            </span>
             {transitions.map(
                 ({ item, key, props }) => item && (
                     <DropDownContainer
                         key={key}
                         style={props}
                     >
-                        {dropDown}
+                        {content}
                     </DropDownContainer>
                 )
             )}

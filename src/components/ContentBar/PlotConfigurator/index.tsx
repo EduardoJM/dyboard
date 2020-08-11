@@ -22,7 +22,6 @@ interface PlotConfiguratorProps {
 
 const PlotConfigurator: React.FC<PlotConfiguratorProps> = ({ data }) => {
     const [editing, setEditing] = useState<RenderItem | null>(null);
-    const [addRenderItemsDropDown, setAddRenderItemsDropDown] = useState(false);
     const tools = useTools();
     const board = useBoard();
     const theme = useTheme();
@@ -49,32 +48,19 @@ const PlotConfigurator: React.FC<PlotConfiguratorProps> = ({ data }) => {
 
     function addAxis() {
         addPlotItem(new jPlot.Axis());
-        setAddRenderItemsDropDown(false);
     }
 
     function addFunction() {
         addPlotItem(new jPlot.Function());
-        setAddRenderItemsDropDown(false);
     }
 
     function addAreaUnderCurve() {
         addPlotItem(new jPlot.AreaUnderCurve());
-        setAddRenderItemsDropDown(false);
     }
 
     function addPoint() {
         addPlotItem(new jPlot.Point());
-        setAddRenderItemsDropDown(false);
     }
-
-    const addDropDownContent = (
-        <div className="add-dropdown-content">
-            <button onClick={addAxis}>{t('items.axis')}</button>
-            <button onClick={addFunction}>{t('items.function')}</button>
-            <button onClick={addAreaUnderCurve}>{t('items.areaUnderCurve')}</button>
-            <button onClick={addPoint}>{t('items.point')}</button>
-        </div>
-    );
 
     function getListItemName(item: RenderItem) {
         if (item instanceof jPlot.Axis) {
@@ -156,9 +142,12 @@ const PlotConfigurator: React.FC<PlotConfiguratorProps> = ({ data }) => {
                 </div>
                 <div className="list-tools">
                     <DropDownButton
-                        dropDown={addDropDownContent}
-                        dropDownState={addRenderItemsDropDown}
-                        setDropDownState={setAddRenderItemsDropDown}
+                        dropDownButtons={[
+                            { key: 'add-axis', label: t('items.axis'), click: addAxis },
+                            { key: 'add-func', label: t('items.function'), click: addFunction },
+                            { key: 'add-areauc', label: t('items.areaUnderCurve'), click: addAreaUnderCurve },
+                            { key: 'add-point', label: t('items.point'), click: addPoint }
+                        ]}
                     >
                         <MdAdd size={24} />
                     </DropDownButton>

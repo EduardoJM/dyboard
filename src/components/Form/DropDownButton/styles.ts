@@ -3,12 +3,11 @@ import { animated } from 'react-spring';
 
 export const Container = styled.div`
     display: inline-block;
-    list-style-type: none;
     position: relative;
     overflow: visible;
 
-    > li {
-        outline: none;
+    span {
+        cursor: pointer;
     }
 `;
 
@@ -22,4 +21,9 @@ export const DropDownContainer = styled(animated.div)`
     outline: none;
 
     width: 250px;
+
+    background: #FFF;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
 `;
