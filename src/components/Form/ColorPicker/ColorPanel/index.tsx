@@ -2,7 +2,7 @@ import React, { useState, useEffect, createRef, MouseEvent, ChangeEvent } from '
 
 import Container from './styles';
 
-import Spinner from '../Spinner';
+import Spinner from '../../Spinner';
 
 import {
     HSB,
@@ -14,7 +14,7 @@ import {
     HEXtoHSB,
     HEXtoRGB,
     RGBtoHEX
-} from '../../../utils/color';
+} from '../../../../utils/color';
 
 interface ColorPanelProps {
     color: string;

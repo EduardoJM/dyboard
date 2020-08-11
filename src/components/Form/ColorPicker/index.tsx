@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Container, ButtonArea } from './styles';
 
 import Modal from '../../Modal';
-import ColorPanel from '../ColorPanel';
+import ColorPanel from './ColorPanel';
 import Button from '../Button';
 
 interface ColorPickerProps {
