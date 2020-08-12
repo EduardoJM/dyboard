@@ -71,9 +71,7 @@ const ConfigPanel: React.FC<ConfigPanelProps> = ({
                     <div className="content">
                         <Form onSubmit={(data) => console.log(data)}>
                             {currentItem instanceof jPlot.Axis && (
-                                <AxisPanel
-                                    item={currentItem}
-                                />
+                                <AxisPanel item={currentItem} />
                             )}
                             {currentItem instanceof jPlot.Function && (
                                 <FunctionPanel
@@ -90,11 +88,7 @@ const ConfigPanel: React.FC<ConfigPanelProps> = ({
                                 />
                             )}
                             {currentItem instanceof jPlot.Point && (
-                                <PointPanel
-                                    item={currentItem}
-                                    updateItem={updateCurrentItem}
-                                    getUpdateItemIndex={getUpdateItemIndex}
-                                />
+                                <PointPanel item={currentItem} />
                             )}
                             <button type="submit">SUBMIT</button>
                         </Form>

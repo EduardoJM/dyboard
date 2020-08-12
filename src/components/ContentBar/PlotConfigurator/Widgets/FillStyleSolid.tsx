@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { SolidFill, Color } from 'jplot';
+import React from 'react';
+import { SolidFill } from 'jplot';
 import { useTranslation } from 'react-i18next';
 
 import ColorPicker from '../../../Form/ColorPicker';
@@ -7,45 +7,27 @@ import Spinner from '../../../Form/Spinner';
 
 interface FillStyleSolidProps{
     style: SolidFill,
-    setStyle: (newStyle: SolidFill) => void;
 }
 
 const FillStyleSolid: React.FC<FillStyleSolidProps> = ({
-    style,
-    setStyle
+    style
 }) => {
-    const [color, setColor] =
-        useState(`rgb(${style.color.r}, ${style.color.g}, ${style.color.b})`);
-    const [opacity, setOpacity] = useState(Math.floor(style.opacity * 100));
     const { t } = useTranslation('jplot');
-
-    function handleApplyColor(newColor: string) {
-        setColor(newColor);
-        style.color = Color.fromString(newColor);
-        setStyle(style);
-    }
-
-    function handleApplyOpacity(newOpacity: number) {
-        style.opacity = newOpacity / 100;
-        setStyle(style);
-    }
 
     return (
         <>
             <ColorPicker
+                name="color"
                 text={t('widgets.fillStyle.solid.color')}
-                color={color}
-                onSubmit={handleApplyColor}
+                color={`rgb(${style.color.r}, ${style.color.g}, ${style.color.b})`}
             />
             <Spinner
-                labeled
+                name="opacity"
                 text={t('widgets.fillStyle.solid.opacity')}
-                value={opacity}
+                initialValue={Math.round(style.opacity * 100)}
                 min={0}
                 max={100}
-                onChange={setOpacity}
-                onDragStop={handleApplyOpacity}
-                onInputBlur={handleApplyOpacity}
+                transform={100}
             />
         </>
     );

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { LineStyle, Color } from 'jplot';
+import { LineStyle } from 'jplot';
 import { MdKeyboardArrowDown, MdKeyboardArrowRight } from 'react-icons/md';
 import { useTranslation } from 'react-i18next';
 import { Scope } from '@unform/core';

@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import Select from 'react-select';
+import Select, { ValueType } from 'react-select';
 import { useField } from '@unform/core';
 
 import Container from './styles';
@@ -14,13 +14,15 @@ interface OptionPickerProps {
         value: string;
     }[];
     initialValue: string;
+    onChange?: (value: string) => void;
 }
 
 const OptionPicker: React.FC<OptionPickerProps> = ({
     name,
     text,
     options,
-    initialValue
+    initialValue,
+    onChange
 }) => {
     const selectRef = useRef(null);
     const { fieldName, registerField } = useField(name);
@@ -39,6 +41,15 @@ const OptionPicker: React.FC<OptionPickerProps> = ({
             }
         });
     }, [fieldName, registerField]);
+
+    function handleSelectChange(v: ValueType<{
+        label: string;
+        value: string;
+    }>) {
+        if (onChange) {
+            onChange((v as { value: string; }).value);
+        }
+    }
 
     return (
         <Container>
@@ -71,6 +82,7 @@ const OptionPicker: React.FC<OptionPickerProps> = ({
                 })}
                 defaultValue={options.filter((item) => item.value === initialValue)[0]}
                 ref={selectRef}
+                onChange={handleSelectChange}
                 classNamePrefix="react-select"
             />
         </Container>

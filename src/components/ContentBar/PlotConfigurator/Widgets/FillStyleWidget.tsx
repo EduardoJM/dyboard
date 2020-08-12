@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { FillStyle, SolidFill, PatternLine } from 'jplot';
 import { MdKeyboardArrowDown, MdKeyboardArrowRight } from 'react-icons/md';
 import { useTranslation } from 'react-i18next';
+import { Scope } from '@unform/core';
 
 import OptionPicker from '../../../Form/OptionPicker';
 
@@ -11,20 +12,20 @@ import FillStyleSolid from './FillStyleSolid';
 import Container from './styles';
 
 interface FillStyleWidgetProps {
+    name: string;
     text: string;
-    style: FillStyle;
-    setStyle: (newStyle: FillStyle) => void;
+    initialStyle: FillStyle;
 }
 
+type FillType = 'solid' | 'linePattern' | 'none';
+
 const FillStyleWidget: React.FC<FillStyleWidgetProps> = ({
+    name,
     text,
-    style,
-    setStyle
+    initialStyle
 }) => {
     const [propsVisible, setPropsVisible] = useState(false);
-    const { t } = useTranslation('jplot');
-
-    type FillType = 'solid' | 'linePattern' | 'none';
+    const [style, setStyle] = useState<FillStyle>(initialStyle);
     const [fillType, setFillType] = useState<FillType>(() => {
         if (style instanceof SolidFill) {
             return 'solid';
@@ -34,6 +35,7 @@ const FillStyleWidget: React.FC<FillStyleWidgetProps> = ({
         setStyle(new SolidFill());
         return 'none';
     });
+    const { t } = useTranslation('jplot');
 
     function handleFillTypeChange(value: string) {
         if (value === 'solid') {
@@ -53,37 +55,32 @@ const FillStyleWidget: React.FC<FillStyleWidgetProps> = ({
 
     return (
         <Container className="config line-style">
-            <span onClick={handleCaptionClick}>
-                {propsVisible
-                    ? <MdKeyboardArrowDown />
-                    : <MdKeyboardArrowRight />}
-                {text}
-            </span>
-            {propsVisible && (
-                <div className="config-content">
+            <Scope path={name}>
+                <span onClick={handleCaptionClick}>
+                    {propsVisible
+                        ? <MdKeyboardArrowDown />
+                        : <MdKeyboardArrowRight />}
+                    {text}
+                </span>
+                <div className={`config-content${propsVisible ? ' show' : ' hide'}`}>
                     <OptionPicker
+                        name="type"
                         options={[
                             { value: 'solid', label: t('widgets.fillStyle.typeSolid') },
                             { value: 'linePattern', label: t('widgets.fillStyle.typeLinePattern') }
                         ]}
+                        initialValue={fillType}
                         onChange={handleFillTypeChange}
-                        value={fillType}
                         text={t('widgets.fillStyle.type')}
                     />
                     {style instanceof PatternLine && (
-                        <FillStyleLinePattern
-                            style={style}
-                            setStyle={setStyle}
-                        />
+                        <FillStyleLinePattern style={style} />
                     )}
                     {style instanceof SolidFill && (
-                        <FillStyleSolid
-                            style={style}
-                            setStyle={setStyle}
-                        />
+                        <FillStyleSolid style={style} />
                     )}
                 </div>
-            )}
+            </Scope>
         </Container>
     );
 };

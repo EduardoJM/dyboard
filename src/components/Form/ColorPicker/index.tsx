@@ -19,7 +19,7 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
     color,
     text
 }) => {
-    const pickerRef = useRef(null);
+    const pickerRef = useRef<HTMLDivElement>(null);
     const { fieldName, registerField } = useField(name);
     const [newColor, setNewColor] = useState(color);
     // dropDown state
@@ -30,7 +30,12 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
         registerField({
             name: fieldName,
             ref: pickerRef.current,
-            path: 'data-color'
+            getValue: (ref: HTMLDivElement) => {
+                if (ref.dataset.color === undefined) {
+                    return 'black';
+                }
+                return ref.dataset.color;
+            }
         });
     }, [fieldName, registerField]);
 

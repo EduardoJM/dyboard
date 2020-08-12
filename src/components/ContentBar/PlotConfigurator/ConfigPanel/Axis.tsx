@@ -7,8 +7,6 @@ import { LineStyleWidget } from '../Widgets';
 
 export interface AxisPanelrops {
     item: Axis;
-    getUpdateItemIndex: () => number;
-    updateItem: (idx: number) => void;
 }
 
 const AxisPanel: React.FC<AxisPanelrops> = ({
