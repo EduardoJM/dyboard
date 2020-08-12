@@ -1,5 +1,6 @@
 import React from 'react';
 import jPlot, { RenderItem } from 'jplot';
+import { Form } from '@unform/web';
 import { useTranslation } from 'react-i18next';
 
 import Scrollbars from '../../../Scrollbars';
@@ -61,40 +62,42 @@ const ConfigPanel: React.FC<ConfigPanelProps> = ({
             </div>
         );
     }
+
     return (
         <>
             <div className="heading">{t('configHeader')}</div>
             <div className="editor">
                 <Scrollbars>
                     <div className="content">
-                        {currentItem instanceof jPlot.Axis && (
-                            <AxisPanel
-                                item={currentItem}
-                                updateItem={updateCurrentItem}
-                                getUpdateItemIndex={getUpdateItemIndex}
-                            />
-                        )}
-                        {currentItem instanceof jPlot.Function && (
-                            <FunctionPanel
-                                item={currentItem}
-                                updateItem={updateCurrentItem}
-                                getUpdateItemIndex={getUpdateItemIndex}
-                            />
-                        )}
-                        {currentItem instanceof jPlot.AreaUnderCurve && (
-                            <AreaUnderCurvePanel
-                                item={currentItem}
-                                updateItem={updateCurrentItem}
-                                getUpdateItemIndex={getUpdateItemIndex}
-                            />
-                        )}
-                        {currentItem instanceof jPlot.Point && (
-                            <PointPanel
-                                item={currentItem}
-                                updateItem={updateCurrentItem}
-                                getUpdateItemIndex={getUpdateItemIndex}
-                            />
-                        )}
+                        <Form onSubmit={(data) => console.log(data)}>
+                            {currentItem instanceof jPlot.Axis && (
+                                <AxisPanel
+                                    item={currentItem}
+                                />
+                            )}
+                            {currentItem instanceof jPlot.Function && (
+                                <FunctionPanel
+                                    item={currentItem}
+                                    updateItem={updateCurrentItem}
+                                    getUpdateItemIndex={getUpdateItemIndex}
+                                />
+                            )}
+                            {currentItem instanceof jPlot.AreaUnderCurve && (
+                                <AreaUnderCurvePanel
+                                    item={currentItem}
+                                    updateItem={updateCurrentItem}
+                                    getUpdateItemIndex={getUpdateItemIndex}
+                                />
+                            )}
+                            {currentItem instanceof jPlot.Point && (
+                                <PointPanel
+                                    item={currentItem}
+                                    updateItem={updateCurrentItem}
+                                    getUpdateItemIndex={getUpdateItemIndex}
+                                />
+                            )}
+                            <button type="submit">SUBMIT</button>
+                        </Form>
                     </div>
                 </Scrollbars>
             </div>

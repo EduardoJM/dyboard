@@ -1,42 +1,50 @@
-import React from 'react';
-import Select, { ValueType } from 'react-select';
+import React, { useRef, useEffect } from 'react';
+import Select from 'react-select';
+import { useField } from '@unform/core';
 
 import Container from './styles';
 
 import { useTheme } from '../../../contexts/theme';
 
 interface OptionPickerProps {
+    name: string;
     text: string;
     options: {
         label: string;
         value: string;
     }[];
-    value: string;
-    onChange: (value: string) => void;
+    initialValue: string;
 }
 
 const OptionPicker: React.FC<OptionPickerProps> = ({
+    name,
     text,
     options,
-    value,
-    onChange
+    initialValue
 }) => {
+    const selectRef = useRef(null);
+    const { fieldName, registerField } = useField(name);
     const theme = useTheme();
 
-    function handleSelectChange(v: ValueType<{
-        label: string;
-        value: string;
-    }>) {
-        onChange((v as { value: string; }).value);
-    }
+    useEffect(() => {
+        registerField({
+            name: fieldName,
+            ref: selectRef.current,
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            getValue: (ref: any) => {
+                if (!ref.state.value) {
+                    return '';
+                }
+                return ref.state.value.value;
+            }
+        });
+    }, [fieldName, registerField]);
 
     return (
         <Container>
             <label>{text}</label>
             <Select
                 options={options}
-                value={options.filter(opt => opt.value === value)[0]}
-                onChange={handleSelectChange}
                 theme={(selectTheme) => ({
                     ...selectTheme,
                     borderRadius: 0,
@@ -61,6 +69,9 @@ const OptionPicker: React.FC<OptionPickerProps> = ({
                         dangerLight: theme.selectDangerLight
                     }
                 })}
+                defaultValue={options.filter((item) => item.value === initialValue)[0]}
+                ref={selectRef}
+                classNamePrefix="react-select"
             />
         </Container>
     );

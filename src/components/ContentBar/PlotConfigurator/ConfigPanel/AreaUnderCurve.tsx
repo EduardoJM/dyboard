@@ -37,21 +37,9 @@ const AreaUnderCurvePanel: React.FC<AreaUnderCurvePanelProps> = ({
         updateItem(idx);
     }
 
-    function handleToggleFill(check: boolean) {
-        const idx = getUpdateItemIndex();
-        item.fill = check;
-        updateItem(idx);
-    }
-
     function handleApplyFillStyle(newStyle: FillStyle) {
         const idx = getUpdateItemIndex();
         item.fillStyle = newStyle;
-        updateItem(idx);
-    }
-
-    function handleToggleStroke(check: boolean) {
-        const idx = getUpdateItemIndex();
-        item.stroke = check;
         updateItem(idx);
     }
 
@@ -87,9 +75,9 @@ const AreaUnderCurvePanel: React.FC<AreaUnderCurvePanelProps> = ({
                 onChange={(v) => handleSpinnerUpdate('right', v)}
             />
             <Switch
+                name="fill"
                 text={t('panels.areaUnderCurve.fill')}
-                checked={item.fill}
-                handleCheckChange={handleToggleFill}
+                initialCheck={item.fill}
             />
             <FillStyleWidget
                 text={t('panels.areaUnderCurve.fillStyle')}
@@ -97,9 +85,9 @@ const AreaUnderCurvePanel: React.FC<AreaUnderCurvePanelProps> = ({
                 setStyle={handleApplyFillStyle}
             />
             <Switch
+                name="stroke"
                 text={t('panels.areaUnderCurve.stroke')}
-                checked={item.stroke}
-                handleCheckChange={handleToggleStroke}
+                initialCheck={item.stroke}
             />
             <LineStyleWidget
                 text={t('panels.areaUnderCurve.strokeStyle')}

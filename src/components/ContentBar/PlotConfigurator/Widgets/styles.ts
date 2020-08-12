@@ -21,6 +21,10 @@ const Container = styled.div`
 
     .config-content {
         padding: 5px;
+
+        &.hide {
+            display: none;
+        }
     }
 `;
 

@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useField } from '@unform/core';
 
 import { Container, ButtonArea } from './styles';
 
@@ -8,24 +9,34 @@ import ColorPanel from './ColorPanel';
 import Button from '../Button';
 
 interface ColorPickerProps {
+    name: string;
     color: string;
     text: string;
-    onSubmit: (color: string) => void;
 }
 
 const ColorPicker: React.FC<ColorPickerProps> = ({
+    name,
     color,
-    text,
-    onSubmit
+    text
 }) => {
+    const pickerRef = useRef(null);
+    const { fieldName, registerField } = useField(name);
     const [newColor, setNewColor] = useState(color);
     // dropDown state
     const [visible, setVisible] = useState(false);
     const { t } = useTranslation('modals');
 
+    useEffect(() => {
+        registerField({
+            name: fieldName,
+            ref: pickerRef.current,
+            path: 'data-color'
+        });
+    }, [fieldName, registerField]);
+
     function handleSubmit() {
         setVisible(false);
-        onSubmit(newColor);
+        setNewColor(newColor);
     }
 
     function handleCloseModal() {
@@ -33,7 +44,10 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
     }
 
     return (
-        <Container>
+        <Container
+            ref={pickerRef}
+            data-color={newColor}
+        >
             <div
                 onClick={() => setVisible(true)}
             >

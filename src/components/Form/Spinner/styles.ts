@@ -2,18 +2,11 @@ import styled from 'styled-components';
 
 import { ThemeContextData } from '../../../contexts/theme';
 
-interface InputContainerProps {
-    width?: number;
-}
-
-export const InputContainer = styled.div<InputContainerProps>`
+export const InputContainer = styled.div`
     margin-bottom: 10px;
-    width: ${props => props.width !== undefined ? `${props.width}px` : 'auto'};
 `;
 
 interface ContainerProps {
-    width?: number;
-
     theme: ThemeContextData;
 }
 
@@ -23,7 +16,6 @@ export const Container = styled.div<ContainerProps>`
     align-items: stretch;
 
     height: 25px;
-    width: ${props => props.width !== undefined ? `${props.width}px` : 'auto'};
 
     overflow: hidden;
 

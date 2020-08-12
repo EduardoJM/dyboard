@@ -1,8 +1,8 @@
 import React, { useState, useEffect, createRef, MouseEvent, ChangeEvent } from 'react';
 
-import Container from './styles';
+import { Container } from './styles';
 
-import Spinner from '../../Spinner';
+import Spinner from './Spinner';
 
 import {
     HSB,

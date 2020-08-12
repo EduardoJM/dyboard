@@ -1,9 +1,9 @@
 import React from 'react';
-import { Axis, LineStyle } from 'jplot';
+import { Axis } from 'jplot';
 import { useTranslation } from 'react-i18next';
 
 import Switch from '../../../Form/Switch';
-import LineStyleWidget from '../Widgets/LineStyleWidget';
+import { LineStyleWidget } from '../Widgets';
 
 export interface AxisPanelrops {
     item: Axis;
@@ -12,115 +12,65 @@ export interface AxisPanelrops {
 }
 
 const AxisPanel: React.FC<AxisPanelrops> = ({
-    item,
-    getUpdateItemIndex,
-    updateItem
+    item
 }) => {
     const { t } = useTranslation('jplot');
-
-    type AxisProp = 'xAxis' | 'yAxis' | 'arrows'
-                    | 'xAxisThick' | 'yAxisThick'
-                    | 'xAxisThickNumbers' | 'yAxisThickNumbers';
-
-    function handleSwitchChange(prop: AxisProp, value: boolean) {
-        const idx = getUpdateItemIndex();
-        if (prop === 'xAxis') {
-            item.xAxis = value;
-        } else if (prop === 'yAxis') {
-            item.yAxis = value;
-        } else if (prop === 'arrows') {
-            item.arrows = value;
-        } else if (prop === 'xAxisThick') {
-            item.xAxisThick = value;
-        } else if (prop === 'yAxisThick') {
-            item.yAxisThick = value;
-        } else if (prop === 'xAxisThickNumbers') {
-            item.xAxisThickNumbers = value;
-        } else if (prop === 'yAxisThickNumbers') {
-            item.yAxisThickNumbers = value;
-        }
-        updateItem(idx);
-    }
-
-    function handleApplyHorizontalAxisStyle(style: LineStyle) {
-        const idx = getUpdateItemIndex();
-        item.xAxisStyle = style;
-        updateItem(idx);
-    }
-
-    function handleApplyHorizontalAxisThickStyle(style: LineStyle) {
-        const idx = getUpdateItemIndex();
-        item.xAxisThickStyle = style;
-        updateItem(idx);
-    }
-
-    function handleApplyVerticalAxisStyle(style: LineStyle) {
-        const idx = getUpdateItemIndex();
-        item.yAxisStyle = style;
-        updateItem(idx);
-    }
-
-    function handleApplyVerticalAxisThickStyle(style: LineStyle) {
-        const idx = getUpdateItemIndex();
-        item.yAxisThickStyle = style;
-        updateItem(idx);
-    }
 
     return (
         <>
             <Switch
-                checked={item.xAxis}
-                handleCheckChange={(v) => handleSwitchChange('xAxis', v)}
+                name="xAxis"
+                initialCheck={item.xAxis}
                 text={t('panels.axis.xAxis')}
             />
             <LineStyleWidget
+                name="xAxisStyle"
                 style={item.xAxisStyle}
-                setStyle={handleApplyHorizontalAxisStyle}
                 text={t('panels.axis.xAxisStyle')}
             />
             <Switch
-                checked={item.xAxisThick}
-                handleCheckChange={(v) => handleSwitchChange('xAxisThick', v)}
+                name="xAxisThick"
+                initialCheck={item.xAxisThick}
                 text={t('panels.axis.xAxisThick')}
             />
             <Switch
-                checked={item.xAxisThickNumbers}
-                handleCheckChange={(v) => handleSwitchChange('xAxisThickNumbers', v)}
+                name="xAxisThickNumbers"
+                initialCheck={item.xAxisThickNumbers}
                 text={t('panels.axis.xAxisThickNumbers')}
             />
             <LineStyleWidget
+                name="xAxisThickStyle"
                 style={item.xAxisThickStyle}
-                setStyle={handleApplyHorizontalAxisThickStyle}
                 text={t('panels.axis.xAxisThickStyle')}
             />
             <Switch
-                checked={item.yAxis}
-                handleCheckChange={(v) => handleSwitchChange('yAxis', v)}
+                name="yAxis"
+                initialCheck={item.yAxis}
                 text={t('panels.axis.yAxis')}
             />
             <LineStyleWidget
+                name="yAxisStyle"
                 style={item.yAxisStyle}
-                setStyle={handleApplyVerticalAxisStyle}
                 text={t('panels.axis.yAxisStyle')}
             />
             <Switch
-                checked={item.yAxisThick}
-                handleCheckChange={(v) => handleSwitchChange('yAxisThick', v)}
+                name="yAxisThick"
+                initialCheck={item.yAxisThick}
                 text={t('panels.axis.yAxisThick')}
             />
             <Switch
-                checked={item.yAxisThickNumbers}
-                handleCheckChange={(v) => handleSwitchChange('yAxisThickNumbers', v)}
+                name="yAxisThickNumbers"
+                initialCheck={item.yAxisThickNumbers}
                 text={t('panels.axis.yAxisThickNumbers')}
             />
             <LineStyleWidget
+                name="yAxisThickStyle"
                 style={item.yAxisThickStyle}
-                setStyle={handleApplyVerticalAxisThickStyle}
                 text={t('panels.axis.yAxisThickStyle')}
             />
             <Switch
-                checked={item.arrows}
-                handleCheckChange={(v) => handleSwitchChange('arrows', v)}
+                name="arrows"
+                initialCheck={item.arrows}
                 text={t('panels.axis.arrows')}
             />
         </>

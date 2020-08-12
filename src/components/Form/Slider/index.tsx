@@ -1,35 +1,49 @@
-import React, { createRef, useState, MouseEvent } from 'react';
+import React, { useRef, useEffect, useState, MouseEvent } from 'react';
 import { useTransition, animated } from 'react-spring';
+import { useField } from '@unform/core';
 
 import { Container, TextBlock } from './styles';
 
 import { useTheme } from '../../../contexts/theme';
 
 interface SliderProps {
+    name: string;
     text: string;
     min: number;
     max: number;
-    value: number;
-    onValueChange: (newValue: number) => void;
-    onDragStop?: (value: number) => void;
+    initialValue: number;
 }
 
 const Slider: React.FC<SliderProps> = ({
+    name,
     text,
     min,
     max,
-    value,
-    onValueChange,
-    onDragStop
+    initialValue
 }) => {
-    const sliderRef = createRef<HTMLDivElement>();
+    const sliderRef = useRef<HTMLDivElement>(null);
+    const { fieldName, registerField } = useField(name);
     const [dragging, setDragging] = useState(false);
+    const [value, setValue] = useState(initialValue);
     const transitions = useTransition(dragging, null, {
         from: { opacity: 0 },
         enter: { opacity: 1 },
         leave: { opacity: 0 }
     });
     const theme = useTheme();
+
+    useEffect(() => {
+        registerField({
+            name: fieldName,
+            ref: sliderRef.current,
+            getValue: (ref: HTMLDivElement) => {
+                if (ref.dataset.value === undefined) {
+                    return '0';
+                }
+                return ref.dataset.value;
+            }
+        });
+    }, [fieldName, registerField]);
 
     function handleMouseDown(e: MouseEvent<HTMLDivElement>) {
         if (!sliderRef.current) {
@@ -40,24 +54,26 @@ const Slider: React.FC<SliderProps> = ({
         const width = rc.width;
         let newValue = (x / width) * (max - min) + min;
         newValue = Math.min(max, Math.max(min, Math.round(newValue)));
-        onValueChange(newValue);
+        setValue(newValue);
         setDragging(true);
         const handleMouseMove = (evt: globalThis.MouseEvent) => {
             const x = evt.pageX - rc.left;
             newValue = (x / width) * (max - min) + min;
             newValue = Math.min(max, Math.max(min, Math.round(newValue)));
-            onValueChange(newValue);
+            setValue(newValue);
         };
-        const handleMouseUp = (evt: globalThis.MouseEvent) => {
+        const handleMouseUp = (/* evt: globalThis.MouseEvent */) => {
             document.removeEventListener('mousemove', handleMouseMove);
             document.removeEventListener('mouseup', handleMouseUp);
             setDragging(false);
+            /*
             if (onDragStop) {
                 const x = evt.pageX - rc.left;
                 newValue = (x / width) * (max - min) + min;
                 newValue = Math.min(max, Math.max(min, Math.round(newValue)));
                 onDragStop(newValue);
             }
+            */
         };
         document.addEventListener('mousemove', handleMouseMove);
         document.addEventListener('mouseup', handleMouseUp);
@@ -70,6 +86,7 @@ const Slider: React.FC<SliderProps> = ({
                 ref={sliderRef}
                 pos={((value - min) / (max - min)) * 100}
                 isMax={value === max}
+                data-value={value}
                 onMouseDown={handleMouseDown}
                 theme={theme}
             >

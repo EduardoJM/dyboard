@@ -1,98 +1,103 @@
-import React, { ChangeEvent, MouseEvent } from 'react';
+import React, { useRef, useState, useEffect, ChangeEvent, MouseEvent } from 'react';
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from 'react-icons/md';
+import { useField } from '@unform/core';
 
 import { Container, InputContainer } from './styles';
 
 import { useTheme } from '../../../contexts/theme';
 
 interface SpinnerProps {
-    width?: number;
-    labeled?: boolean;
-    text?: string;
-
+    name: string;
+    text: string;
     min: number;
     max: number;
-    value: number;
-    onChange: (newValue: number) => void;
-    onInputBlur?: (currentValue: number) => void;
-    onDragStop?: (currentValue: number) => void;
+    initialValue: number;
+    transform?: number;
 }
 
 const Spinner: React.FC<SpinnerProps> = ({
-    width,
-    labeled,
+    name,
     text,
-
     min,
     max,
-    value,
-    onChange,
-
-    onInputBlur,
-    onDragStop
+    initialValue,
+    transform
 }) => {
+    const inputRef = useRef<HTMLInputElement>(null);
+    const { fieldName, registerField } = useField(name);
+    const [value, setValue] = useState(initialValue.toString());
     const theme = useTheme();
 
+    useEffect(() => {
+        registerField({
+            name: fieldName,
+            ref: inputRef.current,
+            getValue: (ref: HTMLInputElement) => {
+                if (transform === undefined) {
+                    return ref.value;
+                }
+                const val = parseFloat(ref.value);
+                if (Number.isNaN(val)) {
+                    return ref.value;
+                }
+                const num = (val / transform);
+                return num.toString();
+            }
+        });
+    }, [fieldName, registerField]);
+
     function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
-        const val = parseInt(e.target.value, 10);
+        const val = parseFloat(e.target.value);
         if (Number.isNaN(val)) {
             return;
         }
         const newValue = Math.min(max, Math.max(min, val));
-        onChange(newValue);
+        if (newValue !== val) {
+            setValue(newValue.toString());
+        } else {
+            setValue(e.target.value);
+        }
     }
 
     function handleDown(e: MouseEvent<HTMLDivElement>) {
         const startY = e.pageY;
-        const mouseUp = (evt: globalThis.MouseEvent) => {
+        const mouseUp = () => {
             document.removeEventListener('mousemove', mouseMove);
             document.removeEventListener('mouseup', mouseUp);
-            if (onDragStop) {
-                const integerValue = Math.round(value - (evt.pageY - startY));
-                const val = Math.max(min, Math.min(max, integerValue));
-                onDragStop(val);
-            }
         };
         const mouseMove = (evt: globalThis.MouseEvent) => {
-            const integerValue = Math.round(value - (evt.pageY - startY));
-            const val = Math.max(min, Math.min(max, integerValue));
-            onChange(val);
+            let numberValue = parseFloat(value);
+            if (Number.isNaN(numberValue)) {
+                numberValue = initialValue;
+            }
+            const changedValue = numberValue - (evt.pageY - startY);
+            const val = Math.max(min, Math.min(max, changedValue));
+            setValue(val.toString());
         };
         document.addEventListener('mousemove', mouseMove);
         document.addEventListener('mouseup', mouseUp);
     }
 
-    function handleInputBlur() {
-        if (onInputBlur) {
-            onInputBlur(value);
-        }
-    }
-
-    const spinner = (
-        <Container className="spinner" width={width} theme={theme}>
-            <input
-                type="text"
-                value={value}
-                onChange={handleInputChange}
-                onBlur={handleInputBlur}
-            />
-            <div className="buttons" onMouseDown={handleDown}>
-                <div className="up-button">
-                    <MdKeyboardArrowUp size={16} />
-                </div>
-                <div className="down-button">
-                    <MdKeyboardArrowDown size={16} />
-                </div>
-            </div>
-        </Container>
-    );
-    if (!labeled) {
-        return spinner;
-    }
     return (
-        <InputContainer width={width}>
+        <InputContainer>
             <label>{text}</label>
-            {spinner}
+            <Container className="spinner" theme={theme}>
+                <input
+                    type="text"
+                    name={name}
+                    ref={inputRef}
+                    value={value}
+                    onChange={handleInputChange}
+                />
+                <div className="buttons" onMouseDown={handleDown}>
+                    <div className="up-button">
+                        <MdKeyboardArrowUp size={16} />
+                    </div>
+                    <div className="down-button">
+                        <MdKeyboardArrowDown size={16} />
+                    </div>
+                </div>
+            </Container>
         </InputContainer>
     );
 };
