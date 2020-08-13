@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import jPlot, {
     RenderItem,
     AreaUnderCurveCreateOptions,
@@ -6,6 +6,7 @@ import jPlot, {
     AxisCreateOptions,
     FunctionCreateOptions
 } from 'jplot';
+import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import { useTranslation } from 'react-i18next';
 
@@ -32,6 +33,7 @@ const ConfigPanel: React.FC<ConfigPanelProps> = ({
     currentItem,
     setCurrentItem
 }) => {
+    const formRef = useRef<FormHandles>(null);
     const board = useBoard();
     const tools = useTools();
     const { t } = useTranslation('jplot');
@@ -86,6 +88,13 @@ const ConfigPanel: React.FC<ConfigPanelProps> = ({
         }
     }
 
+    function handleApplyClick() {
+        if (!formRef.current) {
+            return;
+        }
+        formRef.current.submitForm();
+    }
+
     if (!currentItem) {
         return (
             <div className="fit-center-text">
@@ -100,7 +109,7 @@ const ConfigPanel: React.FC<ConfigPanelProps> = ({
             <div className="editor">
                 <Scrollbars>
                     <div className="content">
-                        <Form onSubmit={handleSubmit}>
+                        <Form ref={formRef} onSubmit={handleSubmit}>
                             {currentItem instanceof jPlot.Axis && (
                                 <AxisPanel item={currentItem} />
                             )}
@@ -119,7 +128,7 @@ const ConfigPanel: React.FC<ConfigPanelProps> = ({
             </div>
             <div className="footer">
                 {/* TODO: add support for translation here */}
-                <button type="submit">APPLY</button>
+                <button onClick={handleApplyClick} type="submit">APPLY</button>
             </div>
         </>
     );
