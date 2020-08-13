@@ -3,6 +3,7 @@ import { LineStyle } from 'jplot';
 import { MdKeyboardArrowDown, MdKeyboardArrowRight } from 'react-icons/md';
 import { useTranslation } from 'react-i18next';
 import { Scope } from '@unform/core';
+import * as Yup from 'yup';
 
 import ColorPicker from '../../../Form/ColorPicker';
 import Spinner from '../../../Form/Spinner';
@@ -10,6 +11,18 @@ import Slider from '../../../Form/Slider';
 import OptionPicker from '../../../Form/OptionPicker';
 
 import Container from './styles';
+
+export const validationSchema = Yup.object().shape({
+    color: Yup.string(),
+    opacity: Yup.number(),
+    type: Yup.string().oneOf(['dash', 'solid']),
+    lineWidth: Yup.number(),
+    lineCap: Yup.string().oneOf(['butt', 'square', 'round']),
+    lineJoin: Yup.string().oneOf(['bevel', 'miter', 'round']),
+    miterLimit: Yup.number(),
+    dashSize: Yup.number(),
+    dashDistance: Yup.number()
+});
 
 interface LineStyleWidgetProps {
     name: string;

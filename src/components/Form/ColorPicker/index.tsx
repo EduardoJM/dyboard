@@ -58,7 +58,7 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
             >
                 <span>{text}</span>
                 <div className="color-box" style={{
-                    backgroundColor: color
+                    backgroundColor: newColor
                 }} />
             </div>
             <Modal

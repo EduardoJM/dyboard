@@ -159,7 +159,7 @@ const PlotConfigurator: React.FC<PlotConfiguratorProps> = ({ data }) => {
                 </div>
             </PlotsList>
             <PlotsConfig>
-                <ConfigPanel data={data} currentItem={editing} />
+                <ConfigPanel data={data} currentItem={editing} setCurrentItem={setEditing} />
             </PlotsConfig>
         </Container>
     );

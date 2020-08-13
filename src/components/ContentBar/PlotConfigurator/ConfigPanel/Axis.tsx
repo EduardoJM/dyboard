@@ -1,9 +1,24 @@
 import React from 'react';
 import { Axis } from 'jplot';
 import { useTranslation } from 'react-i18next';
+import * as Yup from 'yup';
 
 import Switch from '../../../Form/Switch';
-import { LineStyleWidget } from '../Widgets';
+import { LineStyleWidget, LineStyleSchema } from '../Widgets';
+
+export const validationSchema = Yup.object().shape({
+    xAxis: Yup.boolean(),
+    xAxisStyle: LineStyleSchema,
+    xAxisThick: Yup.boolean(),
+    xAxisThickNumbers: Yup.boolean(),
+    xAxisThickStyle: LineStyleSchema,
+    yAxis: Yup.boolean(),
+    yAxisStyle: LineStyleSchema,
+    yAxisThick: Yup.boolean(),
+    yAxisThickNumbers: Yup.boolean(),
+    yAxisThickStyle: LineStyleSchema,
+    arrows: Yup.boolean()
+});
 
 export interface AxisPanelrops {
     item: Axis;

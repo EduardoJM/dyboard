@@ -1,7 +1,9 @@
-import LineStyleWidget from './LineStyleWidget';
-import FillStyleWidget from './FillStyleWidget';
+import LineStyleWidget, { validationSchema as LineStyleSchema } from './LineStyleWidget';
+import FillStyleWidget, { validationSchema as FillStyleSchema } from './FillStyleWidget';
 
 export {
     FillStyleWidget,
-    LineStyleWidget
+    FillStyleSchema,
+    LineStyleWidget,
+    LineStyleSchema
 };

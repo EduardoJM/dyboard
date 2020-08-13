@@ -1,11 +1,21 @@
 import React from 'react';
 import { Point } from 'jplot';
 import { useTranslation } from 'react-i18next';
+import * as Yup from 'yup';
 
 import Switch from '../../../Form/Switch';
 import Spinner from '../../../Form/Spinner';
 import Slider from '../../../Form/Slider';
-import { LineStyleWidget, FillStyleWidget } from '../Widgets';
+import { LineStyleWidget, FillStyleWidget, FillStyleSchema, LineStyleSchema } from '../Widgets';
+
+export const validationSchema = Yup.object().shape({
+    x: Yup.number(),
+    y: Yup.number(),
+    pointSize: Yup.number(),
+    fillStyle: FillStyleSchema,
+    stroke: Yup.boolean(),
+    strokeStyle: LineStyleSchema
+});
 
 interface PointPanelProps {
     item: Point;

@@ -3,13 +3,26 @@ import { FillStyle, SolidFill, PatternLine } from 'jplot';
 import { MdKeyboardArrowDown, MdKeyboardArrowRight } from 'react-icons/md';
 import { useTranslation } from 'react-i18next';
 import { Scope } from '@unform/core';
+import * as Yup from 'yup';
 
 import OptionPicker from '../../../Form/OptionPicker';
 
 import FillStyleLinePattern from './FillStyleLinePattern';
 import FillStyleSolid from './FillStyleSolid';
+import { validationSchema as LineStyleSchema } from './LineStyleWidget';
 
 import Container from './styles';
+
+export const validationSchema = Yup.object().shape({
+    type: Yup.string().oneOf(['solid', 'patternLine']),
+    opacity: Yup.number(),
+    // solid
+    color: Yup.string(),
+    // linePattern
+    baseColor: Yup.string(),
+    patternSize: Yup.number(),
+    lineStyle: LineStyleSchema
+});
 
 interface FillStyleWidgetProps {
     name: string;
@@ -17,7 +30,7 @@ interface FillStyleWidgetProps {
     initialStyle: FillStyle;
 }
 
-type FillType = 'solid' | 'linePattern' | 'none';
+type FillType = 'solid' | 'patternLine' | 'none';
 
 const FillStyleWidget: React.FC<FillStyleWidgetProps> = ({
     name,
@@ -30,7 +43,7 @@ const FillStyleWidget: React.FC<FillStyleWidgetProps> = ({
         if (style instanceof SolidFill) {
             return 'solid';
         } else if (style instanceof PatternLine) {
-            return 'linePattern';
+            return 'patternLine';
         }
         setStyle(new SolidFill());
         return 'none';
@@ -42,7 +55,7 @@ const FillStyleWidget: React.FC<FillStyleWidgetProps> = ({
             setFillType(value);
             const style = new SolidFill();
             setStyle(style);
-        } else if (value === 'linePattern') {
+        } else if (value === 'patternLine') {
             setFillType(value);
             const style = new PatternLine();
             setStyle(style);
@@ -67,7 +80,7 @@ const FillStyleWidget: React.FC<FillStyleWidgetProps> = ({
                         name="type"
                         options={[
                             { value: 'solid', label: t('widgets.fillStyle.typeSolid') },
-                            { value: 'linePattern', label: t('widgets.fillStyle.typeLinePattern') }
+                            { value: 'patternLine', label: t('widgets.fillStyle.typeLinePattern') }
                         ]}
                         initialValue={fillType}
                         onChange={handleFillTypeChange}

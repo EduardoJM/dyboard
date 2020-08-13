@@ -1,5 +1,11 @@
 import React from 'react';
-import jPlot, { RenderItem } from 'jplot';
+import jPlot, {
+    RenderItem,
+    AreaUnderCurveCreateOptions,
+    PointCreateOptions,
+    AxisCreateOptions,
+    FunctionCreateOptions
+} from 'jplot';
 import { Form } from '@unform/web';
 import { useTranslation } from 'react-i18next';
 
@@ -10,49 +16,74 @@ import { ElementPlot } from '../../../../data/board';
 import { useBoard } from '../../../../contexts/board';
 import { useTools } from '../../../../contexts/tools';
 
-import AxisPanel from './Axis';
-import FunctionPanel from './Function';
-import AreaUnderCurvePanel from './AreaUnderCurve';
-import PointPanel from './Point';
+import AxisPanel, { validationSchema as AxisSchema } from './Axis';
+import FunctionPanel, { validationSchema as FunctionSchema } from './Function';
+import AreaUnderCurvePanel, { validationSchema as AreaUnderCurveSchema } from './AreaUnderCurve';
+import PointPanel, { validationSchema as PointSchema } from './Point';
 
 interface ConfigPanelProps {
     data: ElementPlot;
     currentItem: RenderItem | null;
+    setCurrentItem: (newItem: RenderItem | null) => void;
 }
 
 const ConfigPanel: React.FC<ConfigPanelProps> = ({
     data,
-    currentItem
+    currentItem,
+    setCurrentItem
 }) => {
     const board = useBoard();
     const tools = useTools();
     const { t } = useTranslation('jplot');
 
-    function updateCurrentItem(editingIndex: number) {
+    function updateCurrentItem(cb: () => RenderItem) {
+        if (!currentItem) {
+            return;
+        }
+        let idx = data.items.indexOf(currentItem);
+        const renderItem = cb();
         const newItem = {
             ...data,
             items: [
-                ...data.items.slice(0, editingIndex),
-                currentItem,
-                ...data.items.slice(editingIndex + 1)
+                ...data.items.slice(0, idx),
+                renderItem,
+                ...data.items.slice(idx + 1)
             ]
         };
         const { elements, changeElements } = board;
-        const idx = elements.indexOf(data);
+        idx = elements.indexOf(data);
         const newElements = [
             ...elements.slice(0, idx),
             newItem,
             ...elements.slice(idx + 1)
         ];
+        setCurrentItem(renderItem);
         changeElements(newElements);
         tools.setCurrentElement(newItem);
     }
 
-    function getUpdateItemIndex() {
-        if (!currentItem) {
-            return -1;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    function handleSubmit(data: any) {
+        try {
+            if (currentItem instanceof jPlot.Axis) {
+                AxisSchema.validate(data).then((validatedData) => {
+                    updateCurrentItem(() => new jPlot.Axis(validatedData as AxisCreateOptions));
+                });
+            } else if (currentItem instanceof jPlot.Function) {
+                FunctionSchema.validate(data).then((validatedData) => {
+                    updateCurrentItem(() => new jPlot.Function(validatedData as FunctionCreateOptions));
+                });
+            } else if (currentItem instanceof jPlot.AreaUnderCurve) {
+                AreaUnderCurveSchema.validate(data).then((validatedData) => {
+                    updateCurrentItem(() => new jPlot.AreaUnderCurve(validatedData as AreaUnderCurveCreateOptions));
+                });
+            } else if (currentItem instanceof jPlot.Point) {
+                PointSchema.validate(data).then((validatedData) => {
+                    updateCurrentItem(() => new jPlot.Point(validatedData as PointCreateOptions));
+                });
+            }
+        } catch (err) {
         }
-        return data.items.indexOf(currentItem);
     }
 
     if (!currentItem) {
@@ -69,31 +100,26 @@ const ConfigPanel: React.FC<ConfigPanelProps> = ({
             <div className="editor">
                 <Scrollbars>
                     <div className="content">
-                        <Form onSubmit={(data) => console.log(data)}>
+                        <Form onSubmit={handleSubmit}>
                             {currentItem instanceof jPlot.Axis && (
                                 <AxisPanel item={currentItem} />
                             )}
                             {currentItem instanceof jPlot.Function && (
-                                <FunctionPanel
-                                    item={currentItem}
-                                    updateItem={updateCurrentItem}
-                                    getUpdateItemIndex={getUpdateItemIndex}
-                                />
+                                <FunctionPanel item={currentItem} />
                             )}
                             {currentItem instanceof jPlot.AreaUnderCurve && (
-                                <AreaUnderCurvePanel
-                                    item={currentItem}
-                                    updateItem={updateCurrentItem}
-                                    getUpdateItemIndex={getUpdateItemIndex}
-                                />
+                                <AreaUnderCurvePanel item={currentItem} />
                             )}
                             {currentItem instanceof jPlot.Point && (
                                 <PointPanel item={currentItem} />
                             )}
-                            <button type="submit">SUBMIT</button>
                         </Form>
                     </div>
                 </Scrollbars>
+            </div>
+            <div className="footer">
+                {/* TODO: add support for translation here */}
+                <button type="submit">APPLY</button>
             </div>
         </>
     );
