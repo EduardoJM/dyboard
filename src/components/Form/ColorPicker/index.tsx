@@ -22,6 +22,7 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
     const pickerRef = useRef<HTMLDivElement>(null);
     const { fieldName, registerField } = useField(name);
     const [newColor, setNewColor] = useState(color);
+    const [colorResult, setColorResult] = useState(color);
     // dropDown state
     const [visible, setVisible] = useState(false);
     const { t } = useTranslation('modals');
@@ -41,7 +42,7 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
 
     function handleSubmit() {
         setVisible(false);
-        setNewColor(newColor);
+        setColorResult(newColor);
     }
 
     function handleCloseModal() {
@@ -51,14 +52,14 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
     return (
         <Container
             ref={pickerRef}
-            data-color={newColor}
+            data-color={colorResult}
         >
             <div
                 onClick={() => setVisible(true)}
             >
                 <span>{text}</span>
                 <div className="color-box" style={{
-                    backgroundColor: newColor
+                    backgroundColor: colorResult
                 }} />
             </div>
             <Modal
