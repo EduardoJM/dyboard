@@ -6,6 +6,9 @@ import * as url from 'url';
 import registerMenu from './menu';
 import { registerIO } from './io';
 
+app.commandLine.appendSwitch('disable-gpu');
+app.commandLine.appendArgument('disable-gpu');
+
 let mainWindow: Electron.BrowserWindow | null;
 
 function createWindow() {
