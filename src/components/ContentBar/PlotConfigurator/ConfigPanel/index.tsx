@@ -99,7 +99,7 @@ const ConfigPanel: React.FC<ConfigPanelProps> = ({
         formRef.current.submitForm();
     }
 
-    if (!currentItem) {
+    if (!currentItem || !data.items.includes(currentItem)) {
         return (
             <div className="fit-center-text">
                 {t('noSelection')}
