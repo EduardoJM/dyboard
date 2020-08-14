@@ -1,4 +1,4 @@
-import jPlot, { RenderItem } from 'jplot';
+import { RenderItem, SerializationUtils } from 'jplot';
 import { RawDraftContentState } from 'draft-js';
 
 export interface ElementText {
@@ -53,39 +53,6 @@ export type ElementAll = (ElementText | ElementPlot | ElementSpace3D | ElementIm
 
 export type ElementsCollection = ElementAll[];
 
-export interface LoaderHelperRenderItem {
-    type: string;
-
-    xAxis?: boolean;
-    xAxisWidth?: number;
-    xAxisColor?: string;
-    yAxis?: boolean;
-    yAxisWidth?: number;
-    yAxisColor?: string;
-    arrows?: boolean;
-    arrowSize?: number;
-    xAxisThick?: boolean;
-    xAxisThickSize?: number;
-    xAxisThickWidth?: number;
-    xAxisThickStyle?: 'upper' | 'lower' | 'middle';
-    xAxisThickColor?: string;
-    xAxisThickNumbers?: boolean;
-    xAxisThickFont?: string;
-    yAxisThick?: boolean;
-    yAxisThickSize?: number;
-    yAxisThickWidth?: number;
-    yAxisThickStyle?: 'left' | 'right' | 'middle';
-    yAxisThickColor?: string;
-    yAxisThickNumbers?: boolean;
-    yAxisThickFont?: string;
-
-    resolution?: number;
-    color?: string;
-    lineWidth?: number;
-    function?: string;
-    breakDistance?: number;
-}
-
 export interface LoaderHelperElement {
     id: number | string;
     type: string;
@@ -96,7 +63,8 @@ export interface LoaderHelperElement {
     text?: string;
     rawContent?: string;
     imageContent?: string;
-    items?: LoaderHelperRenderItem[];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    items?: any;
     translation?: {
         x: number;
         y: number;
@@ -133,25 +101,11 @@ export function elementsToString(data: ElementsCollection): string {
             };
         } else if (element.type === 'plot') {
             const plt = element as ElementPlot;
-            const newItems = plt.items.map((item) => {
-                if (item instanceof jPlot.Axis) {
-                    return {
-                        type: 'axis',
-                        ...item
-                    };
-                } else if (item instanceof jPlot.Function) {
-                    return {
-                        type: 'function',
-                        ...item
-                    };
-                }
-                return null;
-            });
             return {
                 ...baseElement,
                 translation: plt.translation,
                 zoom: plt.zoom,
-                items: newItems.filter((item) => item !== null)
+                items: JSON.parse(SerializationUtils.serializeItemsCollection(plt.items))
             };
         }
         return null;
@@ -189,17 +143,6 @@ export function parseToElements(data: LoaderHelperElement[]): ElementsCollection
             if (!item.items) {
                 return null;
             }
-            const newItems = item.items.map((renderItem) => {
-                if (renderItem.type === 'axis') {
-                    return new jPlot.Axis({
-                        ...renderItem
-                    });
-                } else if (renderItem.type === 'function') {
-                    return new jPlot.Function({
-                        ...renderItem
-                    });
-                }
-            });
             return {
                 ...baseItem,
                 translation: item.translation
@@ -214,7 +157,7 @@ export function parseToElements(data: LoaderHelperElement[]): ElementsCollection
                         x: 100,
                         y: 100
                     },
-                items: newItems.filter((item) => item !== null)
+                items: SerializationUtils.deserializeItemsCollection(JSON.stringify(item.items))
             };
         }
         return null;

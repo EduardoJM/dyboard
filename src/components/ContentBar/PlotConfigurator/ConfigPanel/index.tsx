@@ -1,10 +1,14 @@
 import React, { useRef } from 'react';
-import jPlot, {
+import {
     RenderItem,
+    AreaUnderCurve,
     AreaUnderCurveCreateOptions,
+    Point,
     PointCreateOptions,
+    Axis,
     AxisCreateOptions,
-    FunctionCreateOptions
+    FunctionItem,
+    FunctionItemCreateOptions
 } from 'jplot';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
@@ -67,21 +71,21 @@ const ConfigPanel: React.FC<ConfigPanelProps> = ({
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     function handleSubmit(data: any) {
         try {
-            if (currentItem instanceof jPlot.Axis) {
+            if (currentItem instanceof Axis) {
                 AxisSchema.validate(data).then((validatedData) => {
-                    updateCurrentItem(() => new jPlot.Axis(validatedData as AxisCreateOptions));
+                    updateCurrentItem(() => new Axis(validatedData as AxisCreateOptions));
                 });
-            } else if (currentItem instanceof jPlot.Function) {
+            } else if (currentItem instanceof FunctionItem) {
                 FunctionSchema.validate(data).then((validatedData) => {
-                    updateCurrentItem(() => new jPlot.Function(validatedData as FunctionCreateOptions));
+                    updateCurrentItem(() => new FunctionItem(validatedData as FunctionItemCreateOptions));
                 });
-            } else if (currentItem instanceof jPlot.AreaUnderCurve) {
+            } else if (currentItem instanceof AreaUnderCurve) {
                 AreaUnderCurveSchema.validate(data).then((validatedData) => {
-                    updateCurrentItem(() => new jPlot.AreaUnderCurve(validatedData as AreaUnderCurveCreateOptions));
+                    updateCurrentItem(() => new AreaUnderCurve(validatedData as AreaUnderCurveCreateOptions));
                 });
-            } else if (currentItem instanceof jPlot.Point) {
+            } else if (currentItem instanceof Point) {
                 PointSchema.validate(data).then((validatedData) => {
-                    updateCurrentItem(() => new jPlot.Point(validatedData as PointCreateOptions));
+                    updateCurrentItem(() => new Point(validatedData as PointCreateOptions));
                 });
             }
         } catch (err) {
@@ -110,16 +114,16 @@ const ConfigPanel: React.FC<ConfigPanelProps> = ({
                 <Scrollbars>
                     <div className="content">
                         <Form ref={formRef} onSubmit={handleSubmit}>
-                            {currentItem instanceof jPlot.Axis && (
+                            {currentItem instanceof Axis && (
                                 <AxisPanel item={currentItem} />
                             )}
-                            {currentItem instanceof jPlot.Function && (
+                            {currentItem instanceof FunctionItem && (
                                 <FunctionPanel item={currentItem} />
                             )}
-                            {currentItem instanceof jPlot.AreaUnderCurve && (
+                            {currentItem instanceof AreaUnderCurve && (
                                 <AreaUnderCurvePanel item={currentItem} />
                             )}
-                            {currentItem instanceof jPlot.Point && (
+                            {currentItem instanceof Point && (
                                 <PointPanel item={currentItem} />
                             )}
                         </Form>

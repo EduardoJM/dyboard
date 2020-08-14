@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import jPlot, { RenderItem } from 'jplot';
+import {
+    RenderItem,
+    Axis,
+    Point,
+    FunctionItem,
+    AreaUnderCurve
+} from 'jplot';
 import { MdAdd, MdDelete } from 'react-icons/md';
 import { useTranslation } from 'react-i18next';
 
@@ -47,29 +53,29 @@ const PlotConfigurator: React.FC<PlotConfiguratorProps> = ({ data }) => {
     }
 
     function addAxis() {
-        addPlotItem(new jPlot.Axis());
+        addPlotItem(new Axis());
     }
 
     function addFunction() {
-        addPlotItem(new jPlot.Function());
+        addPlotItem(new FunctionItem());
     }
 
     function addAreaUnderCurve() {
-        addPlotItem(new jPlot.AreaUnderCurve());
+        addPlotItem(new AreaUnderCurve());
     }
 
     function addPoint() {
-        addPlotItem(new jPlot.Point());
+        addPlotItem(new Point());
     }
 
     function getListItemName(item: RenderItem) {
-        if (item instanceof jPlot.Axis) {
+        if (item instanceof Axis) {
             return t('items.axis');
-        } else if (item instanceof jPlot.Function) {
+        } else if (item instanceof FunctionItem) {
             return t('items.function');
-        } else if (item instanceof jPlot.AreaUnderCurve) {
+        } else if (item instanceof AreaUnderCurve) {
             return t('items.areaUnderCurve');
-        } else if (item instanceof jPlot.Point) {
+        } else if (item instanceof Point) {
             return t('items.point');
         }
         return t('items.unsupported');

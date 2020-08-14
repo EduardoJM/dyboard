@@ -1,5 +1,5 @@
 import React from 'react';
-import { Function as FunctionItem } from 'jplot';
+import { FunctionItem } from 'jplot';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 
