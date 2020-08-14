@@ -91,4 +91,18 @@ export const PlotsConfig = styled.div`
         justify-content: center;
         text-align: center;
     }
+
+    .footer {
+        padding: 5px;
+        display: flex;
+        justify-content: flex-end;
+
+        button {
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #E1E1E6;
+        }
+    }
 `;

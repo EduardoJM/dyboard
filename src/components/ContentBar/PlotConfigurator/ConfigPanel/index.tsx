@@ -131,8 +131,7 @@ const ConfigPanel: React.FC<ConfigPanelProps> = ({
                 </Scrollbars>
             </div>
             <div className="footer">
-                {/* TODO: add support for translation here */}
-                <button onClick={handleApplyClick} type="submit">APPLY</button>
+                <button onClick={handleApplyClick} type="button">{t('applyButton')}</button>
             </div>
         </>
     );

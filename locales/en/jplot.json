@@ -2,6 +2,7 @@
     "itemsHeader": "Items",
     "configHeader": "Settings",
     "noSelection": "No selection.",
+    "applyButton": "Apply",
     "items": {
         "axis": "Axis",
         "function": "Function",

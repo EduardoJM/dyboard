@@ -2,6 +2,7 @@
     "itemsHeader": "Itens",
     "configHeader": "Propriedades",
     "noSelection": "Não há item selecionado.",
+    "applyButton": "Aplicar",
     "items": {
         "axis": "Eixo",
         "function": "Função",
