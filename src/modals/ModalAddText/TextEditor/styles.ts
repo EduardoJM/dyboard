@@ -21,13 +21,6 @@ export const Container = styled.div<ContainerProps>`
     > .toolbar-container {
         border-bottom: 1px solid ${props => props.theme.textEditorSeparatorBorder};
     }
-
-    .DraftEditor-root {
-        height: 300px;
-
-        overflow-x: hidden;
-        overflow-y: auto;
-    }
 `;
 
 export const ToolBar = styled.div<ContainerProps>`

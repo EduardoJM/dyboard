@@ -14,6 +14,8 @@ import { Container, ToolBar } from './styles';
 import { BlockTypes, InlineStyles } from '../../../data/textEditor';
 import { useTheme } from '../../../contexts/theme';
 
+import Scrollbars from '../../../components/Scrollbars';
+
 import TeXBlock from './TeXBlock';
 import { setInlineDecorator, insertTeXBlock, removeTeXBlock } from '../../../utils/draft';
 
@@ -105,13 +107,15 @@ const TextEditor: React.FC<TextEditorProps> = ({
                     </button>
                 </ToolBar>
             </div>
-            <Editor
-                editorState={editorState}
-                onChange={setEditorState}
-                blockRendererFn={handleBlockRenderer}
-                readOnly={liveTeXEdits.count() > 0}
-                spellCheck={true}
-            />
+            <Scrollbars>
+                <Editor
+                    editorState={editorState}
+                    onChange={setEditorState}
+                    blockRendererFn={handleBlockRenderer}
+                    readOnly={liveTeXEdits.count() > 0}
+                    spellCheck={true}
+                />
+            </Scrollbars>
         </Container>
     );
 };
