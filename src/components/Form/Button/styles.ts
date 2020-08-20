@@ -5,7 +5,7 @@ interface ContainerProps {
     theme: ThemeContextData;
 }
 
-const Container = styled.button<ContainerProps>`
+export const Container = styled.button<ContainerProps>`
     padding: 8px 20px;
     background-color: ${props => props.theme.buttonBg};
     color: ${props => props.theme.buttonFg};
@@ -22,4 +22,10 @@ const Container = styled.button<ContainerProps>`
     }
 `;
 
-export default Container;
+export const TransparentContainer = styled.button`
+    padding: 8px 20px;
+    background: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+`;
