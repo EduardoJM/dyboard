@@ -161,7 +161,7 @@ const PlotBlock: React.FC<PlotBlockProps> = ({ data }) => {
     const html = (
         <Container
             ref={canvasRef}
-            absolute={tools.currentTool === 'cursor'}
+            absolute={tools.currentTool === 'cursor' || tools.currentTool === 'pan'}
             left={left}
             top={top}
             width={width}

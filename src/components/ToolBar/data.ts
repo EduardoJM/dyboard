@@ -27,6 +27,12 @@ const toolBarData: ToolBarObjectItem[][] = [
             deep: false
         },
         {
+            id: 'pan',
+            title: 'Mover O Quadro',
+            tool: 'set-pan',
+            deep: false
+        },
+        {
             id: 'add',
             title: 'Adicionar Elementos',
             tool: 'goto',

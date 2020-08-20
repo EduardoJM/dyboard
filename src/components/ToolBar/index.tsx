@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MdFunctions, MdTitle, MdInsertPhoto, MdAdd, MdChevronLeft } from 'react-icons/md';
+import { MdFunctions, MdPanTool, MdTitle, MdInsertPhoto, MdAdd, MdChevronLeft } from 'react-icons/md';
 import { GiArrowCursor, GiCube, GiStoneSphere, GiResize, GiMove } from 'react-icons/gi';
 import { BsGraphDown } from 'react-icons/bs';
 import { useTransition } from 'react-spring';
@@ -32,6 +32,8 @@ const ToolBar: React.FC = () => {
             return <MdAdd size={24} />;
         } else if (id === 'add-text') {
             return <MdTitle size={24} />;
+        } else if (id === 'pan') {
+            return <MdPanTool size={24} />;
         } else if (id === 'add-image') {
             return <MdInsertPhoto size={24} />;
         } else if (id === 'parent') {
@@ -69,6 +71,8 @@ const ToolBar: React.FC = () => {
             tools.changeCurrentTool('drag');
         } else if (button.tool === 'set-resize') {
             tools.changeCurrentTool('resize');
+        } else if (button.tool === 'set-pan') {
+            tools.changeCurrentTool('pan');
         } else if (button.tool === 'add-plot') {
             tools.setCatchClick({
                 id: Date.now(),

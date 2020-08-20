@@ -3,13 +3,15 @@
       "to-add": "Click to add",
       "cursor": "Cursor",
       "drag": "Move",
-      "resize": "Resize"
+      "resize": "Resize",
+      "pan": "Move the board"
   },
   "toolBar": {
       "titles": {
           "cursor": "Cursor",
           "drag": "Move",
           "resize": "Resize",
+          "pan": "Move the board",
           "add": "Add Element",
           "parent": "Tools",
           "add-text": "Add Text",

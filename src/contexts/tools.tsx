@@ -5,7 +5,7 @@ import { ModalAddText, ModalAddImage, ModalAddLaTeX } from '../modals';
 import { ElementAll } from '../data/board';
 import { useBoard } from '../contexts/board';
 
-type Tools = 'cursor' | 'drag' | 'resize';
+type Tools = 'cursor' | 'drag' | 'resize' | 'pan';
 
 export interface ToolsContextData {
     currentTool: Tools;

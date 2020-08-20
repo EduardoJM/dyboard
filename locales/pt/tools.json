@@ -3,13 +3,15 @@
         "to-add": "Clique para adicionar",
         "cursor": "Cursor",
         "drag": "Mover",
-        "resize": "Redimensionar"
+        "resize": "Redimensionar",
+        "pan": "Mover o Quadro"
     },
     "toolBar": {
         "titles": {
             "cursor": "Cursor",
             "drag": "Mover",
             "resize": "Redimensionar",
+            "pan": "Mover o Quadro",
             "add": "Adicionar Elementos",
             "parent": "Ferramentas",
             "add-text": "Adicionar Texto",
