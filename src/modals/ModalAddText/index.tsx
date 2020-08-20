@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     EditorState,
     RawDraftContentState,
@@ -44,6 +44,14 @@ const ModalAddText: React.FC<ModalAddTextProps> = ({
     );
     const { t } = useTranslation('modals');
     const tools = useTools();
+
+    useEffect(() => {
+        setEditorState(
+            () => isEditing && editingInitialContent
+                ? EditorState.createWithContent(convertFromRaw(editingInitialContent))
+                : EditorState.createEmpty()
+        );
+    }, [isEditing, editingInitialContent]);
 
     function handleAdd() {
         const contentState = editorState.getCurrentContent();
