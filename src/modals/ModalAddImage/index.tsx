@@ -6,14 +6,19 @@ import { useTranslation } from 'react-i18next';
 import Button from '../../components/Form/Button';
 
 import Modal from '../../components/Modal';
-import ModalProps from '../interfaces';
 
 import { useTools } from '../../contexts/tools';
 import { useTheme } from '../../contexts/theme';
 
 import { Container, ImageDropzone, ImageContent, ButtonArea } from './styles';
 
-const ModalAddImage: React.FC<ModalProps> = ({
+interface ModalAddImageProps {
+    opened: boolean;
+    modalId: string;
+    handleClose: (id: string) => void;
+}
+
+const ModalAddImage: React.FC<ModalAddImageProps> = ({
     opened,
     modalId,
     handleClose

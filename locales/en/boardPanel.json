@@ -3,6 +3,7 @@
         "image": "Image",
         "text": "Text",
         "plot": "Plot Area",
+        "latex": "LaTeX Equation",
 
         "unsupported": "Unsupported"
     }

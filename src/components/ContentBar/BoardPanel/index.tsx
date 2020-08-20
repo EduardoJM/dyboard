@@ -18,6 +18,8 @@ const BoardPanel: React.FC = () => {
             return t('items.image');
         } else if (name === 'text') {
             return t('items.text');
+        } else if (name === 'latex') {
+            return t('items.latex');
         } else if (name === 'plot') {
             return t('items.plot');
         }

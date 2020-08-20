@@ -1,9 +1,9 @@
-import ModalProps from './interfaces';
 import ModalAddText from './ModalAddText';
 import ModalAddImage from './ModalAddImage';
+import ModalAddLaTeX from './ModalAddLaTeX';
 
 export {
-    ModalProps,
     ModalAddText,
-    ModalAddImage
+    ModalAddImage,
+    ModalAddLaTeX
 };

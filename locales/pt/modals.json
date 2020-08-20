@@ -9,6 +9,16 @@
             "button": "Atualizar"
         }
     },
+    "latex": {
+        "add": {
+            "title": "Adicionar Formula LaTeX",
+            "button": "Adicionar"
+        },
+        "edit": {
+            "title": "Editar Formula LaTeX",
+            "button": "Atualizar"
+        }
+    },
     "image": {
         "add": {
             "title": "Adicionar Imagem",

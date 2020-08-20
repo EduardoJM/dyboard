@@ -9,6 +9,16 @@
             "button": "Update"
         }
     },
+    "latex": {
+        "add": {
+            "title": "Add LaTeX Equation",
+            "button": "Add"
+        },
+        "edit": {
+            "title": "Edit LaTeX Equation",
+            "button": "Update"
+        }
+    },
     "image": {
         "add": {
             "title": "Add Image",

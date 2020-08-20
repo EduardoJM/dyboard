@@ -1,6 +1,6 @@
 import React, { useContext, useState, createContext } from 'react';
 
-import { ModalAddText, ModalAddImage } from '../modals';
+import { ModalAddText, ModalAddImage, ModalAddLaTeX } from '../modals';
 
 import { ElementAll } from '../data/board';
 import { useBoard } from '../contexts/board';
@@ -12,6 +12,7 @@ export interface ToolsContextData {
     changeCurrentTool: (tool: Tools) => void;
     addText: () => void;
     addImage: () => void;
+    addLatex: () => void;
     elementToAdd: ElementAll | null;
     setCatchClick: (element: ElementAll) => void;
     catchedClick: (x: number, y: number) => void;
@@ -26,7 +27,8 @@ export const ToolsContextProvider: React.FC = ({
 }) => {
     const [modalStates, setModalStates] = useState({
         addText: false,
-        addImage: false
+        addImage: false,
+        addLatex: false
     });
     const [currentTool, setCurrentTool] = useState<Tools>('cursor');
     const [elementToAdd, setElementToAdd] = useState<ElementAll | null>(null);
@@ -44,6 +46,13 @@ export const ToolsContextProvider: React.FC = ({
         setModalStates({
             ...modalStates,
             addImage: true
+        });
+    };
+
+    const addLatex = () => {
+        setModalStates({
+            ...modalStates,
+            addLatex: true
         });
     };
 
@@ -86,6 +95,7 @@ export const ToolsContextProvider: React.FC = ({
                 changeCurrentTool,
                 addText,
                 addImage,
+                addLatex,
                 elementToAdd,
                 setCatchClick: handleSetCatchClick,
                 catchedClick: handleCatchedClick,
@@ -95,6 +105,7 @@ export const ToolsContextProvider: React.FC = ({
                 { children }
                 <ModalAddText modalId="addText" opened={modalStates.addText} handleClose={handleCloseModal} />
                 <ModalAddImage modalId="addImage" opened={modalStates.addImage} handleClose={handleCloseModal} />
+                <ModalAddLaTeX modalId="addLatex" opened={modalStates.addLatex} handleClose={handleCloseModal} />
             </ToolsContext.Provider>
         </>
     );

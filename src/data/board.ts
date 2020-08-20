@@ -12,6 +12,16 @@ export interface ElementText {
     rawContent: RawDraftContentState;
 }
 
+export interface ElementLaTeX {
+    id: number | string;
+    type: string;
+    width: number;
+    height: number;
+    left: number;
+    top: number;
+    text: string;
+}
+
 export interface ElementImage {
     id: number | string;
     type: string;
@@ -93,6 +103,12 @@ export function elementsToString(data: ElementsCollection): string {
                 text: text.text,
                 rawContent: JSON.stringify(text.rawContent)
             };
+        } else if (element.type === 'latex') {
+            const latex = element as ElementLaTeX;
+            return {
+                ...baseElement,
+                text: latex.text
+            };
         } else if (element.type === 'image') {
             const img = element as ElementImage;
             return {
@@ -133,6 +149,11 @@ export function parseToElements(data: LoaderHelperElement[]): ElementsCollection
                 ...baseItem,
                 text: item.text,
                 rawContent: JSON.parse(item.rawContent) as RawDraftContentState
+            };
+        } else if (item.type === 'latex') {
+            return {
+                ...baseItem,
+                text: item.text
             };
         } else if (item.type === 'image') {
             return {

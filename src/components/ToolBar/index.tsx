@@ -61,6 +61,8 @@ const ToolBar: React.FC = () => {
             tools.addText();
         } else if (button.tool === 'add-image') {
             tools.addImage();
+        } else if (button.tool === 'add-math') {
+            tools.addLatex();
         } else if (button.tool === 'set-cursor') {
             tools.changeCurrentTool('cursor');
         } else if (button.tool === 'set-drag') {
