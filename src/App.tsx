@@ -4,6 +4,9 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useTranslation } from 'react-i18next';
 import { ipcRenderer } from 'electron';
+import { Provider } from 'react-redux';
+
+import store from './redux/store';
 
 import { GlobalStyle } from './styles/GlobalStyle';
 
@@ -12,9 +15,9 @@ import ToolBar from './components/ToolBar';
 import ContentBar from './components/ContentBar';
 import Board from './components/Board';
 import { Container, ContentContainer } from './styles/app';
-import { ToolsContextProvider } from './contexts/tools';
-import { BoardContextProvider } from './contexts/board';
 import { ThemeContextProvider } from './contexts/theme';
+
+import Modals from './containers/Modals';
 
 import 'katex/dist/katex.min.css';
 import 'react-resizable/css/styles.css';
@@ -38,21 +41,20 @@ const App = () => {
         <>
             <DndProvider backend={HTML5Backend}>
                 <ThemeContextProvider>
-                    <Container>
-                        <BoardContextProvider>
-                            <ToolsContextProvider>
-                                <ContentContainer>
-                                    <ToolBar />
-                                    <Board />
-                                    <ContentBar />
-                                </ContentContainer>
-                                <StatusBar />
-                            </ToolsContextProvider>
-                        </BoardContextProvider>
-                    </Container>
+                    <Provider store={store}>
+                        <Container>
+                            <ContentContainer>
+                                <ToolBar />
+                                <Board />
+                                <ContentBar />
+                            </ContentContainer>
+                            <StatusBar />
+                        </Container>
+                        <Modals />
+                    </Provider>
                 </ThemeContextProvider>
-                <GlobalStyle />
             </DndProvider>
+            <GlobalStyle />
         </>
     );
 };

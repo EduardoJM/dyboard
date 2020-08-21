@@ -6,18 +6,17 @@ import {
     convertFromRaw
 } from 'draft-js';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 
-import { stateToHTML } from '../../utils/draft';
-import Modal from '../../components/Modal';
-
-import { useTools } from '../../contexts/tools';
+import { stateToHTML } from '../../../utils/draft';
+import Modal from '../../../components/Modal';
 
 import {
     Form,
     ButtonArea
 } from './styles';
 
-import Button from '../../components/Form/Button';
+import Button from '../../../components/Form/Button';
 import TextEditor from './TextEditor';
 
 interface ModalAddTextProps {
@@ -43,7 +42,7 @@ const ModalAddText: React.FC<ModalAddTextProps> = ({
             : EditorState.createEmpty()
     );
     const { t } = useTranslation('modals');
-    const tools = useTools();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         setEditorState(
@@ -60,18 +59,20 @@ const ModalAddText: React.FC<ModalAddTextProps> = ({
             editComplete(convertToRaw(contentState), text);
             return;
         }
-        const item = {
-            id: Date.now(),
-            type: 'text',
-            width: 300,
-            height: 150,
-            left: 0,
-            top: 0,
-            text,
-            rawContent: convertToRaw(contentState)
-        };
         setEditorState(EditorState.createEmpty());
-        tools.setCatchClick(item);
+        dispatch({
+            type: 'SET_ELEMENT_TO_ADD',
+            element: {
+                id: Date.now(),
+                type: 'text',
+                width: 300,
+                height: 150,
+                left: 0,
+                top: 0,
+                text,
+                rawContent: convertToRaw(contentState)
+            }
+        });
         handleClose(modalId);
     }
 

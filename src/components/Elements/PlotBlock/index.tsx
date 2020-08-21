@@ -1,32 +1,24 @@
-import React, { useState, useEffect, MouseEvent, WheelEvent, createRef, SyntheticEvent } from 'react';
+import React, { useEffect, MouseEvent, WheelEvent, createRef } from 'react';
 import { View } from 'jplot';
 import { evaluate } from 'mathjs';
-import { ResizeCallbackData } from 'react-resizable';
-import Draggable, { DraggableEvent, DraggableData } from 'react-draggable';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { Store } from '../../../redux/reducers/types';
 
 import Container from './styles';
 
 import { ElementPlot } from '../../../data/board';
 
-import { useTools } from '../../../contexts/tools';
-import { useTheme } from '../../../contexts/theme';
-import { useBoard } from '../../../contexts/board';
-
-import { ResizableContainer, DraggableContainer } from '../commonStyles';
+import ElementContainer from '../ElementContainer';
 
 interface PlotBlockProps {
     data: ElementPlot;
 }
 
 const PlotBlock: React.FC<PlotBlockProps> = ({ data }) => {
-    const [left, setLeft] = useState(data.left);
-    const [top, setTop] = useState(data.top);
-    const [width, setWidth] = useState(data.width);
-    const [height, setHeight] = useState(data.height);
     const canvasRef = createRef<HTMLCanvasElement>();
-    const tools = useTools();
-    const board = useBoard();
-    const theme = useTheme();
+    const dispatch = useDispatch();
+    const state = useSelector((state: Store) => state);
 
     let view: View | null = null;
 
@@ -37,6 +29,9 @@ const PlotBlock: React.FC<PlotBlockProps> = ({ data }) => {
         if (!canvasRef.current) {
             return;
         }
+        const rc = canvasRef.current.getBoundingClientRect();
+        canvasRef.current.width = rc.width;
+        canvasRef.current.height = rc.height;
         view = new View(canvasRef.current);
         view.evaluate = (expr, x) => evaluate(expr, { x });
         data.items.forEach((item) => {
@@ -52,31 +47,8 @@ const PlotBlock: React.FC<PlotBlockProps> = ({ data }) => {
         view.render();
     }, [canvasRef]);
 
-    function handleOnResize(event: SyntheticEvent, data: ResizeCallbackData) {
-        setWidth(data.size.width);
-        setHeight(data.size.height);
-    };
-
-    function handleOnDrag(event: DraggableEvent, eventData: DraggableData) {
-        setLeft(eventData.x);
-        setTop(eventData.y);
-        // update bounds
-        board.updateElementBounds(data, eventData.x, eventData.y, width, height, tools);
-    }
-
-    function handleResizeStop() {
-        // update bounds
-        board.updateElementBounds(data, left, top, width, height, tools);
-    }
-
-    function handleClick() {
-        if (tools.currentTool === 'cursor') {
-            tools.setCurrentElement(data);
-        }
-    }
-
     function handleMouseDown(e: MouseEvent) {
-        if (!canvasRef.current || tools.currentTool !== 'cursor') {
+        if (!canvasRef.current || state.tools.tool !== 'cursor') {
             return;
         }
         const rc = canvasRef.current.getBoundingClientRect();
@@ -104,13 +76,12 @@ const PlotBlock: React.FC<PlotBlockProps> = ({ data }) => {
             }
             document.removeEventListener('mousemove', mouseMove);
             document.removeEventListener('mouseup', mouseUp);
-            const idx = board.elements.indexOf(data);
-            const isSelected = tools.currentElement === data;
-            data.translation = view.translation;
-            board.updateElement(idx, data);
-            if (isSelected) {
-                tools.setCurrentElement(data);
-            }
+            const newItem = {
+                ...data,
+                zoom: view.zoom,
+                translation: view.translation
+            };
+            dispatch({ type: 'UPDATE_BOARD_ITEM', boardItem: newItem, oldItem: data });
         };
         document.addEventListener('mousemove', mouseMove);
         document.addEventListener('mouseup', mouseUp);
@@ -147,66 +118,24 @@ const PlotBlock: React.FC<PlotBlockProps> = ({ data }) => {
             if (!view) {
                 return;
             }
-            const idx = board.elements.indexOf(data);
-            const isSelected = tools.currentElement === data;
-            data.translation = view.translation;
-            data.zoom = view.zoom;
-            board.updateElement(idx, data);
-            if (isSelected) {
-                tools.setCurrentElement(data);
-            }
+            const newItem = {
+                ...data,
+                zoom: view.zoom,
+                translation: view.translation
+            };
+            dispatch({ type: 'UPDATE_BOARD_ITEM', boardItem: newItem, oldItem: data });
         }, 400);
     }
 
-    const html = (
-        <Container
-            ref={canvasRef}
-            absolute={tools.currentTool === 'cursor' || tools.currentTool === 'pan'}
-            left={left}
-            top={top}
-            width={width}
-            height={height}
-            onClick={handleClick}
-            onMouseDown={handleMouseDown}
-            onWheel={handleWheel}
-        />
+    return (
+        <ElementContainer data={data}>
+            <Container
+                ref={canvasRef}
+                onMouseDown={handleMouseDown}
+                onWheel={handleWheel}
+            />
+        </ElementContainer>
     );
-
-    if (tools.currentTool === 'resize') {
-        return (
-            <ResizableContainer
-                width={width}
-                height={height}
-                onResize={handleOnResize}
-                onResizeStop={handleResizeStop}
-                minConstraints={[100, 100]}
-                left={left}
-                top={top}
-                theme={theme}
-            >
-                { html }
-            </ResizableContainer>
-        );
-    } else if (tools.currentTool === 'drag') {
-        return (
-            <Draggable
-                position={{
-                    x: left,
-                    y: top
-                }}
-                onStop={handleOnDrag}
-            >
-                <DraggableContainer
-                    width={width}
-                    height={height}
-                    theme={theme}
-                >
-                    { html }
-                </DraggableContainer>
-            </Draggable>
-        );
-    }
-    return html;
 };
 
 export default PlotBlock;

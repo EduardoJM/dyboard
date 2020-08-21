@@ -13,13 +13,11 @@ import {
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 
 import Scrollbars from '../../../Scrollbars';
 
 import { ElementPlot } from '../../../../data/board';
-
-import { useBoard } from '../../../../contexts/board';
-import { useTools } from '../../../../contexts/tools';
 
 import AxisPanel, { validationSchema as AxisSchema } from './Axis';
 import FunctionPanel, { validationSchema as FunctionSchema } from './Function';
@@ -38,34 +36,27 @@ const ConfigPanel: React.FC<ConfigPanelProps> = ({
     setCurrentItem
 }) => {
     const formRef = useRef<FormHandles>(null);
-    const board = useBoard();
-    const tools = useTools();
+    const dispatch = useDispatch();
     const { t } = useTranslation('jplot');
 
-    function updateCurrentItem(cb: () => RenderItem) {
+    function updateCurrentItem(item: RenderItem) {
         if (!currentItem) {
             return;
         }
-        let idx = data.items.indexOf(currentItem);
-        const renderItem = cb();
+        const idx = data.items.indexOf(currentItem);
+        if (idx < 0) {
+            return;
+        }
         const newItem = {
             ...data,
             items: [
                 ...data.items.slice(0, idx),
-                renderItem,
+                item,
                 ...data.items.slice(idx + 1)
             ]
         };
-        const { elements, changeElements } = board;
-        idx = elements.indexOf(data);
-        const newElements = [
-            ...elements.slice(0, idx),
-            newItem,
-            ...elements.slice(idx + 1)
-        ];
-        setCurrentItem(renderItem);
-        changeElements(newElements);
-        tools.setCurrentElement(newItem);
+        setCurrentItem(item);
+        dispatch({ type: 'UPDATE_BOARD_ITEM', boardItem: newItem, oldItem: data });
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -73,19 +64,19 @@ const ConfigPanel: React.FC<ConfigPanelProps> = ({
         try {
             if (currentItem instanceof Axis) {
                 AxisSchema.validate(data).then((validatedData) => {
-                    updateCurrentItem(() => new Axis(validatedData as AxisCreateOptions));
+                    updateCurrentItem(new Axis(validatedData as AxisCreateOptions));
                 });
             } else if (currentItem instanceof FunctionItem) {
                 FunctionSchema.validate(data).then((validatedData) => {
-                    updateCurrentItem(() => new FunctionItem(validatedData as FunctionItemCreateOptions));
+                    updateCurrentItem(new FunctionItem(validatedData as FunctionItemCreateOptions));
                 });
             } else if (currentItem instanceof AreaUnderCurve) {
                 AreaUnderCurveSchema.validate(data).then((validatedData) => {
-                    updateCurrentItem(() => new AreaUnderCurve(validatedData as AreaUnderCurveCreateOptions));
+                    updateCurrentItem(new AreaUnderCurve(validatedData as AreaUnderCurveCreateOptions));
                 });
             } else if (currentItem instanceof Point) {
                 PointSchema.validate(data).then((validatedData) => {
-                    updateCurrentItem(() => new Point(validatedData as PointCreateOptions));
+                    updateCurrentItem(new Point(validatedData as PointCreateOptions));
                 });
             }
         } catch (err) {

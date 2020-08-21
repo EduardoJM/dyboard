@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { animated } from 'react-spring';
-import { ThemeContextData } from '../../../../contexts/theme';
+import { ThemeContextData } from '../../../../../contexts/theme';
 
 interface EditPanelProps {
     theme: ThemeContextData;

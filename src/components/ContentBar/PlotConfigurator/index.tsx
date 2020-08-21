@@ -8,6 +8,7 @@ import {
 } from 'jplot';
 import { MdAdd, MdDelete } from 'react-icons/md';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 
 import { ElementPlot } from '../../../data/board';
 
@@ -16,8 +17,6 @@ import { ListBox, ListBoxItem } from '../../Form/DraggableListBox';
 
 import { Container, PlotsList, PlotsConfig, ListToolButton } from './styles';
 
-import { useBoard } from '../../../contexts/board';
-import { useTools } from '../../../contexts/tools';
 import { useTheme } from '../../../contexts/theme';
 
 import ConfigPanel from './ConfigPanel';
@@ -28,28 +27,19 @@ interface PlotConfiguratorProps {
 
 const PlotConfigurator: React.FC<PlotConfiguratorProps> = ({ data }) => {
     const [editing, setEditing] = useState<RenderItem | null>(null);
-    const tools = useTools();
-    const board = useBoard();
     const theme = useTheme();
     const { t } = useTranslation('jplot');
+    const dispatch = useDispatch();
 
-    function addPlotItem(item: RenderItem) {
+    function addPlotItem(plotItem: RenderItem) {
         const newItem = {
             ...data,
             items: [
                 ...data.items,
-                item
+                plotItem
             ]
         };
-        const { elements, changeElements } = board;
-        const idx = elements.indexOf(data);
-        const newElements = [
-            ...elements.slice(0, idx),
-            newItem,
-            ...elements.slice(idx + 1)
-        ];
-        changeElements(newElements);
-        tools.setCurrentElement(newItem);
+        dispatch({ type: 'UPDATE_BOARD_ITEM', boardItem: newItem, oldItem: data });
     }
 
     function addAxis() {
@@ -85,24 +75,11 @@ const PlotConfigurator: React.FC<PlotConfiguratorProps> = ({ data }) => {
         if (!editing) {
             return;
         }
-        let idx = data.items.indexOf(editing);
         const newItem = {
             ...data,
-            items: [
-                ...data.items.slice(0, idx),
-                ...data.items.slice(idx + 1)
-            ]
+            items: data.items.filter((item) => item !== editing)
         };
-        const { elements, changeElements } = board;
-        idx = elements.indexOf(data);
-        const newElements = [
-            ...elements.slice(0, idx),
-            newItem,
-            ...elements.slice(idx + 1)
-        ];
-        changeElements(newElements);
-        tools.setCurrentElement(newItem);
-        setEditing(null);
+        dispatch({ type: 'UPDATE_BOARD_ITEM', boardItem: newItem, oldItem: data });
     }
 
     function handleMovePlotItem(fromIndex: number, toIndex: number) {
@@ -114,16 +91,7 @@ const PlotConfigurator: React.FC<PlotConfiguratorProps> = ({ data }) => {
             ...data,
             items: newItems
         };
-        const { elements, changeElements } = board;
-        const idx = elements.indexOf(data);
-        const newElements = [
-            ...elements.slice(0, idx),
-            newItem,
-            ...elements.slice(idx + 1)
-        ];
-        changeElements(newElements);
-        tools.setCurrentElement(newItem);
-        setEditing(null);
+        dispatch({ type: 'UPDATE_BOARD_ITEM', boardItem: newItem, oldItem: data });
     }
 
     return (

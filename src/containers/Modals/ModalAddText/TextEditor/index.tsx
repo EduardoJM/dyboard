@@ -11,13 +11,13 @@ import { useTranslation } from 'react-i18next';
 
 import { Container, ToolBar } from './styles';
 
-import { BlockTypes, InlineStyles } from '../../../data/textEditor';
-import { useTheme } from '../../../contexts/theme';
+import { BlockTypes, InlineStyles } from '../../../../data/textEditor';
+import { useTheme } from '../../../../contexts/theme';
 
-import Scrollbars from '../../../components/Scrollbars';
+import Scrollbars from '../../../../components/Scrollbars';
 
 import TeXBlock from './TeXBlock';
-import { setInlineDecorator, insertTeXBlock, removeTeXBlock } from '../../../utils/draft';
+import { setInlineDecorator, insertTeXBlock, removeTeXBlock } from '../../../../utils/draft';
 
 import 'draft-js/dist/Draft.css';
 

@@ -2,13 +2,13 @@ import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { FiUpload } from 'react-icons/fi';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 
-import Button from '../../components/Form/Button';
+import Button from '../../../components/Form/Button';
 
-import Modal from '../../components/Modal';
+import Modal from '../../../components/Modal';
 
-import { useTools } from '../../contexts/tools';
-import { useTheme } from '../../contexts/theme';
+import { useTheme } from '../../../contexts/theme';
 
 import { Container, ImageDropzone, ImageContent, ButtonArea } from './styles';
 
@@ -26,8 +26,8 @@ const ModalAddImage: React.FC<ModalAddImageProps> = ({
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [selectedFileUrl, setSelectedFileUrl] = useState('');
     const { t } = useTranslation('modals');
-    const tools = useTools();
     const theme = useTheme();
+    const dispatch = useDispatch();
 
     const onDrop = useCallback((acceptedFiles: File[]) => {
         if (acceptedFiles.length <= 0) {
@@ -56,18 +56,20 @@ const ModalAddImage: React.FC<ModalAddImageProps> = ({
         reader.onerror = () => console.log('error');
         reader.onload = () => {
             const imageContent = reader.result as string;
-            const item = {
-                id: Date.now(),
-                type: 'image',
-                width: 300,
-                height: 300,
-                left: 0,
-                top: 0,
-                imageContent
-            };
             setSelectedFile(null);
             setSelectedFileUrl('');
-            tools.setCatchClick(item);
+            dispatch({
+                type: 'SET_ELEMENT_TO_ADD',
+                element: {
+                    id: Date.now(),
+                    type: 'image',
+                    width: 300,
+                    height: 300,
+                    left: 0,
+                    top: 0,
+                    imageContent
+                }
+            });
             handleClose(modalId);
         };
         reader.readAsDataURL(selectedFile);

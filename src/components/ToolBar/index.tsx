@@ -1,21 +1,25 @@
 import React, { useState } from 'react';
 import { MdFunctions, MdPanTool, MdTitle, MdInsertPhoto, MdAdd, MdChevronLeft } from 'react-icons/md';
-import { GiArrowCursor, GiCube, GiStoneSphere, GiResize, GiMove } from 'react-icons/gi';
+import { GiArrowCursor, GiStoneSphere, GiResize, GiMove } from 'react-icons/gi';
 import { BsGraphDown } from 'react-icons/bs';
 import { useTransition } from 'react-spring';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { useTools } from '../../contexts/tools';
+import { Store } from '../../redux/reducers/types';
+
 import { useTheme } from '../../contexts/theme';
 
 import { ToolBarButton } from '../../styles/toolbar';
 import { Container, Animation } from './styles';
-import toolBarData, { ToolBarObjectItem } from './data';
+import { toolBarData, ToolBarObjectItem } from '../../data/tools';
 
 const ToolBar: React.FC = () => {
-    const tools = useTools();
     const theme = useTheme();
     const { t } = useTranslation('tools');
+    const dispatch = useDispatch();
+
+    const activeTool = useSelector((state: Store) => state.tools.tool);
 
     const [currentTools, setCurrentTools] = useState(0);
 
@@ -38,8 +42,6 @@ const ToolBar: React.FC = () => {
             return <MdInsertPhoto size={24} />;
         } else if (id === 'parent') {
             return <MdChevronLeft size={24} />;
-        } else if (id === '3d-element' || id === 'cube') {
-            return <GiCube size={24} />;
         } else if (id === 'sphere') {
             return <GiStoneSphere size={24} />;
         } else if (id === 'math') {
@@ -60,39 +62,33 @@ const ToolBar: React.FC = () => {
                 setCurrentTools(button.goToId);
             }
         } else if (button.tool === 'add-text') {
-            tools.addText();
+            dispatch({ type: 'CHANGE_MODAL', id: 'addText', visible: true });
         } else if (button.tool === 'add-image') {
-            tools.addImage();
+            dispatch({ type: 'CHANGE_MODAL', id: 'addImage', visible: true });
         } else if (button.tool === 'add-math') {
-            tools.addLatex();
+            dispatch({ type: 'CHANGE_MODAL', id: 'addLaTeX', visible: true });
         } else if (button.tool === 'set-cursor') {
-            tools.changeCurrentTool('cursor');
+            dispatch({ type: 'SET_CURRENT_TOOL', tool: 'cursor' });
         } else if (button.tool === 'set-drag') {
-            tools.changeCurrentTool('drag');
+            dispatch({ type: 'SET_CURRENT_TOOL', tool: 'drag' });
         } else if (button.tool === 'set-resize') {
-            tools.changeCurrentTool('resize');
+            dispatch({ type: 'SET_CURRENT_TOOL', tool: 'resize' });
         } else if (button.tool === 'set-pan') {
-            tools.changeCurrentTool('pan');
+            dispatch({ type: 'SET_CURRENT_TOOL', tool: 'pan' });
         } else if (button.tool === 'add-plot') {
-            tools.setCatchClick({
-                id: Date.now(),
-                width: 300,
-                height: 300,
-                left: 0,
-                top: 0,
-                type: 'plot',
-                items: [],
-                translation: { x: -2.5, y: -2.5 },
-                zoom: { x: 100, y: 100 }
-            });
-        } else if (button.tool === 'add-3dspace') {
-            tools.setCatchClick({
-                id: Date.now(),
-                width: 300,
-                height: 300,
-                left: 0,
-                top: 0,
-                type: '3d-space'
+            dispatch({
+                type: 'SET_ELEMENT_TO_ADD',
+                element: {
+                    id: Date.now(),
+                    width: 300,
+                    height: 300,
+                    left: 0,
+                    top: 0,
+                    type: 'plot',
+                    items: [],
+                    translation: { x: -2.5, y: -2.5 },
+                    zoom: { x: 100, y: 100 }
+                }
             });
         }
     }
@@ -106,7 +102,7 @@ const ToolBar: React.FC = () => {
                             title={t(`toolBar.titles.${button.id}`)}
                             key={button.id}
                             theme={theme}
-                            current={tools.currentTool === button.id}
+                            current={activeTool === button.id}
                             onClick={() => handleButtonClick(button)}
                         >
                             {renderIcon(button.id)}

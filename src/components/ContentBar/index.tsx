@@ -3,6 +3,9 @@ import { useTransition } from 'react-spring';
 import { RiListSettingsLine } from 'react-icons/ri';
 import { MdDelete, MdList } from 'react-icons/md';
 import { useTranslation } from 'react-i18next';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { Store } from '../../redux/reducers/types';
 
 import { Container, Content, Bar } from './styles';
 
@@ -15,8 +18,6 @@ import { ElementPlot, ElementText } from '../../data/board';
 import { ToolBarButton } from '../../styles/toolbar';
 
 import { useTheme } from '../../contexts/theme';
-import { useBoard } from '../../contexts/board';
-import { useTools } from '../../contexts/tools';
 
 type ContentBarPanel = 'contentSetting' | 'boardItems';
 
@@ -30,35 +31,36 @@ const ContentBar: React.FC = () => {
     });
     const { t } = useTranslation('contentBar');
     const theme = useTheme();
-    const tools = useTools();
-    const board = useBoard();
+    const dispatch = useDispatch();
+
+    const elements = useSelector((state: Store) => state.board.elements);
+    const selectedElement = useSelector((state: Store) => state.board.currentElement);
 
     function renderContent(): JSX.Element | null {
         if (currentPanel === 'boardItems') {
             return <BoardPanel />;
         } else if (currentPanel === 'contentSetting') {
-            if (tools.currentElement === null) {
+            if (selectedElement === null) {
                 return null;
-            } else if (tools.currentElement.type === 'plot') {
-                return <PlotConfigurator data={tools.currentElement as ElementPlot} />;
-            } else if (tools.currentElement.type === 'text') {
-                return <TextConfigurator data={tools.currentElement as ElementText} />;
+            } else if (selectedElement.type === 'plot') {
+                return <PlotConfigurator data={selectedElement as ElementPlot} />;
+            } else if (selectedElement.type === 'text') {
+                return <TextConfigurator data={selectedElement as ElementText} />;
             }
         }
         return null;
     }
 
     function handleDeleteClick() {
-        if (!tools.currentElement) {
+        if (!selectedElement) {
             return;
         }
-        const idx = board.elements.indexOf(tools.currentElement);
+        const idx = elements.indexOf(selectedElement);
         const newElements = [
-            ...board.elements.slice(0, idx),
-            ...board.elements.slice(idx + 1)
+            ...elements.slice(0, idx),
+            ...elements.slice(idx + 1)
         ];
-        board.changeElements(newElements);
-        tools.setCurrentElement(null);
+        dispatch({ type: 'SET_BOARD_ITEMS', boardItemsCollection: newElements });
     }
 
     function handleContentButtonClick() {
@@ -104,7 +106,7 @@ const ContentBar: React.FC = () => {
                 >
                     <RiListSettingsLine size={24} />
                 </ToolBarButton>
-                {tools.currentElement && (
+                {selectedElement && (
                     <ToolBarButton
                         title={t('delete')}
                         theme={theme}

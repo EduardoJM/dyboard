@@ -1,44 +1,29 @@
 import { RenderItem, SerializationUtils } from 'jplot';
 import { RawDraftContentState } from 'draft-js';
 
-export interface ElementText {
+interface ElementBase {
     id: number | string;
     type: string;
     width: number;
     height: number;
     left: number;
     top: number;
+}
+
+export interface ElementText extends ElementBase {
     text: string;
     rawContent: RawDraftContentState;
 }
 
-export interface ElementLaTeX {
-    id: number | string;
-    type: string;
-    width: number;
-    height: number;
-    left: number;
-    top: number;
+export interface ElementLaTeX extends ElementBase {
     text: string;
 }
 
-export interface ElementImage {
-    id: number | string;
-    type: string;
-    width: number;
-    height: number;
-    left: number;
-    top: number;
+export interface ElementImage extends ElementBase {
     imageContent: string;
 }
 
-export interface ElementPlot {
-    id: number | string;
-    type: string;
-    width: number;
-    height: number;
-    left: number;
-    top: number;
+export interface ElementPlot extends ElementBase {
     items: RenderItem[];
     translation: {
         x: number;
@@ -50,16 +35,7 @@ export interface ElementPlot {
     };
 }
 
-export interface ElementSpace3D {
-    id: number | string;
-    type: string;
-    width: number;
-    height: number;
-    left: number;
-    top: number;
-}
-
-export type ElementAll = (ElementText | ElementPlot | ElementSpace3D | ElementImage);
+export type ElementAll = (ElementText | ElementLaTeX | ElementPlot | ElementImage);
 
 export type ElementsCollection = ElementAll[];
 

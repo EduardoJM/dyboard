@@ -1,14 +1,13 @@
 import React, { useState, useEffect, ChangeEvent } from 'react';
 import Katex from 'katex';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 
-import Modal from '../../components/Modal';
-
-import { useTools } from '../../contexts/tools';
+import Modal from '../../../components/Modal';
 
 import { LatexEditor, ButtonArea } from './styles';
 
-import Button from '../../components/Form/Button';
+import Button from '../../../components/Form/Button';
 
 interface ModalAddLaTeXProps {
     opened: boolean;
@@ -47,8 +46,8 @@ const ModalAddLaTeX: React.FC<ModalAddLaTeXProps> = ({
             ? render(editingInitialContent)
             : ''
     );
-    const tools = useTools();
     const { t } = useTranslation('modals');
+    const dispatch = useDispatch();
 
     useEffect(() => {
         setText(
@@ -73,17 +72,19 @@ const ModalAddLaTeX: React.FC<ModalAddLaTeXProps> = ({
             editComplete(text);
             return;
         }
-        const item = {
-            id: Date.now(),
-            type: 'latex',
-            width: 300,
-            height: 150,
-            left: 0,
-            top: 0,
-            text
-        };
         setText('');
-        tools.setCatchClick(item);
+        dispatch({
+            type: 'SET_ELEMENT_TO_ADD',
+            element: {
+                id: Date.now(),
+                type: 'latex',
+                width: 300,
+                height: 150,
+                left: 0,
+                top: 0,
+                text
+            }
+        });
         handleClose(modalId);
     }
 

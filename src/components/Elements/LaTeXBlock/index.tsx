@@ -1,14 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import Draggable, { DraggableEvent, DraggableData } from 'react-draggable';
 import Katex from 'katex';
-
-import { useTools } from '../../../contexts/tools';
-import { useTheme } from '../../../contexts/theme';
-import { useBoard } from '../../../contexts/board';
-
 import { ElementLaTeX } from '../../../data/board';
-
-import { StaticContainer, DraggableContainer } from '../commonStyles';
+import ElementContainer from '../ElementContainer';
 
 interface TextBlockProps {
     data: ElementLaTeX;
@@ -37,12 +30,7 @@ const measureHtml = (html: string): { width: number; height: number; } => {
 const LaTeXBlock: React.FC<TextBlockProps> = ({ data }) => {
     const [width, setWidth] = useState(0);
     const [height, setHeight] = useState(0);
-    const [left, setLeft] = useState(data.left);
-    const [top, setTop] = useState(data.top);
     const [mathText, setMathText] = useState('');
-    const tools = useTools();
-    const board = useBoard();
-    const theme = useTheme();
 
     useEffect(() => {
         const html = Katex.renderToString(data.text);
@@ -52,52 +40,11 @@ const LaTeXBlock: React.FC<TextBlockProps> = ({ data }) => {
         setMathText(html);
     }, [data.text]);
 
-    function handleOnDrag(event: DraggableEvent, eventData: DraggableData) {
-        setLeft(eventData.x);
-        setTop(eventData.y);
-        // update bounds
-        board.updateElementBounds(data, eventData.x, eventData.y, 250, 250, tools);
-    }
-
-    function handleClick() {
-        if (tools.currentTool === 'cursor') {
-            tools.setCurrentElement(data);
-        }
-    }
-
-    const html = <div dangerouslySetInnerHTML={{ __html: mathText }} />;
-
-    if (tools.currentTool === 'drag') {
-        return (
-            <Draggable
-                position={{
-                    x: left,
-                    y: top
-                }}
-                onStop={handleOnDrag}
-            >
-                <DraggableContainer
-                    width={width}
-                    height={height}
-                    theme={theme}
-                >
-                    { html }
-                </DraggableContainer>
-            </Draggable>
-        );
-    } else {
-        return (
-            <StaticContainer
-                left={left}
-                top={top}
-                width={width}
-                height={height}
-                onClick={handleClick}
-            >
-                { html }
-            </StaticContainer>
-        );
-    }
+    return (
+        <ElementContainer data={data} disableResize={true} staticSize={[width, height]}>
+            <div dangerouslySetInnerHTML={{ __html: mathText }} />
+        </ElementContainer>
+    );
 };
 
 export default LaTeXBlock;

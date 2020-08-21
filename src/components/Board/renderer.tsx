@@ -1,10 +1,9 @@
 import React from 'react';
-import { ElementAll, ElementText, ElementPlot, ElementSpace3D, ElementImage, ElementLaTeX } from '../../data/board';
+import { ElementAll, ElementText, ElementPlot, ElementImage, ElementLaTeX } from '../../data/board';
 
 import TextBlock from '../Elements/TextBlock';
 import LaTeXBlock from '../Elements/LaTeXBlock';
 import PlotBlock from '../Elements/PlotBlock';
-import Space3DBlock from '../Elements/Space3DBlock';
 import ImageBlock from '../Elements/ImageBlock';
 
 function renderTextBlock(data: ElementText): JSX.Element {
@@ -19,10 +18,6 @@ function renderPlotBlock(data: ElementPlot): JSX.Element {
     return <PlotBlock data={data} key={data.id} />;
 }
 
-function renderSpace3DBlock(data: ElementSpace3D): JSX.Element {
-    return <Space3DBlock data={data} key={data.id} />;
-}
-
 function renderImageBlock(data: ElementImage): JSX.Element {
     return <ImageBlock data={data} key={data.id} />;
 }
@@ -34,8 +29,6 @@ export default function renderElement(el: ElementAll): JSX.Element {
         return renderLaTeXBlock(el as ElementLaTeX);
     } else if (el.type === 'plot') {
         return renderPlotBlock(el as ElementPlot);
-    } else if (el.type === '3d-space') {
-        return renderSpace3DBlock(el as ElementSpace3D);
     } else if (el.type === 'image') {
         return renderImageBlock(el as ElementImage);
     }

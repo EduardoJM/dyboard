@@ -3,7 +3,7 @@ import { ContentState, ContentBlock } from 'draft-js';
 import katex from 'katex';
 import { useTransition } from 'react-spring';
 
-import { useTheme } from '../../../../contexts/theme';
+import { useTheme } from '../../../../../contexts/theme';
 
 import KatexOutput from './KatexOutput';
 import { EditPanel } from './styles';

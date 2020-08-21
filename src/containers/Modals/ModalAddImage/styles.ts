@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ThemeContextData } from '../../contexts/theme';
+import { ThemeContextData } from '../../../contexts/theme';
 
 export const Container = styled.div`
     padding: 10px 20px;

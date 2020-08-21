@@ -1,7 +1,8 @@
 import React, { createRef, useState, MouseEvent } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
-import { useBoard } from '../../contexts/board';
-import { useTools } from '../../contexts/tools';
+import { Store } from '../../redux/reducers/types';
+
 import { useTheme } from '../../contexts/theme';
 
 import Container from './styles';
@@ -10,25 +11,38 @@ import renderElement from './renderer';
 const Board: React.FC = () => {
     const boardRef = createRef<HTMLDivElement>();
     const boardTranslationRef = createRef<HTMLDivElement>();
-    const boardData = useBoard();
-    const tools = useTools();
     const theme = useTheme();
+    const dispatch = useDispatch();
+
+    const boardItems = useSelector((state: Store) => state.board.elements);
+    const tools = useSelector((state: Store) => state.tools);
 
     const [translateX, setTranslateX] = useState(0);
     const [translateY, setTranslateY] = useState(0);
 
     function handleClick(e: MouseEvent) {
-        if (tools.elementToAdd && boardRef && boardRef.current) {
+        if (tools.elementToAdd && boardRef.current) {
             const { pageX, pageY } = e;
             const rc = boardRef.current.getBoundingClientRect();
             const x = pageX - rc.left;
             const y = pageY - rc.top;
-            tools.catchedClick(x, y);
+            dispatch({
+                type: 'ADD_BOARD_ITEM',
+                boardItem: {
+                    ...tools.elementToAdd,
+                    left: x,
+                    top: y
+                }
+            });
+            dispatch({
+                type: 'SET_ELEMENT_TO_ADD',
+                element: null
+            });
         }
     }
 
     function handleMouseDown(e: MouseEvent) {
-        if (!boardRef.current || tools.currentTool !== 'pan') {
+        if (!boardRef.current || tools.tool !== 'pan') {
             return;
         }
         const rc = boardRef.current.getBoundingClientRect();
@@ -81,7 +95,7 @@ const Board: React.FC = () => {
                     top: translateY
                 }}
             >
-                {boardData.elements.map((element) => renderElement(element))}
+                {boardItems.map((element) => renderElement(element))}
             </div>
         </Container>
     );

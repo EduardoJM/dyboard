@@ -1,17 +1,19 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { Store } from '../../../redux/reducers/types';
 
 import { ListBox, ListBoxItem } from '../../Form/DraggableListBox';
-
-import { useBoard } from '../../../contexts/board';
-import { useTools } from '../../../contexts/tools';
 
 import { ElementAll } from '../../../data/board';
 
 const BoardPanel: React.FC = () => {
     const { t } = useTranslation('boardPanel');
-    const board = useBoard();
-    const tools = useTools();
+    const dispatch = useDispatch();
+
+    const currentItem = useSelector((state: Store) => state.board.currentElement);
+    const boardItems = useSelector((state: Store) => state.board.elements);
 
     function getDisplayText(name: string) {
         if (name === 'image') {
@@ -27,26 +29,26 @@ const BoardPanel: React.FC = () => {
     }
 
     function handleListItemClick(item: ElementAll) {
-        tools.setCurrentElement(item);
+        dispatch({ type: 'SET_SELECTION', boardItem: item });
     }
 
     function handleListItemDrag(fromIndex: number, toIndex: number) {
-        const dragged = board.elements[fromIndex];
-        const newElements = [...board.elements];
+        const dragged = boardItems[fromIndex];
+        const newElements = [...boardItems];
         newElements.splice(fromIndex, 1);
         newElements.splice(toIndex, 0, dragged);
-        board.changeElements(newElements);
+        dispatch({ type: 'SET_BOARD_ITEMS', boardItemsCollection: newElements });
     }
 
     return (
         <ListBox>
-            {board.elements.map((item, index) => (
+            {boardItems.map((item, index) => (
                 <ListBoxItem
                     key={item.id}
                     dragType="BOARD_ITEM"
                     dragMove={handleListItemDrag}
                     index={index}
-                    selected={tools.currentElement === item}
+                    selected={currentItem === item}
                     onClick={() => handleListItemClick(item)}
                 >
                     {getDisplayText(item.type)}
