@@ -8,6 +8,16 @@ export const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: stretch;
+
+    .fit-right {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+
+        span {
+            cursor: pointer;
+        }
+    }
 `;
 
 interface ImageContentProps {
