@@ -8,7 +8,7 @@ const options = {
     supportedLngs: ['pt', 'en'],
     lng: 'pt',
     fallbackLng: ['en', 'pt'],
-    debug: true,
+    debug: false,
     whitelist: ['en', 'pt'],
     backend: {
         loadPath: './locales/{{lng}}/{{ns}}.json',
