@@ -55,8 +55,8 @@ const Board: React.FC = () => {
         if (tools.elementToAdd && boardRef.current) {
             const { pageX, pageY } = e;
             const rc = boardRef.current.getBoundingClientRect();
-            const x = pageX - rc.left;
-            const y = pageY - rc.top;
+            const x = pageX - rc.left - translateX;
+            const y = pageY - rc.top - translateY;
             dispatch({
                 type: 'ADD_BOARD_ITEM',
                 boardItem: {
