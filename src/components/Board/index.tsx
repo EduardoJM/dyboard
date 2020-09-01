@@ -1,9 +1,11 @@
-import React, { createRef, useState, MouseEvent } from 'react';
+import React, { createRef, useEffect, useState, MouseEvent } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { ipcRenderer } from 'electron';
 
 import { Store } from '../../redux/reducers/types';
 
 import { useTheme } from '../../contexts/theme';
+import { LoaderHelperElement, parseToElements, elementsToString } from '../../data/board';
 
 import Container from './styles';
 import renderElement from './renderer';
@@ -19,6 +21,35 @@ const Board: React.FC = () => {
 
     const [translateX, setTranslateX] = useState(0);
     const [translateY, setTranslateY] = useState(0);
+
+    const [needSave, setNeedSave] = useState(false);
+    const [savePath, setSavePath] = useState('');
+
+    useEffect(() => {
+        ipcRenderer.on('request-save', (event, arg: { path: string; }) => {
+            setSavePath(arg.path);
+            setNeedSave(true);
+        });
+        ipcRenderer.on('loaded', (event, arg: { path: string; data: LoaderHelperElement[] }) => {
+            // TODO: set the file-path
+            dispatch({
+                type: 'SET_BOARD_ITEMS',
+                boardItemsCollection: parseToElements(arg.data)
+            });
+        });
+    }, []);
+
+    useEffect(() => {
+        if (!needSave) {
+            return;
+        }
+        ipcRenderer.send('save', {
+            data: elementsToString(boardItems),
+            path: savePath
+        });
+        setSavePath('');
+        setNeedSave(false);
+    }, [needSave]);
 
     function handleClick(e: MouseEvent) {
         if (tools.elementToAdd && boardRef.current) {
