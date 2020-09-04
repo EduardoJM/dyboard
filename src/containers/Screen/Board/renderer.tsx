@@ -1,10 +1,17 @@
 import React from 'react';
-import { ElementAll, ElementText, ElementPlot, ElementImage, ElementLaTeX } from '../../data/board';
-
-import TextBlock from '../Elements/TextBlock';
-import LaTeXBlock from '../Elements/LaTeXBlock';
-import PlotBlock from '../Elements/PlotBlock';
-import ImageBlock from '../Elements/ImageBlock';
+import {
+    ElementAll,
+    ElementText,
+    ElementPlot,
+    ElementImage,
+    ElementLaTeX
+} from '../../../data/board';
+import {
+    TextBlock,
+    LaTeXBlock,
+    PlotBlock,
+    ImageBlock
+} from '../../../components/Elements';
 
 function renderTextBlock(data: ElementText): JSX.Element {
     return <TextBlock data={data} key={data.id} />;

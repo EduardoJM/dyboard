@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { ThemeContextData } from '../../contexts/theme';
+import { ThemeContextData } from '../../../contexts/theme';
 
 interface ContainerProps {
     catching: boolean;

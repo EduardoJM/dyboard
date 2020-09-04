@@ -2,12 +2,12 @@ import React, { createRef, useEffect, useState, MouseEvent } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { ipcRenderer } from 'electron';
 
-import { Store } from '../../redux/reducers/types';
+import { Store } from '../../../redux/reducers/types';
 
-import { useTheme } from '../../contexts/theme';
-import { LoaderHelperElement, parseToElements, elementsToString } from '../../data/board';
+import { useTheme } from '../../../contexts/theme';
+import { LoaderHelperElement, parseToElements, elementsToString } from '../../../data/board';
 
-import actions from '../../redux/actions';
+import actions from '../../../redux/actions';
 
 import Container from './styles';
 import renderElement from './renderer';

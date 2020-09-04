@@ -10,11 +10,7 @@ import store from './redux/store';
 
 import { GlobalStyle } from './styles/GlobalStyle';
 
-import StatusBar from './components/StatusBar';
-import ToolBar from './components/ToolBar';
-import ContentBar from './components/ContentBar';
-import Board from './components/Board';
-import { Container, ContentContainer } from './styles/app';
+import Screen from './containers/Screen';
 import { ThemeContextProvider } from './contexts/theme';
 
 import Modals from './containers/Modals';
@@ -42,14 +38,7 @@ const App = () => {
             <DndProvider backend={HTML5Backend}>
                 <ThemeContextProvider>
                     <Provider store={store}>
-                        <Container>
-                            <ContentContainer>
-                                <ToolBar />
-                                <Board />
-                                <ContentBar />
-                            </ContentContainer>
-                            <StatusBar />
-                        </Container>
+                        <Screen />
                         <Modals />
                     </Provider>
                 </ThemeContextProvider>
