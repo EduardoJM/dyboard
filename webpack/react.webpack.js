@@ -47,6 +47,8 @@ module.exports = {
     publicPath: './'
   },
   plugins: [
-    new HtmlWebpackPlugin()
+    new HtmlWebpackPlugin({
+      title: 'DyBoard'
+    })
   ]
 }
