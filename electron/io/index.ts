@@ -8,6 +8,11 @@ export default class IO {
         this.filePath = '';
     }
 
+    public newBoard(win: BrowserWindow): void {
+        this.filePath = '';
+        win.webContents.send('loaded', { path: '', data: [] });
+    }
+
     public open(win: BrowserWindow): void {
         dialog.showOpenDialog(win, {
             properties: ['openFile'],

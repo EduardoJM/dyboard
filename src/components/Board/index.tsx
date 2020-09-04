@@ -33,7 +33,6 @@ const Board: React.FC = () => {
             setNeedSave(true);
         });
         ipcRenderer.on('loaded', (event, arg: { path: string; data: LoaderHelperElement[] }) => {
-            console.log(arg.data);
             dispatch(actions.board.setBoardItems(parseToElements(arg.data)));
         });
     }, []);

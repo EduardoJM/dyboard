@@ -18,15 +18,16 @@ function setLanguage(win: BrowserWindow, lang: string) {
 }
 
 export default function registerMenu(win: BrowserWindow): void {
-    const fileIO = new IO();
     i18n.loadNamespaces('applicationMenu').then(() => {
+        const fileIO = new IO();
         const template: MenuItemConstructorOptions[] = [
             {
                 label: i18n.t('applicationMenu:file'),
                 submenu: [
                     {
                         label: i18n.t('applicationMenu:fileItems.new'),
-                        accelerator: 'CmdOrCtrl+N'
+                        accelerator: 'CmdOrCtrl+N',
+                        click: () => fileIO.newBoard(win)
                     },
                     {
                         label: i18n.t('applicationMenu:fileItems.open'),
