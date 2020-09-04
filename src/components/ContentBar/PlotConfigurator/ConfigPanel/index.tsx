@@ -19,6 +19,8 @@ import Scrollbars from '../../../Scrollbars';
 
 import { ElementPlot } from '../../../../data/board';
 
+import actions from '../../../../redux/actions';
+
 import AxisPanel, { validationSchema as AxisSchema } from './Axis';
 import FunctionPanel, { validationSchema as FunctionSchema } from './Function';
 import AreaUnderCurvePanel, { validationSchema as AreaUnderCurveSchema } from './AreaUnderCurve';
@@ -56,7 +58,7 @@ const ConfigPanel: React.FC<ConfigPanelProps> = ({
             ]
         };
         setCurrentItem(item);
-        dispatch({ type: 'UPDATE_BOARD_ITEM', boardItem: newItem, oldItem: data });
+        dispatch(actions.board.updateBoardItem(data, newItem));
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -5,6 +5,8 @@ import { useDispatch } from 'react-redux';
 
 import Modal from '../../../components/Modal';
 
+import actions from '../../../redux/actions';
+
 import { LatexEditor, ButtonArea } from './styles';
 
 import Button from '../../../components/Form/Button';
@@ -73,18 +75,15 @@ const ModalAddLaTeX: React.FC<ModalAddLaTeXProps> = ({
             return;
         }
         setText('');
-        dispatch({
-            type: 'SET_ELEMENT_TO_ADD',
-            element: {
-                id: Date.now(),
-                type: 'latex',
-                width: 300,
-                height: 150,
-                left: 0,
-                top: 0,
-                text
-            }
-        });
+        dispatch(actions.tools.setElementToAdd({
+            id: Date.now(),
+            type: 'latex',
+            width: 300,
+            height: 150,
+            left: 0,
+            top: 0,
+            text
+        }));
         handleClose(modalId);
     }
 

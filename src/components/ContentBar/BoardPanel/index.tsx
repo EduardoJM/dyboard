@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { Store } from '../../../redux/reducers/types';
+import actions from '../../../redux/actions';
 
 import { ListBox, ListBoxItem } from '../../Form/DraggableListBox';
 
@@ -29,7 +30,7 @@ const BoardPanel: React.FC = () => {
     }
 
     function handleListItemClick(item: ElementAll) {
-        dispatch({ type: 'SET_SELECTION', boardItem: item });
+        dispatch(actions.board.setSelection(item));
     }
 
     function handleListItemDrag(fromIndex: number, toIndex: number) {
@@ -37,7 +38,7 @@ const BoardPanel: React.FC = () => {
         const newElements = [...boardItems];
         newElements.splice(fromIndex, 1);
         newElements.splice(toIndex, 0, dragged);
-        dispatch({ type: 'SET_BOARD_ITEMS', boardItemsCollection: newElements });
+        dispatch(actions.board.setBoardItems(newElements));
     }
 
     return (

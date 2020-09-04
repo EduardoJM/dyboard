@@ -19,6 +19,8 @@ import { Container, PlotsList, PlotsConfig, ListToolButton } from './styles';
 
 import { useTheme } from '../../../contexts/theme';
 
+import actions from '../../../redux/actions';
+
 import ConfigPanel from './ConfigPanel';
 
 interface PlotConfiguratorProps {
@@ -39,7 +41,7 @@ const PlotConfigurator: React.FC<PlotConfiguratorProps> = ({ data }) => {
                 plotItem
             ]
         };
-        dispatch({ type: 'UPDATE_BOARD_ITEM', boardItem: newItem, oldItem: data });
+        dispatch(actions.board.updateBoardItem(data, newItem));
     }
 
     function addAxis() {
@@ -79,7 +81,7 @@ const PlotConfigurator: React.FC<PlotConfiguratorProps> = ({ data }) => {
             ...data,
             items: data.items.filter((item) => item !== editing)
         };
-        dispatch({ type: 'UPDATE_BOARD_ITEM', boardItem: newItem, oldItem: data });
+        dispatch(actions.board.updateBoardItem(data, newItem));
     }
 
     function handleMovePlotItem(fromIndex: number, toIndex: number) {
@@ -91,7 +93,7 @@ const PlotConfigurator: React.FC<PlotConfiguratorProps> = ({ data }) => {
             ...data,
             items: newItems
         };
-        dispatch({ type: 'UPDATE_BOARD_ITEM', boardItem: newItem, oldItem: data });
+        dispatch(actions.board.updateBoardItem(data, newItem));
     }
 
     return (

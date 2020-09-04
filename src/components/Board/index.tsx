@@ -7,6 +7,8 @@ import { Store } from '../../redux/reducers/types';
 import { useTheme } from '../../contexts/theme';
 import { LoaderHelperElement, parseToElements, elementsToString } from '../../data/board';
 
+import actions from '../../redux/actions';
+
 import Container from './styles';
 import renderElement from './renderer';
 
@@ -32,10 +34,7 @@ const Board: React.FC = () => {
         });
         ipcRenderer.on('loaded', (event, arg: { path: string; data: LoaderHelperElement[] }) => {
             // TODO: set the file-path
-            dispatch({
-                type: 'SET_BOARD_ITEMS',
-                boardItemsCollection: parseToElements(arg.data)
-            });
+            dispatch(actions.board.setBoardItems(parseToElements(arg.data)));
         });
     }, []);
 
@@ -57,18 +56,12 @@ const Board: React.FC = () => {
             const rc = boardRef.current.getBoundingClientRect();
             const x = pageX - rc.left - translateX;
             const y = pageY - rc.top - translateY;
-            dispatch({
-                type: 'ADD_BOARD_ITEM',
-                boardItem: {
-                    ...tools.elementToAdd,
-                    left: x,
-                    top: y
-                }
-            });
-            dispatch({
-                type: 'SET_ELEMENT_TO_ADD',
-                element: null
-            });
+            dispatch(actions.board.addBoardItem({
+                ...tools.elementToAdd,
+                left: x,
+                top: y
+            }));
+            dispatch(actions.tools.setElementToAdd(null));
         }
     }
 

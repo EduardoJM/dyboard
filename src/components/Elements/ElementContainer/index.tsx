@@ -7,6 +7,8 @@ import { Store } from '../../../redux/reducers/types';
 
 import { ElementAll } from '../../../data/board';
 
+import actions from '../../../redux/actions';
+
 import { useTheme } from '../../../contexts/theme';
 
 import { ResizableContainer, DraggableContainer, StaticContainer } from '../commonStyles';
@@ -54,7 +56,7 @@ const ElementContainer: React.FC<ElementContainerProps> = ({
             width,
             height
         };
-        dispatch({ type: 'UPDATE_BOARD_ITEM', boardItem: newItem, oldItem: data });
+        dispatch(actions.board.updateBoardItem(data, newItem));
     }
 
     function handleResizeStop() {
@@ -65,12 +67,12 @@ const ElementContainer: React.FC<ElementContainerProps> = ({
             width,
             height
         };
-        dispatch({ type: 'UPDATE_BOARD_ITEM', boardItem: newItem, oldItem: data });
+        dispatch(actions.board.updateBoardItem(data, newItem));
     }
 
     function handleClick() {
         if (tools.tool === 'cursor') {
-            dispatch({ type: 'SET_SELECTION', boardItem: data });
+            dispatch(actions.board.setSelection(data));
         }
     }
 

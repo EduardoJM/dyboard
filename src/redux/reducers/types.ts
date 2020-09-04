@@ -37,8 +37,10 @@ export const ToolsStoreInitial : ToolsStore = {
     elementToAdd: null
 };
 
+export type ModalsIds = 'addImage' | 'addLaTeX' | 'addText';
+
 export interface ModalsAction extends ReduxAction {
-    id: 'addImage' | 'addLaTeX' | 'addText';
+    id: ModalsIds;
     visible: boolean;
 }
 

@@ -5,6 +5,8 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { Store } from '../../../redux/reducers/types';
 
+import actions from '../../../redux/actions';
+
 import Container from './styles';
 
 import { ElementPlot } from '../../../data/board';
@@ -81,7 +83,7 @@ const PlotBlock: React.FC<PlotBlockProps> = ({ data }) => {
                 zoom: view.zoom,
                 translation: view.translation
             };
-            dispatch({ type: 'UPDATE_BOARD_ITEM', boardItem: newItem, oldItem: data });
+            dispatch(actions.board.updateBoardItem(data, newItem));
         };
         document.addEventListener('mousemove', mouseMove);
         document.addEventListener('mouseup', mouseUp);
@@ -123,7 +125,7 @@ const PlotBlock: React.FC<PlotBlockProps> = ({ data }) => {
                 zoom: view.zoom,
                 translation: view.translation
             };
-            dispatch({ type: 'UPDATE_BOARD_ITEM', boardItem: newItem, oldItem: data });
+            dispatch(actions.board.updateBoardItem(data, newItem));
         }, 400);
     }
 

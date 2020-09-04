@@ -5,6 +5,8 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { clipboard } from 'electron';
 
+import actions from '../../../redux/actions';
+
 import Button from '../../../components/Form/Button';
 
 import Modal from '../../../components/Modal';
@@ -52,18 +54,15 @@ const ModalAddImage: React.FC<ModalAddImageProps> = ({
     function handleAddClick() {
         if (!selectedFile) {
             if (pastedDataUrl !== '') {
-                dispatch({
-                    type: 'SET_ELEMENT_TO_ADD',
-                    element: {
-                        id: Date.now(),
-                        type: 'image',
-                        width: 300,
-                        height: 300,
-                        left: 0,
-                        top: 0,
-                        imageContent: pastedDataUrl
-                    }
-                });
+                dispatch(actions.tools.setElementToAdd({
+                    id: Date.now(),
+                    type: 'image',
+                    width: 300,
+                    height: 300,
+                    left: 0,
+                    top: 0,
+                    imageContent: pastedDataUrl
+                }));
                 setSelectedFile(null);
                 setSelectedFileUrl('');
                 setPastedDataUrl('');
@@ -77,18 +76,15 @@ const ModalAddImage: React.FC<ModalAddImageProps> = ({
             const imageContent = reader.result as string;
             setSelectedFile(null);
             setSelectedFileUrl('');
-            dispatch({
-                type: 'SET_ELEMENT_TO_ADD',
-                element: {
-                    id: Date.now(),
-                    type: 'image',
-                    width: 300,
-                    height: 300,
-                    left: 0,
-                    top: 0,
-                    imageContent
-                }
-            });
+            dispatch(actions.tools.setElementToAdd({
+                id: Date.now(),
+                type: 'image',
+                width: 300,
+                height: 300,
+                left: 0,
+                top: 0,
+                imageContent
+            }));
             handleClose(modalId);
         };
         reader.readAsDataURL(selectedFile);

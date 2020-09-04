@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Store } from '../../redux/reducers/types';
+import actions from '../../redux/actions';
 
 import { useTheme } from '../../contexts/theme';
 
@@ -62,34 +63,31 @@ const ToolBar: React.FC = () => {
                 setCurrentTools(button.goToId);
             }
         } else if (button.tool === 'add-text') {
-            dispatch({ type: 'CHANGE_MODAL', id: 'addText', visible: true });
+            dispatch(actions.modals.changeModal('addText', true));
         } else if (button.tool === 'add-image') {
-            dispatch({ type: 'CHANGE_MODAL', id: 'addImage', visible: true });
+            dispatch(actions.modals.changeModal('addImage', true));
         } else if (button.tool === 'add-math') {
-            dispatch({ type: 'CHANGE_MODAL', id: 'addLaTeX', visible: true });
+            dispatch(actions.modals.changeModal('addLaTeX', true));
         } else if (button.tool === 'set-cursor') {
-            dispatch({ type: 'SET_CURRENT_TOOL', tool: 'cursor' });
+            dispatch(actions.tools.setCurrentTool('cursor'));
         } else if (button.tool === 'set-drag') {
-            dispatch({ type: 'SET_CURRENT_TOOL', tool: 'drag' });
+            dispatch(actions.tools.setCurrentTool('drag'));
         } else if (button.tool === 'set-resize') {
-            dispatch({ type: 'SET_CURRENT_TOOL', tool: 'resize' });
+            dispatch(actions.tools.setCurrentTool('resize'));
         } else if (button.tool === 'set-pan') {
-            dispatch({ type: 'SET_CURRENT_TOOL', tool: 'pan' });
+            dispatch(actions.tools.setCurrentTool('pan'));
         } else if (button.tool === 'add-plot') {
-            dispatch({
-                type: 'SET_ELEMENT_TO_ADD',
-                element: {
-                    id: Date.now(),
-                    width: 300,
-                    height: 300,
-                    left: 0,
-                    top: 0,
-                    type: 'plot',
-                    items: [],
-                    translation: { x: -2.5, y: -2.5 },
-                    zoom: { x: 100, y: 100 }
-                }
-            });
+            dispatch(actions.tools.setElementToAdd({
+                id: Date.now(),
+                width: 300,
+                height: 300,
+                left: 0,
+                top: 0,
+                type: 'plot',
+                items: [],
+                translation: { x: -2.5, y: -2.5 },
+                zoom: { x: 100, y: 100 }
+            }));
         }
     }
 

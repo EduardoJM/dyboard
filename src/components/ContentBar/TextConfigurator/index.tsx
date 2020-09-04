@@ -12,6 +12,8 @@ import { useTheme } from '../../../contexts/theme';
 
 import Container from './styles';
 
+import actions from '../../../redux/actions';
+
 interface TextConfiguratorProps {
     data: ElementText;
 }
@@ -34,7 +36,7 @@ const TextConfigurator: React.FC<TextConfiguratorProps> = ({ data }) => {
             text,
             rawContent: state
         };
-        dispatch({ type: 'UPDATE_BOARD_ITEM', boardItem: newItem, oldItem: data });
+        dispatch(actions.board.updateBoardItem(data, newItem));
     }
 
     function handleModalClose(id: string) {

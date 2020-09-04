@@ -8,6 +8,8 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 
+import actions from '../../../redux/actions';
+
 import { stateToHTML } from '../../../utils/draft';
 import Modal from '../../../components/Modal';
 
@@ -60,19 +62,16 @@ const ModalAddText: React.FC<ModalAddTextProps> = ({
             return;
         }
         setEditorState(EditorState.createEmpty());
-        dispatch({
-            type: 'SET_ELEMENT_TO_ADD',
-            element: {
-                id: Date.now(),
-                type: 'text',
-                width: 300,
-                height: 150,
-                left: 0,
-                top: 0,
-                text,
-                rawContent: convertToRaw(contentState)
-            }
-        });
+        dispatch(actions.tools.setElementToAdd({
+            id: Date.now(),
+            type: 'text',
+            width: 300,
+            height: 150,
+            left: 0,
+            top: 0,
+            text,
+            rawContent: convertToRaw(contentState)
+        }));
         handleClose(modalId);
     }
 

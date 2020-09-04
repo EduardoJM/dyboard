@@ -15,6 +15,8 @@ import BoardPanel from './BoardPanel';
 
 import { ElementPlot, ElementText } from '../../data/board';
 
+import actions from '../../redux/actions';
+
 import { ToolBarButton } from '../../styles/toolbar';
 
 import { useTheme } from '../../contexts/theme';
@@ -60,7 +62,7 @@ const ContentBar: React.FC = () => {
             ...elements.slice(0, idx),
             ...elements.slice(idx + 1)
         ];
-        dispatch({ type: 'SET_BOARD_ITEMS', boardItemsCollection: newElements });
+        dispatch(actions.board.setBoardItems(newElements));
     }
 
     function handleContentButtonClick() {

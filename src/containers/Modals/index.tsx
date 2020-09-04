@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { Store } from '../../redux/reducers/types';
+import actions from '../../redux/actions';
 
 import ModalAddText from './ModalAddText';
 import ModalAddImage from './ModalAddImage';
@@ -12,7 +13,7 @@ const Modals: React.FC = () => {
     const dispatch = useDispatch();
 
     function handleCloseModal(id: string) {
-        dispatch({ type: 'CHANGE_MODAL', id, visible: false });
+        dispatch(actions.modals.changeModal(id, false));
     }
 
     return (
