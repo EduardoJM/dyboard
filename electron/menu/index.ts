@@ -6,7 +6,7 @@ import {
 
 import i18n from '../../i18n';
 
-import { open, save } from '../io';
+import IO from '../io';
 
 const isMac = process.platform === 'darwin';
 
@@ -18,6 +18,7 @@ function setLanguage(win: BrowserWindow, lang: string) {
 }
 
 export default function registerMenu(win: BrowserWindow): void {
+    const fileIO = new IO();
     i18n.loadNamespaces('applicationMenu').then(() => {
         const template: MenuItemConstructorOptions[] = [
             {
@@ -30,12 +31,17 @@ export default function registerMenu(win: BrowserWindow): void {
                     {
                         label: i18n.t('applicationMenu:fileItems.open'),
                         accelerator: 'CmdOrCtrl+O',
-                        click: () => open(win)
+                        click: () => fileIO.open(win)
                     },
                     {
                         label: i18n.t('applicationMenu:fileItems.save'),
                         accelerator: 'CmdOrCtrl+S',
-                        click: () => save(win)
+                        click: () => fileIO.save(win)
+                    },
+                    {
+                        label: i18n.t('applicationMenu:fileItems.saveAs'),
+                        accelerator: 'CmdOrCtrl+Shift+S',
+                        click: () => fileIO.saveAs(win)
                     },
                     {
                         label: i18n.t('applicationMenu:fileItems.exit'),

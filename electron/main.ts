@@ -4,7 +4,7 @@ import * as url from 'url';
 // import installExtension, { REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } from 'electron-devtools-installer';
 
 import registerMenu from './menu';
-import { registerIO } from './io';
+import IO from './io';
 
 app.commandLine.appendSwitch('disable-gpu');
 app.commandLine.appendArgument('disable-gpu');
@@ -61,4 +61,4 @@ app.on('ready', createWindow)
 
 app.allowRendererProcessReuse = true;
 
-registerIO();
+IO.registerIO();

@@ -33,7 +33,7 @@ const Board: React.FC = () => {
             setNeedSave(true);
         });
         ipcRenderer.on('loaded', (event, arg: { path: string; data: LoaderHelperElement[] }) => {
-            // TODO: set the file-path
+            console.log(arg.data);
             dispatch(actions.board.setBoardItems(parseToElements(arg.data)));
         });
     }, []);
