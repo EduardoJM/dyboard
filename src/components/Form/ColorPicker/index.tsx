@@ -36,6 +36,9 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
                     return 'black';
                 }
                 return ref.dataset.color;
+            },
+            setValue: (ref: HTMLDivElement, value: string) => {
+                setColorResult(value);
             }
         });
     }, [fieldName, registerField]);

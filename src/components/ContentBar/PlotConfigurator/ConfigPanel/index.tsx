@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import {
     RenderItem,
     AreaUnderCurve,
@@ -29,13 +29,13 @@ import PointPanel, { validationSchema as PointSchema } from './Point';
 interface ConfigPanelProps {
     data: ElementPlot;
     currentItem: RenderItem | null;
-    setCurrentItem: (newItem: RenderItem | null) => void;
+    // setCurrentItem: (newItem: RenderItem | null) => void;
 }
 
 const ConfigPanel: React.FC<ConfigPanelProps> = ({
     data,
-    currentItem,
-    setCurrentItem
+    currentItem//,
+    // setCurrentItem
 }) => {
     const formRef = useRef<FormHandles>(null);
     const dispatch = useDispatch();
@@ -57,7 +57,7 @@ const ConfigPanel: React.FC<ConfigPanelProps> = ({
                 ...data.items.slice(idx + 1)
             ]
         };
-        setCurrentItem(item);
+        // setCurrentItem(item);
         dispatch(actions.board.updateBoardItem(data, newItem));
     }
 
@@ -91,6 +91,12 @@ const ConfigPanel: React.FC<ConfigPanelProps> = ({
         }
         formRef.current.submitForm();
     }
+
+    useEffect(() => {
+        if (formRef.current && currentItem) {
+            formRef.current.setData(currentItem);
+        }
+    }, [currentItem]);
 
     if (!currentItem || !data.items.includes(currentItem)) {
         return (

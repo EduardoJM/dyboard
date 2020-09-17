@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import Select, { ValueType } from 'react-select';
 import { useField } from '@unform/core';
 
@@ -6,13 +6,15 @@ import Container from './styles';
 
 import { useTheme } from '../../../contexts/theme';
 
+interface OptionPickerItem {
+    label: string;
+    value: string;
+}
+
 interface OptionPickerProps {
     name: string;
     text: string;
-    options: {
-        label: string;
-        value: string;
-    }[];
+    options: OptionPickerItem[];
     initialValue: string;
     onChange?: (value: string) => void;
 }
@@ -24,20 +26,26 @@ const OptionPicker: React.FC<OptionPickerProps> = ({
     initialValue,
     onChange
 }) => {
-    const selectRef = useRef(null);
+    const selectRef = useRef<Select>(null);
     const { fieldName, registerField } = useField(name);
+    const [value, setValue] = useState<OptionPickerItem>(options.filter((item) => {
+        return item.value === initialValue;
+    })[0]);
     const theme = useTheme();
 
     useEffect(() => {
         registerField({
             name: fieldName,
             ref: selectRef.current,
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            getValue: (ref: any) => {
+            getValue: (ref: Select) => {
                 if (!ref.state.value) {
                     return '';
                 }
-                return ref.state.value.value;
+                const retVal = (ref.state.value as OptionPickerItem).value;
+                return retVal;
+            },
+            setValue: (ref: Select, value: string) => {
+                setValue(options.filter((item) => item.value === value)[0]);
             }
         });
     }, [fieldName, registerField]);
@@ -46,6 +54,7 @@ const OptionPicker: React.FC<OptionPickerProps> = ({
         label: string;
         value: string;
     }>) {
+        setValue(v as OptionPickerItem);
         if (onChange) {
             onChange((v as { value: string; }).value);
         }
@@ -80,10 +89,10 @@ const OptionPicker: React.FC<OptionPickerProps> = ({
                         dangerLight: theme.selectDangerLight
                     }
                 })}
-                defaultValue={options.filter((item) => item.value === initialValue)[0]}
                 ref={selectRef}
                 onChange={handleSelectChange}
                 classNamePrefix="react-select"
+                value={value}
             />
         </Container>
     );

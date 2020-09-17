@@ -33,14 +33,22 @@ const Slider: React.FC<SliderProps> = ({
     const theme = useTheme();
 
     useEffect(() => {
-        registerField({
+        registerField<number>({
             name: fieldName,
             ref: sliderRef.current,
-            getValue: (ref: HTMLDivElement) => {
+            getValue: (ref: HTMLDivElement): number => {
                 if (ref.dataset.value === undefined) {
-                    return '0';
+                    return 0;
                 }
-                return ref.dataset.value;
+                let num = parseFloat(ref.dataset.value);
+                if (Number.isNaN(num)) {
+                    num = initialValue;
+                }
+                return num;
+            },
+            setValue: (ref: HTMLDivElement, value: number) => {
+                const newValue = Math.min(max, Math.max(min, value));
+                setValue(newValue);
             }
         });
     }, [fieldName, registerField]);

@@ -28,7 +28,8 @@ interface PlotConfiguratorProps {
 }
 
 const PlotConfigurator: React.FC<PlotConfiguratorProps> = ({ data }) => {
-    const [editing, setEditing] = useState<RenderItem | null>(null);
+    // const [editing, setEditing] = useState<RenderItem | null>(null);
+    const [selectedIndex, setSelectedIndex] = useState<number>(-1);
     const theme = useTheme();
     const { t } = useTranslation('jplot');
     const dispatch = useDispatch();
@@ -74,12 +75,12 @@ const PlotConfigurator: React.FC<PlotConfiguratorProps> = ({ data }) => {
     }
 
     function handleDeleteItem() {
-        if (!editing) {
+        if (selectedIndex < 0 || selectedIndex >= data.items.length) {
             return;
         }
         const newItem = {
             ...data,
-            items: data.items.filter((item) => item !== editing)
+            items: data.items.filter((item, index) => index !== selectedIndex)
         };
         dispatch(actions.board.updateBoardItem(data, newItem));
     }
@@ -106,10 +107,10 @@ const PlotConfigurator: React.FC<PlotConfiguratorProps> = ({ data }) => {
                             <ListBoxItem
                                 dragType="PLOT_ITEM"
                                 dragMove={handleMovePlotItem}
-                                selected={editing === item}
+                                selected={selectedIndex === index}
                                 key={`index${index}`}
                                 index={index}
-                                onClick={() => setEditing(item)}
+                                onClick={() => setSelectedIndex(index)}
                             >
                                 {getListItemName(item)}
                             </ListBoxItem>
@@ -135,7 +136,9 @@ const PlotConfigurator: React.FC<PlotConfiguratorProps> = ({ data }) => {
                 </div>
             </PlotsList>
             <PlotsConfig>
-                <ConfigPanel data={data} currentItem={editing} setCurrentItem={setEditing} />
+                {selectedIndex >= 0 && selectedIndex < data.items.length && (
+                    <ConfigPanel data={data} currentItem={data.items[selectedIndex]} />
+                )}
             </PlotsConfig>
         </Container>
     );

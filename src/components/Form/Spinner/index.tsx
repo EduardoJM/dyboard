@@ -29,19 +29,26 @@ const Spinner: React.FC<SpinnerProps> = ({
     const theme = useTheme();
 
     useEffect(() => {
-        registerField({
+        registerField<number>({
             name: fieldName,
             ref: inputRef.current,
-            getValue: (ref: HTMLInputElement) => {
-                if (transform === undefined) {
-                    return ref.value;
-                }
-                const val = parseFloat(ref.value);
+            getValue: (ref: HTMLInputElement): number => {
+                let val = parseFloat(ref.value);
                 if (Number.isNaN(val)) {
-                    return ref.value;
+                    val = initialValue;
+                }
+                if (transform === undefined) {
+                    return val;
                 }
                 const num = (val / transform);
-                return num.toString();
+                return num;
+            },
+            setValue: (ref: HTMLInputElement, value: number) => {
+                let newValue = Math.min(max, Math.max(min, value));
+                if (transform !== undefined) {
+                    newValue *= transform;
+                }
+                setValue(newValue.toString());
             }
         });
     }, [fieldName, registerField]);

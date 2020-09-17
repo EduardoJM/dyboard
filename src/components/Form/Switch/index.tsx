@@ -22,14 +22,17 @@ const Switch: React.FC<SwitchProps> = ({ name, text, initialCheck }) => {
     const theme = useTheme();
 
     useEffect(() => {
-        registerField({
+        registerField<boolean>({
             name: fieldName,
             ref: inputRef.current,
-            getValue: (ref: HTMLDivElement) => {
+            getValue: (ref: HTMLDivElement): boolean => {
                 if (ref.dataset.checked === undefined) {
-                    return 'false';
+                    return false;
                 }
-                return ref.dataset.checked;
+                return (ref.dataset.checked.toLowerCase() === 'true');
+            },
+            setValue: (ref: HTMLDivElement, value: boolean) => {
+                setState(value);
             }
         });
     }, [fieldName, registerField]);
