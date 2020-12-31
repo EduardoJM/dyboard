@@ -19,6 +19,8 @@ const HandWritingBlock: React.FC<HandWritingBlockProps> = ({ data }) => {
     const [color, setColor] = useState('#FFF');
     const [width, setWidth] = useState(1);
 
+    let path: {x: number; y: number; }[] = [];
+
     const [currentPath, setCurrentPath] = useState<{x: number; y: number; }[]>([]);
 
     const handleMouseMove = (e: globalThis.MouseEvent) => {
@@ -26,12 +28,14 @@ const HandWritingBlock: React.FC<HandWritingBlockProps> = ({ data }) => {
             return;
         }
         const rc = ref.current.getBoundingClientRect();
+        const point = {
+            x: e.pageX - rc.left,
+            y: e.pageY - rc.top
+        };
+        path.push(point);
         setCurrentPath((path) => [
             ...path,
-            {
-                x: e.pageX - rc.left,
-                y: e.pageY - rc.top
-            }
+            point
         ]);
     };
 
@@ -39,29 +43,27 @@ const HandWritingBlock: React.FC<HandWritingBlockProps> = ({ data }) => {
         document.removeEventListener('mousemove', handleMouseMove);
         document.removeEventListener('mouseup', handleMouseUp);
 
-        setCurrentPath((path) => {
-            const newItem = {
-                ...data,
-                paths: [
-                    ...data.paths,
-                    {
-                        id: Date.now().toString(),
-                        points: path,
-                        color,
-                        width
-                    }
-                ]
-            };
-            dispatch(actions.board.updateBoardItem(data, newItem));
-            return [];
-        });
+        const newItem = {
+            ...data,
+            paths: [
+                ...data.paths,
+                {
+                    id: Date.now().toString(),
+                    points: path,
+                    color,
+                    width
+                }
+            ]
+        };
+        dispatch(actions.board.updateBoardItem(data, newItem));
+        setCurrentPath([]);
+        path = [];
     };
 
     const handleMouseDown = (e: MouseEvent) => {
         if (state.tools.tool !== 'cursor' || !ref.current) {
             return;
         }
-        console.log('going to');
         document.addEventListener('mousemove', handleMouseMove);
         document.addEventListener('mouseup', handleMouseUp);
     };
@@ -83,7 +85,13 @@ const HandWritingBlock: React.FC<HandWritingBlockProps> = ({ data }) => {
                 style={{ width: '100%', height: '100%' }}
                 onMouseDown={handleMouseDown}
             >
-                <svg style={{ width: '100%', height: '100%' }}>
+                <svg
+                    style={{
+                        width: '100%',
+                        height: '100%',
+                        pointerEvents: 'none'
+                    }}
+                >
                     {data.paths.map((path) => (
                         <path
                             key={path.id}
