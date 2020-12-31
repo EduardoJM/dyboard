@@ -61,6 +61,11 @@ export const toolBarData: ToolBarObjectItem[][] = [
             id: 'plot',
             tool: 'add-plot',
             deep: false
+        },
+        {
+            id: 'hand-pen',
+            tool: 'add-hand-pen',
+            deep: false
         }
     ]
 ];

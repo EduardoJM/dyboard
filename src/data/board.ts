@@ -35,7 +35,18 @@ export interface ElementPlot extends ElementBase {
     };
 }
 
-export type ElementAll = (ElementText | ElementLaTeX | ElementPlot | ElementImage);
+export interface ElementHandWritePath {
+    id: string;
+    color: string;
+    width: number;
+    points: { x: number; y: number; }[];
+}
+
+export interface ElementHandWrite extends ElementBase {
+    paths: ElementHandWritePath[];
+}
+
+export type ElementAll = (ElementText | ElementLaTeX | ElementPlot | ElementImage | ElementHandWrite);
 
 export type ElementsCollection = ElementAll[];
 
@@ -59,6 +70,7 @@ export interface LoaderHelperElement {
         x: number;
         y: number;
     };
+    paths?: ElementHandWritePath[];
 }
 
 export function elementsToString(data: ElementsCollection): string {
@@ -155,6 +167,14 @@ export function parseToElements(data: LoaderHelperElement[]): ElementsCollection
                         y: 100
                     },
                 items: SerializationUtils.deserializeItemsCollection(JSON.stringify(item.items))
+            };
+        } else if (item.type === 'hand-writing') {
+            if (!item.paths) {
+                return null;
+            }
+            return {
+                ...baseItem,
+                paths: item.paths
             };
         }
         return null;

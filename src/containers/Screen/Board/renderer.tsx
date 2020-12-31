@@ -4,12 +4,14 @@ import {
     ElementText,
     ElementPlot,
     ElementImage,
-    ElementLaTeX
+    ElementLaTeX,
+    ElementHandWrite
 } from '../../../data/board';
 import {
     TextBlock,
     LaTeXBlock,
     PlotBlock,
+    HandWritingBlock,
     ImageBlock
 } from '../../../components/Elements';
 
@@ -29,6 +31,10 @@ function renderImageBlock(data: ElementImage): JSX.Element {
     return <ImageBlock data={data} key={data.id} />;
 }
 
+function renderHandWritingBlock(data: ElementHandWrite) {
+    return <HandWritingBlock data={data} key={data.id} />;
+}
+
 export default function renderElement(el: ElementAll): JSX.Element {
     if (el.type === 'text') {
         return renderTextBlock(el as ElementText);
@@ -38,6 +44,8 @@ export default function renderElement(el: ElementAll): JSX.Element {
         return renderPlotBlock(el as ElementPlot);
     } else if (el.type === 'image') {
         return renderImageBlock(el as ElementImage);
+    } else if (el.type === 'hand-writing') {
+        return renderHandWritingBlock(el as ElementHandWrite);
     }
     return <span key={el.id}></span>;
 }

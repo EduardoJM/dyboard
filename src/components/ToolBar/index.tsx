@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MdFunctions, MdPanTool, MdTitle, MdInsertPhoto, MdAdd, MdChevronLeft } from 'react-icons/md';
+import { MdFunctions, MdPanTool, MdTitle, MdInsertPhoto, MdAdd, MdChevronLeft, MdEdit } from 'react-icons/md';
 import { GiArrowCursor, GiStoneSphere, GiResize, GiMove } from 'react-icons/gi';
 import { BsGraphDown } from 'react-icons/bs';
 import { useTransition } from 'react-spring';
@@ -53,6 +53,8 @@ const ToolBar: React.FC = () => {
             return <GiResize size={24} />;
         } else if (id === 'plot') {
             return <BsGraphDown size={24} />;
+        } else if (id === 'hand-pen') {
+            return <MdEdit size={24} />;
         }
         return <></>;
     };
@@ -87,6 +89,16 @@ const ToolBar: React.FC = () => {
                 items: [],
                 translation: { x: -2.5, y: -2.5 },
                 zoom: { x: 100, y: 100 }
+            }));
+        } else if (button.tool === 'add-hand-pen') {
+            dispatch(actions.tools.setElementToAdd({
+                id: Date.now(),
+                width: 600,
+                height: 600,
+                left: 0,
+                top: 0,
+                type: 'hand-writing',
+                paths: []
             }));
         }
     }
