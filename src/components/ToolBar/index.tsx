@@ -78,27 +78,17 @@ const ToolBar: React.FC = () => {
             dispatch(actions.tools.setCurrentTool('resize'));
         } else if (button.tool === 'set-pan') {
             dispatch(actions.tools.setCurrentTool('pan'));
-        } else if (button.tool === 'add-plot') {
-            dispatch(actions.tools.setElementToAdd({
-                id: Date.now(),
-                width: 300,
-                height: 300,
-                left: 0,
-                top: 0,
-                type: 'plot',
-                items: [],
-                translation: { x: -2.5, y: -2.5 },
-                zoom: { x: 100, y: 100 }
-            }));
         } else if (button.tool === 'add-hand-pen') {
             dispatch(actions.tools.setElementToAdd({
-                id: Date.now(),
+                type: 'handwrite',
+                id: Date.now().toString(10),
                 width: 600,
                 height: 600,
                 left: 0,
                 top: 0,
-                type: 'hand-writing',
-                paths: []
+                data: {
+                    paths: []
+                }
             }));
         }
     }
