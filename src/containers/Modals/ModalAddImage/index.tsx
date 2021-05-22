@@ -55,13 +55,15 @@ const ModalAddImage: React.FC<ModalAddImageProps> = ({ modalId }) => {
         if (!selectedFile) {
             if (pastedDataUrl !== '') {
                 dispatch(actions.tools.setElementToAdd({
-                    id: Date.now(),
                     type: 'image',
+                    id: Date.now().toString(10),
                     width: 300,
                     height: 300,
                     left: 0,
                     top: 0,
-                    imageContent: pastedDataUrl
+                    data: {
+                        imageContent: pastedDataUrl
+                    }
                 }));
                 setSelectedFile(null);
                 setSelectedFileUrl('');
@@ -76,13 +78,13 @@ const ModalAddImage: React.FC<ModalAddImageProps> = ({ modalId }) => {
             setSelectedFile(null);
             setSelectedFileUrl('');
             dispatch(actions.tools.setElementToAdd({
-                id: Date.now(),
                 type: 'image',
+                id: Date.now().toString(10),
                 width: 300,
                 height: 300,
                 left: 0,
                 top: 0,
-                imageContent
+                data: { imageContent }
             }));
             handleClose();
         };

@@ -76,14 +76,16 @@ const ModalAddText: React.FC<ModalAddTextProps> = ({
         }
         setEditorState(EditorState.createEmpty());
         dispatch(actions.tools.setElementToAdd({
-            id: Date.now(),
             type: 'text',
+            id: Date.now().toString(10),
             width: 300,
             height: 150,
             left: 0,
             top: 0,
-            text,
-            rawContent: convertToRaw(contentState)
+            data: {
+                text,
+                rawContent: convertToRaw(contentState)
+            }
         }));
         handleClose();
     }

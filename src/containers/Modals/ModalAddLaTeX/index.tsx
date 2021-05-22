@@ -83,13 +83,13 @@ const ModalAddLaTeX: React.FC<ModalAddLaTeXProps> = ({
         }
         setText('');
         dispatch(actions.tools.setElementToAdd({
-            id: Date.now(),
             type: 'latex',
+            id: Date.now().toString(10),
             width: 300,
             height: 150,
             left: 0,
             top: 0,
-            text
+            data: { text }
         }));
         handleClose();
     }

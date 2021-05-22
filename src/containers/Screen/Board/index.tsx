@@ -4,8 +4,10 @@ import { ipcRenderer } from 'electron';
 
 import { Store } from '../../../redux/reducers/types';
 
+import board from '../../../lib/board';
+
 import { useTheme } from '../../../contexts/theme';
-import { LoaderHelperElement, parseToElements, elementsToString } from '../../../data/board';
+// import { LoaderHelperElement, parseToElements, elementsToString } from '../../../lib/board';
 
 import actions from '../../../redux/actions';
 
@@ -32,8 +34,15 @@ const Board: React.FC = () => {
             setSavePath(arg.path);
             setNeedSave(true);
         });
-        ipcRenderer.on('loaded', (event, arg: { path: string; data: LoaderHelperElement[] }) => {
-            dispatch(actions.board.setBoardItems(parseToElements(arg.data)));
+        ipcRenderer.on('loaded', (event, arg: { path: string; data: Record<string, unknown> }) => {
+            board.parse(arg.data).then((result) => {
+                if (!result) {
+                    // TODO: show a better error message here.
+                    console.log('We have an error parsing the file.');
+                    return;
+                }
+                dispatch(actions.board.setBoardItems(result));
+            });
         });
     }, []);
 
@@ -42,7 +51,7 @@ const Board: React.FC = () => {
             return;
         }
         ipcRenderer.send('save', {
-            data: elementsToString(boardItems),
+            data: board.stringify(boardItems),
             path: savePath
         });
         setSavePath('');
