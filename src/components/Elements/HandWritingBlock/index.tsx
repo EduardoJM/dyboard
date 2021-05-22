@@ -3,12 +3,12 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import ElementContainer from '../ElementContainer';
 
-import { ElementHandWrite } from '../../../data/board';
+import { TypedElement } from '../../../lib/board';
 import { Store } from '../../../redux/reducers/types';
 import actions from '../../../redux/actions';
 
 interface HandWritingBlockProps {
-    data: ElementHandWrite;
+    data: TypedElement<'handwrite'>;
 }
 
 const HandWritingBlock: React.FC<HandWritingBlockProps> = ({ data }) => {
@@ -16,8 +16,8 @@ const HandWritingBlock: React.FC<HandWritingBlockProps> = ({ data }) => {
     const state = useSelector((state: Store) => state);
     const ref = useRef<HTMLDivElement>(null);
 
-    const [color, setColor] = useState('#FFF');
-    const [width, setWidth] = useState(1);
+    const [color] = useState('#FFF');
+    const [width] = useState(1);
 
     let path: {x: number; y: number; }[] = [];
 
@@ -39,28 +39,30 @@ const HandWritingBlock: React.FC<HandWritingBlockProps> = ({ data }) => {
         ]);
     };
 
-    const handleMouseUp = (e: globalThis.MouseEvent) => {
+    const handleMouseUp = () => {
         document.removeEventListener('mousemove', handleMouseMove);
         document.removeEventListener('mouseup', handleMouseUp);
 
         const newItem = {
             ...data,
-            paths: [
-                ...data.paths,
-                {
-                    id: Date.now().toString(),
-                    points: path,
-                    color,
-                    width
-                }
-            ]
+            data: {
+                paths: [
+                    ...data.data.paths,
+                    {
+                        id: Date.now().toString(),
+                        points: path,
+                        color,
+                        width
+                    }
+                ]
+            }
         };
         dispatch(actions.board.updateBoardItem(data, newItem));
         setCurrentPath([]);
         path = [];
     };
 
-    const handleMouseDown = (e: MouseEvent) => {
+    const handleMouseDown = () => {
         if (state.tools.tool !== 'cursor' || !ref.current) {
             return;
         }
@@ -92,7 +94,7 @@ const HandWritingBlock: React.FC<HandWritingBlockProps> = ({ data }) => {
                         pointerEvents: 'none'
                     }}
                 >
-                    {data.paths.map((path) => (
+                    {data.data.paths.map((path) => (
                         <path
                             key={path.id}
                             d={renderPath(path.points)}

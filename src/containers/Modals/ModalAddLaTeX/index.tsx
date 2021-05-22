@@ -1,10 +1,11 @@
 import React, { useState, useEffect, ChangeEvent } from 'react';
 import Katex from 'katex';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Modal from '../../../components/Modal';
 
+import { Store } from '../../../redux/reducers/types';
 import actions, { ModalsIds } from '../../../redux/actions';
 
 import { LatexEditor, ButtonArea } from './styles';
@@ -12,12 +13,8 @@ import { LatexEditor, ButtonArea } from './styles';
 import Button from '../../../components/Form/Button';
 
 interface ModalAddLaTeXProps {
-    opened: boolean;
     modalId: ModalsIds;
-    handleClose: (id: ModalsIds) => void;
     isEditing?: boolean;
-    editingInitialContent?: string;
-    editComplete?: (text: string) => void;
 }
 
 const render = (text: string) => {
@@ -31,13 +28,13 @@ const render = (text: string) => {
 };
 
 const ModalAddLaTeX: React.FC<ModalAddLaTeXProps> = ({
-    opened,
     modalId,
-    handleClose,
-    isEditing,
-    editingInitialContent,
-    editComplete
+    isEditing = false
 }) => {
+    const opened = useSelector((store: Store) => store.modals[modalId]);
+
+    const editingInitialContent = 'x^2+2x'; // TODO: add this to redux modals store.
+
     const [text, setText] = useState(
         () => isEditing && editingInitialContent
             ? editingInitialContent
@@ -64,6 +61,16 @@ const ModalAddLaTeX: React.FC<ModalAddLaTeXProps> = ({
         );
     }, [isEditing, editingInitialContent]);
 
+    function handleClose() {
+        dispatch(actions.modals.changeModalState(modalId, false));
+    }
+
+    function editComplete(text: string) {
+        console.log(text);
+        console.log('NOT IMPLEMENTED YET!');
+        handleClose();
+    }
+
     function handleTextAreaChange(e: ChangeEvent<HTMLTextAreaElement>) {
         setText(e.target.value);
         setMathText(render(e.target.value));
@@ -84,14 +91,14 @@ const ModalAddLaTeX: React.FC<ModalAddLaTeXProps> = ({
             top: 0,
             text
         }));
-        handleClose(modalId);
+        handleClose();
     }
 
     return (
         <Modal
             visible={opened}
             title={isEditing ? t('latex.edit.title') : t('latex.add.title')}
-            closeModalRequest={() => handleClose(modalId)}
+            closeModalRequest={handleClose}
         >
             <LatexEditor>
                 <textarea onChange={handleTextAreaChange} value={text}></textarea>

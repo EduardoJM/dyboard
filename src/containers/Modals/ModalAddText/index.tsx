@@ -6,8 +6,9 @@ import {
     convertFromRaw
 } from 'draft-js';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { Store } from '../../../redux/reducers/types';
 import actions, { ModalsIds } from '../../../redux/actions';
 
 import { stateToHTML } from '../../../utils/draft';
@@ -22,21 +23,13 @@ import Button from '../../../components/Form/Button';
 import TextEditor from './TextEditor';
 
 interface ModalAddTextProps {
-    opened: boolean;
     modalId: ModalsIds;
-    handleClose: (id: ModalsIds) => void;
     isEditing?: boolean;
-    editingInitialContent?: RawDraftContentState;
-    editComplete?: (state: RawDraftContentState, text: string) => void;
 }
 
 const ModalAddText: React.FC<ModalAddTextProps> = ({
-    opened,
     modalId,
-    handleClose,
-    isEditing,
-    editingInitialContent,
-    editComplete
+    isEditing
 }) => {
     const [editorState, setEditorState] = useState(
         () => isEditing && editingInitialContent
@@ -44,6 +37,8 @@ const ModalAddText: React.FC<ModalAddTextProps> = ({
             : EditorState.createEmpty()
     );
     const { t } = useTranslation('modals');
+    const opened = useSelector((store: Store) => store.modals[modalId]);
+    const editingInitialContent = useSelector((store: Store) => store.modals.editTextInitialState);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -54,11 +49,29 @@ const ModalAddText: React.FC<ModalAddTextProps> = ({
         );
     }, [isEditing, editingInitialContent]);
 
+    function handleClose() {
+        dispatch(actions.modals.changeModalState(modalId, false));
+    }
+
+    function handleEditComplete(content: RawDraftContentState, text: string) {
+        /*
+        const newItem = {
+            ...data,
+            text,
+            rawContent: state
+        };
+        dispatch(actions.board.updateBoardItem(data, newItem));
+        */
+        console.log(text);
+        console.log('NOT IMPLEMENTED YET!');
+        handleClose();
+    }
+
     function handleAdd() {
         const contentState = editorState.getCurrentContent();
         const text = stateToHTML(contentState);
-        if (isEditing && editComplete) {
-            editComplete(convertToRaw(contentState), text);
+        if (isEditing) {
+            handleEditComplete(convertToRaw(contentState), text);
             return;
         }
         setEditorState(EditorState.createEmpty());
@@ -72,14 +85,14 @@ const ModalAddText: React.FC<ModalAddTextProps> = ({
             text,
             rawContent: convertToRaw(contentState)
         }));
-        handleClose(modalId);
+        handleClose();
     }
 
     return (
         <Modal
             visible={opened}
             title={isEditing ? t('text.edit.title') : t('text.add.title')}
-            closeModalRequest={() => handleClose(modalId)}
+            closeModalRequest={() => handleClose()}
         >
             <Form>
                 <div className="editor-container">

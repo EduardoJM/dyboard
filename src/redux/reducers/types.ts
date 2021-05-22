@@ -1,8 +1,6 @@
 // import { Action as ReduxAction } from 'redux';
-import {
-    ElementAll,
-    ElementsCollection
-} from '../../data/board';
+import { RawDraftContentState } from 'draft-js';
+import { Element } from '../../lib/board';
 import { DominantTool } from '../../data/tools';
 
 /*
@@ -15,8 +13,8 @@ export interface BoardAction extends ReduxAction {
 */
 
 export interface BoardStore {
-    elements: ElementsCollection;
-    currentElement: ElementAll | null;
+    elements: Element[];
+    currentElement: Element | null;
 }
 
 export const BoardStoreInitial : BoardStore = {
@@ -33,7 +31,7 @@ export interface ToolsAction extends ReduxAction {
 
 export interface ToolsStore {
     tool: DominantTool;
-    elementToAdd: ElementAll | null;
+    elementToAdd: Element | null;
 }
 
 export const ToolsStoreInitial : ToolsStore = {
@@ -50,15 +48,22 @@ export interface ModalsAction extends ReduxAction {
 */
 
 export interface ModalsStore {
-    addImage: false,
-    addLaTeX: false,
-    addText: false,
+    addImage: boolean;
+    addLaTeX: boolean;
+    addText: boolean;
+    editText: boolean;
+    editTextInitialState: RawDraftContentState;
 }
 
 export const ModalsStoreInitial : ModalsStore = {
     addImage: false,
     addLaTeX: false,
-    addText: false
+    addText: false,
+    editText: false,
+    editTextInitialState: {
+        blocks: [],
+        entityMap: {}
+    }
 };
 
 export interface Store {

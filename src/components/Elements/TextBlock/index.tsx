@@ -1,16 +1,16 @@
 import React from 'react';
-import { ElementText } from '../../../data/board';
+import { TypedElement } from '../../../lib/board';
 
 import ElementContainer from '../ElementContainer';
 
 interface TextBlockProps {
-    data: ElementText;
+    data: TypedElement<'text'>;
 }
 
 const TextBlock: React.FC<TextBlockProps> = ({ data }) => {
     return (
         <ElementContainer data={data}>
-            <div dangerouslySetInnerHTML={{ __html: data.text }} />
+            <div dangerouslySetInnerHTML={{ __html: data.data.text }} />
         </ElementContainer>
     );
 };

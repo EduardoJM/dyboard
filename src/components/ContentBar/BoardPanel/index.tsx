@@ -7,7 +7,7 @@ import actions from '../../../redux/actions';
 
 import { ListBox, ListBoxItem } from '../../Form/DraggableListBox';
 
-import { ElementAll } from '../../../data/board';
+import { Element } from '../../../lib/board';
 
 const BoardPanel: React.FC = () => {
     const { t } = useTranslation('boardPanel');
@@ -29,7 +29,7 @@ const BoardPanel: React.FC = () => {
         return t('items.unsupported');
     }
 
-    function handleListItemClick(item: ElementAll) {
+    function handleListItemClick(item: Element) {
         dispatch(actions.board.setSelection(item));
     }
 

@@ -2,9 +2,10 @@ import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { FiUpload, FiClipboard } from 'react-icons/fi';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { clipboard } from 'electron';
 
+import { Store } from '../../../redux/reducers/types';
 import actions, { ModalsIds } from '../../../redux/actions';
 
 import Button from '../../../components/Form/Button';
@@ -16,16 +17,11 @@ import { useTheme } from '../../../contexts/theme';
 import { Container, ImageDropzone, ImageContent, ButtonArea } from './styles';
 
 interface ModalAddImageProps {
-    opened: boolean;
     modalId: ModalsIds;
-    handleClose: (id: ModalsIds) => void;
 }
 
-const ModalAddImage: React.FC<ModalAddImageProps> = ({
-    opened,
-    modalId,
-    handleClose
-}) => {
+const ModalAddImage: React.FC<ModalAddImageProps> = ({ modalId }) => {
+    const opened = useSelector((store: Store) => store.modals[modalId]);
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [selectedFileUrl, setSelectedFileUrl] = useState('');
     const [pastedDataUrl, setPastedDataUrl] = useState('');
@@ -51,6 +47,10 @@ const ModalAddImage: React.FC<ModalAddImageProps> = ({
         accept: 'image/*'
     });
 
+    function handleClose() {
+        dispatch(actions.modals.changeModalState(modalId, false));
+    }
+
     function handleAddClick() {
         if (!selectedFile) {
             if (pastedDataUrl !== '') {
@@ -66,9 +66,8 @@ const ModalAddImage: React.FC<ModalAddImageProps> = ({
                 setSelectedFile(null);
                 setSelectedFileUrl('');
                 setPastedDataUrl('');
-                handleClose(modalId);
             }
-            handleClose(modalId);
+            handleClose();
             return;
         }
         const reader = new FileReader();
@@ -85,7 +84,7 @@ const ModalAddImage: React.FC<ModalAddImageProps> = ({
                 top: 0,
                 imageContent
             }));
-            handleClose(modalId);
+            handleClose();
         };
         reader.readAsDataURL(selectedFile);
     }
@@ -102,7 +101,7 @@ const ModalAddImage: React.FC<ModalAddImageProps> = ({
         <Modal
             visible={opened}
             title={t('image.add.title')}
-            closeModalRequest={() => handleClose(modalId)}
+            closeModalRequest={handleClose}
         >
             <Container>
                 <div className="fit-right">

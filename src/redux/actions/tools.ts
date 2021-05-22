@@ -1,11 +1,11 @@
 import { Action as ReduxAction } from 'redux';
-import { ElementAll } from '../../data/board';
+import { Element } from '../../lib/board';
 import { DominantTool } from '../../data/tools';
 
 export type ToolsActionType = 'SET_ELEMENT_TO_ADD' | 'SET_CURRENT_TOOL';
 
 export interface ToolsActionTypePayloadMap {
-    SET_ELEMENT_TO_ADD: ElementAll | null;
+    SET_ELEMENT_TO_ADD: Element | null;
     SET_CURRENT_TOOL: DominantTool;
 }
 
@@ -17,7 +17,7 @@ export interface ToolsActionMaped<K extends keyof ToolsActionTypePayloadMap> ext
 export type ToolsAction = ToolsActionMaped<'SET_ELEMENT_TO_ADD'> | ToolsActionMaped<'SET_CURRENT_TOOL'>;
 
 export const tools = {
-    setElementToAdd: (item: ElementAll | null): ToolsAction => {
+    setElementToAdd: (item: Element | null): ToolsAction => {
         return {
             type: 'SET_ELEMENT_TO_ADD',
             payload: item

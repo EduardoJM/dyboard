@@ -1,5 +1,5 @@
 import { Action as ReduxAction } from 'redux';
-import { ElementAll, ElementsCollection } from '../../data/board';
+import { Element } from '../../lib/board';
 
 export type BoardActionType = 'ADD_BOARD_ITEM' |
     'UPDATE_BOARD_ITEM' |
@@ -7,13 +7,13 @@ export type BoardActionType = 'ADD_BOARD_ITEM' |
     'SET_SELECTION';
 
 export interface BoardActionTypePayloadMap {
-    ADD_BOARD_ITEM: ElementAll;
+    ADD_BOARD_ITEM: Element;
     UPDATE_BOARD_ITEM: {
-        oldItem: ElementAll;
-        boardItem: ElementAll;
+        oldItem: Element;
+        boardItem: Element;
     };
-    SET_SELECTION: ElementAll;
-    SET_BOARD_ITEMS: ElementsCollection;
+    SET_SELECTION: Element;
+    SET_BOARD_ITEMS: Element[];
 }
 
 export interface BoardActionMaped<K extends keyof BoardActionTypePayloadMap> extends ReduxAction<BoardActionType> {
@@ -27,25 +27,25 @@ export type BoardAction = BoardActionMaped<'ADD_BOARD_ITEM'> |
     BoardActionMaped<'UPDATE_BOARD_ITEM'>;
 
 export const board = {
-    setBoardItems: (items: ElementsCollection): BoardAction => {
+    setBoardItems: (items: Element[]): BoardAction => {
         return {
             type: 'SET_BOARD_ITEMS',
             payload: items
         };
     },
-    addBoardItem: (item: ElementAll): BoardAction => {
+    addBoardItem: (item: Element): BoardAction => {
         return {
             type: 'ADD_BOARD_ITEM',
             payload: item
         };
     },
-    setSelection: (item: ElementAll): BoardAction => {
+    setSelection: (item: Element): BoardAction => {
         return {
             type: 'SET_SELECTION',
             payload: item
         };
     },
-    updateBoardItem: (oldItem: ElementAll, newItem: ElementAll): BoardAction => {
+    updateBoardItem: (oldItem: Element, newItem: Element): BoardAction => {
         return {
             type: 'UPDATE_BOARD_ITEM',
             payload: {

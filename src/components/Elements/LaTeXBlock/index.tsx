@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Katex from 'katex';
-import { ElementLaTeX } from '../../../data/board';
+import { TypedElement } from '../../../lib/board';
 import ElementContainer from '../ElementContainer';
 
 interface TextBlockProps {
-    data: ElementLaTeX;
+    data: TypedElement<'latex'>;
 }
 
 const measureHtml = (html: string): { width: number; height: number; } => {
@@ -33,12 +33,12 @@ const LaTeXBlock: React.FC<TextBlockProps> = ({ data }) => {
     const [mathText, setMathText] = useState('');
 
     useEffect(() => {
-        const html = Katex.renderToString(data.text);
+        const html = Katex.renderToString(data.data.text);
         const size = measureHtml(html);
         setWidth(size.width);
         setHeight(size.height);
         setMathText(html);
-    }, [data.text]);
+    }, [data.data.text]);
 
     return (
         <ElementContainer data={data} disableResize={true} staticSize={[width, height]}>

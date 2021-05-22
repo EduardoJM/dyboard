@@ -1,28 +1,55 @@
-import { RenderItem, SerializationUtils } from 'jplot';
+// import { RenderItem, SerializationUtils } from 'jplot';
+/*
 import { RawDraftContentState } from 'draft-js';
 
-interface ElementBase {
-    id: number | string;
-    type: string;
-    width: number;
-    height: number;
-    left: number;
-    top: number;
-}
-
-export interface ElementText extends ElementBase {
+export interface ElementDataText {
     text: string;
     rawContent: RawDraftContentState;
 }
 
-export interface ElementLaTeX extends ElementBase {
+export interface ElementDataLaTeX {
     text: string;
 }
 
-export interface ElementImage extends ElementBase {
+export interface ElementDataImage {
     imageContent: string;
 }
 
+export interface ElementDataHandWritePath {
+    id: string;
+    color: string;
+    width: number;
+    points: { x: number; y: number; }[];
+}
+
+export interface ElementDataHandWrite {
+    paths: ElementDataHandWritePath[];
+}
+
+export interface ElementTypeDataMap {
+    text: ElementDataText;
+    latex: ElementDataLaTeX;
+    image: ElementDataImage;
+    handwrite: ElementDataHandWrite;
+}
+
+export interface TypedElement<K extends keyof ElementTypeDataMap> {
+    type: K;
+    id: number | string;
+    width: number;
+    height: number;
+    left: number;
+    top: number;
+    data: ElementTypeDataMap[K];
+}
+
+export type Element = TypedElement<'text'> |
+    TypedElement<'latex'> |
+    TypedElement<'image'> |
+    TypedElement<'handwrite'>;
+*/
+
+/*
 export interface ElementPlot extends ElementBase {
     items: RenderItem[];
     translation: {
@@ -34,7 +61,9 @@ export interface ElementPlot extends ElementBase {
         y: number;
     };
 }
+*/
 
+/*
 export interface ElementHandWritePath {
     id: string;
     color: string;
@@ -45,11 +74,13 @@ export interface ElementHandWritePath {
 export interface ElementHandWrite extends ElementBase {
     paths: ElementHandWritePath[];
 }
+*/
 
-export type ElementAll = (ElementText | ElementLaTeX | ElementPlot | ElementImage | ElementHandWrite);
+// export type ElementAll = (ElementText | ElementLaTeX | ElementPlot | ElementImage | ElementHandWrite);
 
-export type ElementsCollection = ElementAll[];
+// export type ElementsCollection = ElementAll[];
 
+/*
 export interface LoaderHelperElement {
     id: number | string;
     type: string;
@@ -71,6 +102,12 @@ export interface LoaderHelperElement {
         y: number;
     };
     paths?: ElementHandWritePath[];
+}
+*/
+
+/*
+export function stringfy(data: Element[]): string {
+
 }
 
 export function elementsToString(data: ElementsCollection): string {
@@ -117,7 +154,9 @@ export function elementsToString(data: ElementsCollection): string {
     const filtered = result.filter((item) => item !== null);
     return JSON.stringify(filtered);
 }
+*/
 
+/*
 export function parseToElements(data: LoaderHelperElement[]): ElementsCollection {
     const result: (ElementAll | null)[] = data.map((item) => {
         const { id, type, width, height, left, top } = item;
@@ -182,3 +221,4 @@ export function parseToElements(data: LoaderHelperElement[]): ElementsCollection
     const filtered = result.filter((item) => item !== null);
     return filtered as ElementsCollection;
 }
+*/

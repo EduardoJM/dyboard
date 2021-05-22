@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { Store } from '../../../redux/reducers/types';
 
-import { ElementAll } from '../../../data/board';
+import { Element } from '../../../lib/board';
 
 import actions from '../../../redux/actions';
 
@@ -14,7 +14,7 @@ import { useTheme } from '../../../contexts/theme';
 import { ResizableContainer, DraggableContainer, StaticContainer } from '../commonStyles';
 
 interface ElementContainerProps {
-    data: ElementAll;
+    data: Element;
     disableResize?: boolean;
     staticSize?: [number, number];
 }

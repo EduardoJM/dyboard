@@ -9,11 +9,8 @@ import { Store } from '../../redux/reducers/types';
 
 import { Container, Content, Bar } from './styles';
 
-import PlotConfigurator from './PlotConfigurator';
 import TextConfigurator from './TextConfigurator';
 import BoardPanel from './BoardPanel';
-
-import { ElementPlot, ElementText } from '../../data/board';
 
 import actions from '../../redux/actions';
 
@@ -44,10 +41,8 @@ const ContentBar: React.FC = () => {
         } else if (currentPanel === 'contentSetting') {
             if (selectedElement === null) {
                 return null;
-            } else if (selectedElement.type === 'plot') {
-                return <PlotConfigurator data={selectedElement as ElementPlot} />;
             } else if (selectedElement.type === 'text') {
-                return <TextConfigurator data={selectedElement as ElementText} />;
+                return <TextConfigurator data={selectedElement} />;
             }
         }
         return null;
