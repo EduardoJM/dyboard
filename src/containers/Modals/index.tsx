@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { Store } from '../../redux/reducers/types';
-import actions from '../../redux/actions';
+import actions, { ModalsIds } from '../../redux/actions';
 
 import ModalAddText from './ModalAddText';
 import ModalAddImage from './ModalAddImage';
@@ -12,8 +12,8 @@ const Modals: React.FC = () => {
     const modalStates = useSelector((state: Store) => state.modals);
     const dispatch = useDispatch();
 
-    function handleCloseModal(id: string) {
-        dispatch(actions.modals.changeModal(id, false));
+    function handleCloseModal(id: ModalsIds) {
+        dispatch(actions.modals.changeModalState(id, false));
     }
 
     return (

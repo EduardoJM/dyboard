@@ -65,11 +65,11 @@ const ToolBar: React.FC = () => {
                 setCurrentTools(button.goToId);
             }
         } else if (button.tool === 'add-text') {
-            dispatch(actions.modals.changeModal('addText', true));
+            dispatch(actions.modals.changeModalState('addText', true));
         } else if (button.tool === 'add-image') {
-            dispatch(actions.modals.changeModal('addImage', true));
+            dispatch(actions.modals.changeModalState('addImage', true));
         } else if (button.tool === 'add-math') {
-            dispatch(actions.modals.changeModal('addLaTeX', true));
+            dispatch(actions.modals.changeModalState('addLaTeX', true));
         } else if (button.tool === 'set-cursor') {
             dispatch(actions.tools.setCurrentTool('cursor'));
         } else if (button.tool === 'set-drag') {

@@ -8,7 +8,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 
-import actions from '../../../redux/actions';
+import actions, { ModalsIds } from '../../../redux/actions';
 
 import { stateToHTML } from '../../../utils/draft';
 import Modal from '../../../components/Modal';
@@ -23,8 +23,8 @@ import TextEditor from './TextEditor';
 
 interface ModalAddTextProps {
     opened: boolean;
-    modalId: string;
-    handleClose: (id: string) => void;
+    modalId: ModalsIds;
+    handleClose: (id: ModalsIds) => void;
     isEditing?: boolean;
     editingInitialContent?: RawDraftContentState;
     editComplete?: (state: RawDraftContentState, text: string) => void;

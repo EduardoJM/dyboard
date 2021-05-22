@@ -1,15 +1,28 @@
-import ActionType from './ActionType';
-import { ModalsAction, ModalsIds } from '../reducers/types';
+import { Action as ReduxAction } from 'redux';
 
-const changeModal = (id: string, visible: boolean): ModalsAction => {
-    const modalId = id as ModalsIds;
-    return {
-        type: ActionType.modals.CHANGE_MODAL,
-        id: modalId,
-        visible
+export type ModalsActionTypes = 'CHANGE_MODAL_STATE';
+
+export type ModalsIds = 'addImage' | 'addLaTeX' | 'addText';
+
+export interface ModalsActionTypePayloadMap {
+    'CHANGE_MODAL_STATE': {
+        modalId: ModalsIds;
+        opened: boolean;
     };
-};
+}
 
-export default {
-    changeModal
+export interface ModalsActionMaped<K extends keyof ModalsActionTypePayloadMap> extends ReduxAction<ModalsActionTypes> {
+    type: K;
+    payload: ModalsActionTypePayloadMap[K];
+}
+
+export type ModalsAction = ModalsActionMaped<'CHANGE_MODAL_STATE'>;
+
+export const modals = {
+    changeModalState: (modalId: ModalsIds, opened: boolean): ModalsAction => {
+        return {
+            type: 'CHANGE_MODAL_STATE',
+            payload: { modalId, opened }
+        };
+    }
 };

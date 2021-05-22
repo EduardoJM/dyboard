@@ -1,16 +1,18 @@
-import { Action as ReduxAction } from 'redux';
+// import { Action as ReduxAction } from 'redux';
 import {
     ElementAll,
     ElementsCollection
 } from '../../data/board';
 import { DominantTool } from '../../data/tools';
 
+/*
 export interface BoardAction extends ReduxAction {
     boardItem?: ElementAll;
     oldItem?: ElementAll;
     index?: number;
     boardItemsCollection?: ElementsCollection;
 }
+*/
 
 export interface BoardStore {
     elements: ElementsCollection;
@@ -22,10 +24,12 @@ export const BoardStoreInitial : BoardStore = {
     currentElement: null
 };
 
+/*
 export interface ToolsAction extends ReduxAction {
     tool?: DominantTool;
     element?: ElementAll | null;
 }
+*/
 
 export interface ToolsStore {
     tool: DominantTool;
@@ -36,13 +40,14 @@ export const ToolsStoreInitial : ToolsStore = {
     tool: 'cursor',
     elementToAdd: null
 };
-
+/*
 export type ModalsIds = 'addImage' | 'addLaTeX' | 'addText';
 
 export interface ModalsAction extends ReduxAction {
     id: ModalsIds;
     visible: boolean;
 }
+*/
 
 export interface ModalsStore {
     addImage: false,

@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 
 import Modal from '../../../components/Modal';
 
-import actions from '../../../redux/actions';
+import actions, { ModalsIds } from '../../../redux/actions';
 
 import { LatexEditor, ButtonArea } from './styles';
 
@@ -13,8 +13,8 @@ import Button from '../../../components/Form/Button';
 
 interface ModalAddLaTeXProps {
     opened: boolean;
-    modalId: string;
-    handleClose: (id: string) => void;
+    modalId: ModalsIds;
+    handleClose: (id: ModalsIds) => void;
     isEditing?: boolean;
     editingInitialContent?: string;
     editComplete?: (text: string) => void;

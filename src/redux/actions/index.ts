@@ -1,10 +1,12 @@
-import ActionType from './ActionType';
-import board from './board';
-import tools from './tools';
-import modals from './modals';
+import { board } from './board';
+import { modals } from './modals';
+import { tools } from './tools';
+
+export * from './board';
+export * from './modals';
+export * from './tools';
 
 export default {
-    types: ActionType,
     board,
     tools,
     modals

@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { clipboard } from 'electron';
 
-import actions from '../../../redux/actions';
+import actions, { ModalsIds } from '../../../redux/actions';
 
 import Button from '../../../components/Form/Button';
 
@@ -17,8 +17,8 @@ import { Container, ImageDropzone, ImageContent, ButtonArea } from './styles';
 
 interface ModalAddImageProps {
     opened: boolean;
-    modalId: string;
-    handleClose: (id: string) => void;
+    modalId: ModalsIds;
+    handleClose: (id: ModalsIds) => void;
 }
 
 const ModalAddImage: React.FC<ModalAddImageProps> = ({

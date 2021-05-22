@@ -1,27 +1,19 @@
-import { ToolsStore, ToolsStoreInitial, ToolsAction } from './types';
+import { ToolsStore, ToolsStoreInitial } from './types';
+import { ToolsAction } from '../actions';
 
 export default function toolsReducer(
     state: ToolsStore = ToolsStoreInitial,
     action: ToolsAction
 ): ToolsStore {
     if (action.type === 'SET_CURRENT_TOOL') {
-        if (!action.tool) {
-            return state;
-        }
         return {
             ...state,
-            tool: action.tool
+            tool: action.payload
         };
     } else if (action.type === 'SET_ELEMENT_TO_ADD') {
-        if (action.element === undefined) {
-            return {
-                ...state,
-                elementToAdd: null
-            };
-        }
         return {
             ...state,
-            elementToAdd: action.element
+            elementToAdd: action.payload
         };
     }
     return state;
